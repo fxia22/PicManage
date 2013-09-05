@@ -1,25 +1,9 @@
-﻿生成启动时间为 2013/9/5 19:57:08。
+﻿生成启动时间为 2013/9/5 20:01:54。
      1>项目“C:\vs2012program\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”在节点 2 上(Build 个目标)。
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D WIN32 /D _WINDOWS /D _DEBUG /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\图片管理器.pch" /Fo"Debug\\" /Fd"Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt ChildFrm.cpp LogInBox.cpp MainFrm.cpp NewClientBox.cpp "图片管理器.cpp" "图片管理器Doc.cpp" "图片管理器View.cpp"
-     1>cl : 命令行 warning D9028: 最小重新生成失败，正在转换为标准生成
-         ChildFrm.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\childfrm.cpp(5): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         LogInBox.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\loginbox.cpp(4): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         MainFrm.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\mainfrm.cpp(5): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         NewClientBox.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\newclientbox.cpp(4): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         图片管理器.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\图片管理器.cpp(5): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         图片管理器Doc.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\图片管理器doc.cpp(5): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         图片管理器View.cpp
-     1>c:\vs2012program\图片管理器\picmanage\图片管理器\图片管理器view.cpp(5): fatal error C1852: “Debug\图片管理器.pch”不是有效的预编译头文件
-         正在生成代码...
-     1>已完成生成项目“C:\vs2012program\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”(Build 个目标)的操作 - 失败。
+     1>Link:
+         图片管理器.vcxproj -> C:\vs2012program\图片管理器\PicManage\Debug\图片管理器.exe
+     1>已完成生成项目“C:\vs2012program\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”(Build 个目标)的操作。
 
-生成失败。
+生成成功。
 
-已用时间 00:00:00.17
+已用时间 00:00:00.12
