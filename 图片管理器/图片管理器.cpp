@@ -13,6 +13,8 @@
 #include "图片管理器View.h"
 #include "LogInBox.h"
 #include "CAboutDlg.h"
+#include "CommandDlg.h"
+#include "CommanddlgObj.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -31,6 +33,8 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	//自己定义的命令
 	ON_COMMAND(ID_LOGIN, &C图片管理器App::OnLogin)
 	ON_COMMAND(ID_LOGOUT, &C图片管理器App::OnLogout)
+	ON_COMMAND(ID_CREATEELE, &C图片管理器App::OnCreateele)
+	ON_COMMAND(ID_CREATEOBJ, &C图片管理器App::OnCreateobj)
 END_MESSAGE_MAP()
 
 
@@ -181,4 +185,20 @@ void C图片管理器App::OnLogout()
 void CAboutDlg::OnBnClickedNewclient()
 {
 	// TODO: 在此添加控件通知处理程序代码
+}
+
+
+void C图片管理器App::OnCreateele()
+{
+	// TODO: 在此添加命令处理程序代码
+	CommandDlg dlg;
+	dlg.DoModal();
+}
+
+
+void C图片管理器App::OnCreateobj()
+{
+	// TODO: 在此添加命令处理程序代码
+	CommandDlgObj dlg;
+	dlg.DoModal();
 }

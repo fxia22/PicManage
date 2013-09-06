@@ -16,14 +16,17 @@
 IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
+//子文档消息映射
+
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
 
 CChildFrame::CChildFrame()
 {
+	
 	// TODO: 在此添加成员初始化代码
-}
+	}
 
 CChildFrame::~CChildFrame()
 {

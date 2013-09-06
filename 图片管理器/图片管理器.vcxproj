@@ -102,6 +102,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="CommandDlg.h" />
+    <ClInclude Include="CommanddlgObj.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="NewClientBox.h" />
@@ -111,10 +113,11 @@
     <ClInclude Include="图片管理器.h" />
     <ClInclude Include="图片管理器Doc.h" />
     <ClInclude Include="图片管理器View.h" />
-    <ClInclude Include="CAboutDlg.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="CommandDlg.cpp" />
+    <ClCompile Include="CommanddlgObj.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="NewClientBox.cpp" />
@@ -130,10 +133,12 @@
     <ResourceCompile Include="图片管理器.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="res\cursor1.cur" />
     <None Include="res\My.rc2" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\Toolbar.bmp" />
+    <Image Include="res\toolbar1.bmp" />
     <Image Include="res\图片管理器.ico" />
     <Image Include="res\图片管理器Doc.ico" />
     <Image Include="\\psf\Home\Pictures\ip\IMG_0831.jpg" />

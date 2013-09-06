@@ -48,7 +48,10 @@
     <ClInclude Include="LogInBox.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="CAboutDlg.h">
+    <ClInclude Include="CommandDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="CommanddlgObj.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
@@ -77,6 +80,12 @@
     <ClCompile Include="NewClientBox.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="CommandDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="CommanddlgObj.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="图片管理器.rc">
@@ -85,6 +94,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="res\My.rc2">
+      <Filter>资源文件</Filter>
+    </None>
+    <None Include="res\cursor1.cur">
       <Filter>资源文件</Filter>
     </None>
   </ItemGroup>
@@ -99,6 +111,9 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="\\psf\Home\Pictures\ip\IMG_0831.jpg">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\toolbar1.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

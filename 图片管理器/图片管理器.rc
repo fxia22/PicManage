@@ -78,6 +78,7 @@ IDR_MyTYPE              ICON                    "res\\图片管理器Doc.ico"
 //
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
+IDR_TOOLBARDRAW         BITMAP                  "res\\toolbar1.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -96,6 +97,23 @@ BEGIN
     SEPARATOR
     BUTTON      ID_FILE_PRINT
     BUTTON      ID_APP_ABOUT
+END
+
+IDR_TOOLBARDRAW TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_ENABLEDRAW
+    BUTTON      ID_DRAW_LINE
+    BUTTON      ID_DRAW_RECT
+    BUTTON      ID_DRAW_ECLIPSE
+    BUTTON      ID_DRAW_CIRCLE
+    BUTTON      ID_DRAW_BRUSH
+    BUTTON      ID_DRAW_CURL
+    BUTTON      ID_BUTTON32806
+    BUTTON      ID_DRAW_ERASE
+    BUTTON      ID_DRAW_COLOR
+    SEPARATOR
+    BUTTON      ID_CREATEELE
+    BUTTON      ID_CREATEOBJ
 END
 
 
@@ -153,7 +171,7 @@ BEGIN
         MENUITEM "打印预览(&V)",                    ID_FILE_PRINT_PREVIEW
         MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
         MENUITEM SEPARATOR
-        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
+        MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
@@ -165,9 +183,33 @@ BEGIN
         MENUITEM "复制(&C)\tCtrl+C",              ID_EDIT_COPY
         MENUITEM "粘贴(&P)\tCtrl+V",              ID_EDIT_PASTE
     END
+    POPUP "工具(&T)"
+    BEGIN
+        MENUITEM "绘图(&D)",                      ID_ENABLEDRAW
+        MENUITEM SEPARATOR
+        MENUITEM "笔",                           ID_DRAW_BRUSH
+        MENUITEM "直线",                          ID_DRAW_LINE
+        MENUITEM "圆",                           ID_DRAW_CIRCLE
+        MENUITEM "椭圆",                          ID_DRAW_ECLIPSE
+        MENUITEM "矩形",                          ID_DRAW_RECT
+        MENUITEM "样条曲线",                        ID_DRAW_CURL
+        MENUITEM SEPARATOR
+        MENUITEM "橡皮擦",                         ID_DRAW_ERASE
+        MENUITEM SEPARATOR
+        MENUITEM "颜色(&C)",                      ID_DRAW_COLOR
+        MENUITEM "式样(&S)",                      ID_DRAW_STYLE
+        MENUITEM SEPARATOR
+        POPUP "通过命令行创建(&M)"
+        BEGIN
+            MENUITEM "创建元件(&E)",                    ID_CREATEELE
+            MENUITEM "创建对象(&O)",                    ID_CREATEOBJ
+        END
+    END
     POPUP "视图(&V)"
     BEGIN
         MENUITEM "工具栏(&T)",                     ID_VIEW_TOOLBAR
+        MENUITEM "绘图工具栏(&D)",                   ID_VIEW_TOOLBARDRAW
+        MENUITEM SEPARATOR
         MENUITEM "状态栏(&S)",                     ID_VIEW_STATUS_BAR
     END
     POPUP "窗口(&W)"
@@ -228,7 +270,7 @@ VS_VERSION_INFO VERSIONINFO
 BEGIN
     BLOCK "StringFileInfo"
     BEGIN
-        BLOCK "080404B0"
+        BLOCK "080404b0"
         BEGIN
             VALUE "CompanyName", "TODO: <公司名>"
             VALUE "FileDescription", "图片管理器"
@@ -278,6 +320,22 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 108
     END
+
+    IDD_CMD, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 292
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 79
+    END
+
+    IDD_CMDDLGOBJ, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 292
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 139
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -298,7 +356,7 @@ BEGIN
     LTEXT           "密码",IDC_STATIC,51,47,17,8
     EDITTEXT        IDC_EDIT1,81,31,69,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT2,81,47,107,14,ES_PASSWORD | ES_AUTOHSCROLL
-    PUSHBUTTON      "新用户",IDC_NEWCLIENT,157,30,50,14
+    PUSHBUTTON      "新用户(&N)",IDC_NEWCLIENT,157,30,50,14
 END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
@@ -306,7 +364,7 @@ STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSM
 CAPTION "关于 图片管理器"
 FONT 9, "MS Shell Dlg", 0, 0, 0x1
 BEGIN
-    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,20,20
     LTEXT           "图片管理器，1.0 版",IDC_STATIC,42,14,114,8,SS_NOPREFIX
     LTEXT           "Copyright (C) 2013",IDC_STATIC,42,26,114,8
     DEFPUSHBUTTON   "确定",IDOK,113,41,50,14,WS_GROUP
@@ -327,6 +385,27 @@ BEGIN
     LTEXT           "确认密码:",IDC_STATIC,39,59,36,8
 END
 
+IDD_CMD DIALOGEX 0, 0, 299, 86
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "通过命令创建图形"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,143,54,50,14
+    PUSHBUTTON      "取消",IDCANCEL,203,55,50,14
+    EDITTEXT        IDC_EDIT1,32,30,219,14,ES_AUTOHSCROLL
+END
+
+IDD_CMDDLGOBJ DIALOGEX 0, 0, 299, 146
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "通过命令创建对象"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,175,118,50,14
+    PUSHBUTTON      "取消",IDCANCEL,229,119,50,14
+    LISTBOX         IDC_LIST1,29,26,54,89,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    EDITTEXT        IDC_EDIT1,134,31,117,14,ES_AUTOHSCROLL
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -334,6 +413,13 @@ END
 //
 
 IDR_IDB_BITMAP11        IDB_BITMAP1             "\\\\psf\\Home\\Pictures\\ip\\IMG_0831.jpg"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Cursor
+//
+
+IDC_CURSORINPUT         CURSOR                  "res\\cursor1.cur"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -465,6 +551,11 @@ END
 STRINGTABLE
 BEGIN
     AFX_IDS_PREVIEW_CLOSE   "关闭打印预览模式\n取消预览"
+END
+
+STRINGTABLE
+BEGIN
+    ID_ENABLEDRAW           "开启绘图"
 END
 
 #endif    // 中文(简体，中国) resources

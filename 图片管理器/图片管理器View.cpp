@@ -56,6 +56,9 @@ void C图片管理器View::OnDraw(CDC* /*pDC*/)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
+	CClientDC dc(this);
+	dc.MoveTo(100,100); 
+	dc.LineTo(200,200);
 	// TODO: 在此处为本机数据添加绘制代码
 }
 

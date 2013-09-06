@@ -30,6 +30,8 @@ public:
 	afx_msg void OnLogout();
 	afx_msg void OnLogin();
 	DECLARE_MESSAGE_MAP()
+	afx_msg void OnCreateele();
+	afx_msg void OnCreateobj();
 };
 
 extern CÕº∆¨π‹¿Ì∆˜App theApp;
