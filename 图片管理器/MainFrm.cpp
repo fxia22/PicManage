@@ -4,8 +4,10 @@
 
 #include "stdafx.h"
 #include "图片管理器.h"
-
 #include "MainFrm.h"
+#include "图片管理器Doc.h"
+#include "图片管理器View.h"
+#include "StyleDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -42,6 +44,12 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_CREATEOBJ, &CMainFrame::OnUpdateCreateobj)
 	ON_COMMAND(ID_VIEW_TOOLBARDRAW, &CMainFrame::OnViewToolbardraw)
 	ON_UPDATE_COMMAND_UI(ID_VIEW_TOOLBARDRAW, &CMainFrame::OnUpdateViewToolbardraw)
+	
+	ON_UPDATE_COMMAND_UI(ID_CALLADMIN, &CMainFrame::OnUpdateCalladmin)
+	ON_COMMAND(ID_DRAW_BKGCOLOR, &CMainFrame::OnDrawBkgcolor)
+	ON_UPDATE_COMMAND_UI(ID_DRAW_BKGCOLOR, &CMainFrame::OnUpdateDrawBkgcolor)
+	ON_COMMAND(ID_DRAW_STYLE, &CMainFrame::OnDrawStyle)
+	ON_MESSAGE(ID_RETURN_PRESSED, OnReturnPressed)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -57,6 +65,11 @@ static UINT indicators[] =
 CMainFrame::CMainFrame()
 {
 	// TODO: 在此添加成员初始化代码
+	m_clr= RGB(0,255,255);
+	m_nLineStyle = 0;
+	m_nLineWidth = 0;
+	m_bkgclr = RGB(255,255,255);
+	
 }
 
 CMainFrame::~CMainFrame()
@@ -81,6 +94,15 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		TRACE0("未能创建工具栏\n");
 		return -1;      // 未能创建
 	}
+
+	if (!m_CmdBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_BOTTOM | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
+		!m_CmdBar.LoadToolBar(IDR_TOOLBAR_CMD))
+	{
+		TRACE0("未能创建工具栏\n");
+		return -1;      // 未能创建
+	}
+
+
 	if (!m_wndStatusBar.Create(this))
 	{
 		TRACE0("未能创建状态栏\n");
@@ -91,11 +113,36 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	// TODO: 如果不需要可停靠工具栏，则删除这三行
 	m_wndToolBar.EnableDocking(CBRS_ALIGN_ANY);
 	m_wndToolBar2.EnableDocking(CBRS_ALIGN_ANY);
+	m_CmdBar.EnableDocking(CBRS_ALIGN_ANY);
+
 	EnableDocking(CBRS_ALIGN_ANY);
 	DockControlBar(&m_wndToolBar);
-	//DockControlBar(&m_wndToolBar2);
+	DockControlBar(&m_wndToolBar2);
+	DockControlBar(&m_CmdBar);
+
+
+	m_CmdBar.SetButtonInfo(0, ID_BAR_STATIC1, TBBS_SEPARATOR, 160 ); 
+	if(!m_CmdBar.m_Static1.Create ("创建元素:",WS_CHILD|WS_VISIBLE,CRect(0,0,100,25), &m_CmdBar, ID_BAR_STATIC1))
+		return -1;
+	m_CmdBar.SetButtonInfo(1, ID_BAR_EDIT1, TBBS_SEPARATOR, 160 ); 
+	if(!m_CmdBar.m_Edit1.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(100,0,360,22), &m_CmdBar, ID_BAR_EDIT1))
+		return -1;
+	m_CmdBar.SetButtonInfo(2, ID_BAR_STATIC2, TBBS_SEPARATOR, 320 ); 
+	if(!m_CmdBar.m_Static2.Create ("创建对象:",WS_CHILD|WS_VISIBLE,CRect(400,0,500,25), &m_CmdBar, ID_BAR_STATIC2))
+		return -1;
+	m_CmdBar.SetButtonInfo(3, ID_BAR_EDIT2, TBBS_SEPARATOR, 160 ); 
+	if(!m_CmdBar.m_Edit2.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(500,0,760,22), &m_CmdBar, ID_BAR_EDIT2))
+		return -1;
+	
+
+	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);	 
 	enabledraw = false;
 	viewtoolbar = true;
+	//创建编辑框
+	
+
+
+
 	return 0;
 }
 
@@ -131,10 +178,6 @@ void CMainFrame::Dump(CDumpContext& dc) const
 void CMainFrame::OnEnabledraw()
 {
 	// TODO: 在此添加命令处理程序代码
-	if (!enabledraw)
-	MessageBox("EnableDraw");
-	else
-	MessageBox("DisableDraw");
 	enabledraw = !enabledraw;
 	drawstatus = enabledraw?DRAW_BRUSH:DRAW_CONNOTDRAW;
 	
@@ -196,8 +239,11 @@ void CMainFrame::OnDrawErase()
 void CMainFrame::OnDrawColor()
 {
 	// TODO: 在此添加命令处理程序代码
-	CColorDialog dlg;
-	dlg.DoModal();
+	
+	CColorDialog cdlg(m_clr, CC_FULLOPEN | CC_RGBINIT); // 设置默认颜色
+	if(cdlg.DoModal() == IDOK)
+		m_clr = cdlg.GetColor();
+	UpdateData(FALSE);
 	
 }
 
@@ -345,3 +391,86 @@ void CMainFrame::OnUpdateViewToolbardraw(CCmdUI *pCmdUI)
 	if (viewtoolbar) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
 }
+
+
+
+void CMainFrame::OnUpdateCalladmin(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	 
+}
+
+
+void CMainFrame::OnDrawBkgcolor()
+{
+	// TODO: 在此添加命令处理程序代码
+	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+	CColorDialog cdlg(pDoc->m_bkgclr, CC_FULLOPEN | CC_RGBINIT); // 设置默认颜色
+	if(cdlg.DoModal() == IDOK)
+	pDoc->m_bkgclr = cdlg.GetColor();
+	UpdateData(FALSE);
+	pDoc->UpdateAllViews(NULL);
+	
+
+	//C图片管理器App* pWinApp=(C图片管理器App*)AfxGetApp();
+	
+}
+
+
+void CMainFrame::OnUpdateDrawBkgcolor(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!enabledraw) pCmdUI->Enable(FALSE);
+	else pCmdUI->Enable(TRUE);
+	//if (MDIGetActive()==NULL) 
+		//MessageBox("NoActive");
+}
+
+
+void CMainFrame::OnDrawStyle()
+{
+	// TODO: 在此添加命令处理程序代码
+	CStyleDlg dlg;
+	dlg.DoModal();
+	
+}
+
+
+LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
+{
+	/*char* buf=(char*)malloc(m_edit.GetWindowTextLength()+1);//将Edit里面的内容读入到buf中
+	m_edit.GetWindowText(buf,m_edit.GetWindowTextLength()+1);
+	m_edit.SetWindowText("");//清空以前的命令
+	MessageBox(buf);
+	free(buf);
+	*/
+
+	char* buf=(char*)malloc(m_CmdBar.m_Edit1.GetWindowTextLength()+1);
+	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
+	m_CmdBar.m_Edit1.SetWindowText("");//清空以前的命令
+	
+	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
+
+		//MessageBox(buf);
+		//MessageBox(buf2);
+		//此处根据命令绘制图形
+		
+		
+		
+		
+		
+		
+	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+		free(buf);
+		free(buf2);
+		Line* n = new Line(100,100,200,200);
+		if (strcmp(buf,"LINE(100,100,200,200)")==0)
+			pDoc->data.push_back(n);
+		
+		pDoc->UpdateAllViews(NULL);
+
+	return TRUE;
+}
+

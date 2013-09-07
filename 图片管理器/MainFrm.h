@@ -3,6 +3,8 @@
 //
 
 #pragma once
+#include "myEdit.h"
+#include "ToolBarEditStatic.h"
 
 class CMainFrame : public CMDIFrameWnd
 {
@@ -43,6 +45,7 @@ protected:  // 控件条嵌入成员
 	CToolBar          m_wndToolBar;
 	CStatusBar        m_wndStatusBar;
 	CToolBar          m_wndToolBar2;
+	CToolBarEditStatic		  m_CmdBar;
 // 生成的消息映射函数
 protected:
 	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
@@ -57,6 +60,15 @@ public:
 	bool enabledraw;
 	int drawstatus;
 	bool viewtoolbar;
+	int m_nLineWidth;
+	int m_nLineStyle;
+	COLORREF m_clr;
+	COLORREF m_bkgclr;
+	CFont m_font;
+
+
+public:
+	//消息处理函数
 	afx_msg void OnDrawBrush();
 	afx_msg void OnDrawLine();
 	afx_msg void OnDrawCircle();
@@ -81,6 +93,12 @@ public:
 	afx_msg void OnUpdateCreateobj(CCmdUI *pCmdUI);
 	afx_msg void OnViewToolbardraw();
 	afx_msg void OnUpdateViewToolbardraw(CCmdUI *pCmdUI);
+	afx_msg void OnCalladmin();
+	afx_msg void OnUpdateCalladmin(CCmdUI *pCmdUI);
+	afx_msg void OnDrawBkgcolor();
+	afx_msg void OnUpdateDrawBkgcolor(CCmdUI *pCmdUI);
+	afx_msg void OnDrawStyle();
+	afx_msg LRESULT OnReturnPressed(WPARAM,LPARAM);//处理自定义消息的函数
 };
 
 

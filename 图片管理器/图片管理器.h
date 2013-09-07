@@ -32,6 +32,8 @@ public:
 	DECLARE_MESSAGE_MAP()
 	afx_msg void OnCreateele();
 	afx_msg void OnCreateobj();
+	afx_msg void OnCalladmin();
+	
 };
 
 extern CÕº∆¨π‹¿Ì∆˜App theApp;

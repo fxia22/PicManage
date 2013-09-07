@@ -1,0 +1,44 @@
+﻿生成启动时间为 2013/9/7 18:09:49。
+     1>项目“\\psf\Home\Desktop\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\图片管理器.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AdminDlg.cpp ChildFrm.cpp CommandDlg.cpp CommanddlgObj.cpp LogInBox.cpp MainFrm.cpp NewClientBox.cpp StyleDlg.cpp myEdit.cpp "图片管理器.cpp" "图片管理器Doc.cpp" "图片管理器View.cpp"
+         AdminDlg.cpp
+         ChildFrm.cpp
+         CommandDlg.cpp
+         CommanddlgObj.cpp
+         LogInBox.cpp
+         MainFrm.cpp
+         NewClientBox.cpp
+         StyleDlg.cpp
+         myEdit.cpp
+         图片管理器.cpp
+         图片管理器Doc.cpp
+         图片管理器View.cpp
+     1>图片管理器View.cpp(89): warning C4018: “<”: 有符号/无符号不匹配
+       ResourceCompile:
+         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D NDEBUG /l"0x0804" /IRelease\ /nologo /fo"Release\图片管理器.res" "图片管理器.rc" 
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.lib" /MACHINE:X86 /SAFESEH "Release\图片管理器.res"
+         Release\AdminDlg.obj
+         Release\ChildFrm.obj
+         Release\CommandDlg.obj
+         Release\CommanddlgObj.obj
+         Release\Line.obj
+         Release\LogInBox.obj
+         Release\MainFrm.obj
+         Release\myEdit.obj
+         Release\NewClientBox.obj
+         Release\stdafx.obj
+         Release\StyleDlg.obj
+         Release\ToolBarEditStatic.obj
+         "Release\图片管理器.obj"
+         "Release\图片管理器Doc.obj"
+         "Release\图片管理器View.obj"
+         正在生成代码
+         已完成代码的生成
+         图片管理器.vcxproj -> \\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.exe
+     1>已完成生成项目“\\psf\Home\Desktop\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:09.79

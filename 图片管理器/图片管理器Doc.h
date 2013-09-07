@@ -4,8 +4,9 @@
 
 
 #pragma once
-
-
+#include "Line.h"
+#include <vector>
+using namespace std;
 class C图片管理器Doc : public CDocument
 {
 protected: // 仅从序列化创建
@@ -14,8 +15,9 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-
-// 操作
+		vector<Line*> data;//用于保存所有需要绘制的直线
+		COLORREF m_bkgclr;
+		// 操作
 public:
 
 // 重写
@@ -39,10 +41,16 @@ protected:
 
 // 生成的消息映射函数
 protected:
-	DECLARE_MESSAGE_MAP()
+	DECLARE_MESSAGE_MAP();
+
+
+//自己定义的变量
+
 
 #ifdef SHARED_HANDLERS
 	// 用于为搜索处理程序设置搜索内容的 Helper 函数
 	void SetSearchContent(const CString& value);
 #endif // SHARED_HANDLERS
+public:
+	afx_msg void OnFileUpdate();
 };

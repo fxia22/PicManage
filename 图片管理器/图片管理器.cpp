@@ -15,6 +15,8 @@
 #include "CAboutDlg.h"
 #include "CommandDlg.h"
 #include "CommanddlgObj.h"
+#include "AdminDlg.h"
+#include "StyleDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -35,6 +37,7 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_LOGOUT, &C图片管理器App::OnLogout)
 	ON_COMMAND(ID_CREATEELE, &C图片管理器App::OnCreateele)
 	ON_COMMAND(ID_CREATEOBJ, &C图片管理器App::OnCreateobj)
+	ON_COMMAND(ID_CALLADMIN, &C图片管理器App::OnCalladmin)
 END_MESSAGE_MAP()
 
 
@@ -202,3 +205,13 @@ void C图片管理器App::OnCreateobj()
 	CommandDlgObj dlg;
 	dlg.DoModal();
 }
+
+
+void C图片管理器App::OnCalladmin()
+{
+	CAdminDlg dlg;
+	dlg.DoModal();
+	// TODO: 在此添加命令处理程序代码
+}
+
+

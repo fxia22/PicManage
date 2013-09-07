@@ -79,6 +79,7 @@ IDR_MyTYPE              ICON                    "res\\图片管理器Doc.ico"
 
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDR_TOOLBARDRAW         BITMAP                  "res\\toolbar1.bmp"
+IDR_TOOLBAR_CMD         BITMAP                  "res\\bmp00001.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -109,11 +110,22 @@ BEGIN
     BUTTON      ID_DRAW_BRUSH
     BUTTON      ID_DRAW_CURL
     BUTTON      ID_BUTTON32806
+    BUTTON      ID_DRAW_STYLE
     BUTTON      ID_DRAW_ERASE
     BUTTON      ID_DRAW_COLOR
+    BUTTON      ID_DRAW_BKGCOLOR
     SEPARATOR
     BUTTON      ID_CREATEELE
     BUTTON      ID_CREATEOBJ
+END
+
+IDR_TOOLBAR_CMD TOOLBAR 16, 15
+BEGIN
+    BUTTON      ID_BAR_STATIC1
+    BUTTON      ID_BAR_EDIT1
+    SEPARATOR
+    BUTTON      ID_BAR_STATIC2
+    BUTTON      ID_BAR_EDIT2
 END
 
 
@@ -128,6 +140,11 @@ BEGIN
     BEGIN
         MENUITEM "登陆(&L)",                      ID_LOGIN
         MENUITEM "注销登录(&G)",                    ID_LOGOUT
+        MENUITEM SEPARATOR
+        MENUITEM "权限管理(&M)",                    ID_32828
+        MENUITEM "偏好设置(&P)",                    ID_32829
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
     POPUP "文件(&F)"
     BEGIN
@@ -139,7 +156,6 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "最近的文件",                       ID_FILE_MRU_FILE1, GRAYED
         MENUITEM SEPARATOR
-        MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
     POPUP "视图(&V)"
     BEGIN
@@ -157,7 +173,12 @@ BEGIN
     POPUP "多用户(&M)"
     BEGIN
         MENUITEM "登陆(&L)",                      ID_LOGIN
-        MENUITEM "注销登录",                        ID_LOGOUT
+        MENUITEM "注销登录(&G)",                    ID_LOGOUT
+        MENUITEM SEPARATOR
+        MENUITEM "权限管理(&M)",                    ID_CALLADMIN
+        MENUITEM "偏好设置(&P)",                    ID_32829
+        MENUITEM SEPARATOR
+        MENUITEM "退出(&X)",                      ID_APP_EXIT
     END
     POPUP "文件(&F)"
     BEGIN
@@ -196,6 +217,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "橡皮擦",                         ID_DRAW_ERASE
         MENUITEM SEPARATOR
+        MENUITEM "背景色(&B)",                     ID_DRAW_BKGCOLOR
         MENUITEM "颜色(&C)",                      ID_DRAW_COLOR
         MENUITEM "式样(&S)",                      ID_DRAW_STYLE
         MENUITEM SEPARATOR
@@ -233,20 +255,21 @@ END
 
 IDR_MAINFRAME ACCELERATORS
 BEGIN
-    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL
-    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL
-    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL
-    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL
-    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL
-    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL
-    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL
-    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL
-    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT
-    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT
-    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL
-    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT
-    VK_F6,          ID_NEXT_PANE,           VIRTKEY 
-    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT
+    "C",            ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_COPY,           VIRTKEY, CONTROL, NOINVERT
+    VK_DELETE,      ID_EDIT_CUT,            VIRTKEY, SHIFT, NOINVERT
+    "X",            ID_EDIT_CUT,            VIRTKEY, CONTROL, NOINVERT
+    "V",            ID_EDIT_PASTE,          VIRTKEY, CONTROL, NOINVERT
+    VK_INSERT,      ID_EDIT_PASTE,          VIRTKEY, SHIFT, NOINVERT
+    VK_BACK,        ID_EDIT_UNDO,           VIRTKEY, ALT, NOINVERT
+    "Z",            ID_EDIT_UNDO,           VIRTKEY, CONTROL, NOINVERT
+    "N",            ID_FILE_NEW,            VIRTKEY, CONTROL, NOINVERT
+    "O",            ID_FILE_OPEN,           VIRTKEY, CONTROL, NOINVERT
+    "P",            ID_FILE_PRINT,          VIRTKEY, CONTROL, NOINVERT
+    "S",            ID_FILE_SAVE,           VIRTKEY, CONTROL, NOINVERT
+    VK_F6,          ID_NEXT_PANE,           VIRTKEY, NOINVERT
+    VK_F6,          ID_PREV_PANE,           VIRTKEY, SHIFT, NOINVERT
+    "B",            ID_CREATEELE,           VIRTKEY, CONTROL, NOINVERT
 END
 
 
@@ -336,6 +359,22 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 139
     END
+
+    IDD_ADMIN, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 170
+    END
+
+    IDD_STYLE, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 270
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 108
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -404,6 +443,32 @@ BEGIN
     PUSHBUTTON      "取消",IDCANCEL,229,119,50,14
     LISTBOX         IDC_LIST1,29,26,54,89,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
     EDITTEXT        IDC_EDIT1,134,31,117,14,ES_AUTOHSCROLL
+END
+
+IDD_ADMIN DIALOGEX 0, 0, 309, 177
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "权限管理"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,198,156,50,14
+    PUSHBUTTON      "取消",IDCANCEL,252,156,50,14
+END
+
+IDD_STYLE DIALOGEX 0, 0, 277, 115
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "选择样式"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    DEFPUSHBUTTON   "确定",IDOK,147,94,50,14
+    PUSHBUTTON      "取消",IDCANCEL,207,94,50,14
+    LTEXT           "线宽",IDC_ST_STATIC,41,26,17,8
+    EDITTEXT        IDC_ST_EDIT,65,24,40,14,ES_AUTOHSCROLL | ES_READONLY
+    CONTROL         "",IDC_ST_SLIDER,"msctls_trackbar32",TBS_AUTOTICKS | TBS_BOTH | TBS_ENABLESELRANGE | WS_TABSTOP,25,39,100,15
+    GROUPBOX        "线形",IDC_ST_STATICBOX,160,17,88,55,WS_GROUP
+    GROUPBOX        "样例",IDC_ST_EXAMPLE,29,68,88,33
+    CONTROL         "实线",IDC_STYLE_RADIO1,"Button",BS_AUTORADIOBUTTON | WS_GROUP,184,28,32,10
+    CONTROL         "虚线",IDC__STYLE_RADIO2,"Button",BS_AUTORADIOBUTTON,183,39,32,10
+    CONTROL         "点划线",IDC_STYLE_RADIO3,"Button",BS_AUTORADIOBUTTON,183,49,40,10
 END
 
 
@@ -555,7 +620,7 @@ END
 
 STRINGTABLE
 BEGIN
-    ID_ENABLEDRAW           "开启绘图"
+    ID_ENABLEDRAW           "开启/关闭绘图"
 END
 
 #endif    // 中文(简体，中国) resources

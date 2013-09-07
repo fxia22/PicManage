@@ -54,6 +54,21 @@
     <ClInclude Include="CommanddlgObj.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AdminDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Line.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="myEdit.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolBarEditStatic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="StyleDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="图片管理器.cpp">
@@ -86,6 +101,21 @@
     <ClCompile Include="CommanddlgObj.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="AdminDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Line.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="myEdit.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolBarEditStatic.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="StyleDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="图片管理器.rc">
@@ -114,6 +144,12 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\toolbar1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bmp00001.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\toolbar_.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

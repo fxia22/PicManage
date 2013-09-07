@@ -22,6 +22,9 @@
 IMPLEMENT_DYNCREATE(C图片管理器Doc, CDocument)
 
 BEGIN_MESSAGE_MAP(C图片管理器Doc, CDocument)
+
+
+
 END_MESSAGE_MAP()
 
 
@@ -30,7 +33,7 @@ END_MESSAGE_MAP()
 C图片管理器Doc::C图片管理器Doc()
 {
 	// TODO: 在此添加一次性构造代码
-
+	m_bkgclr = RGB(255,255,255);
 }
 
 C图片管理器Doc::~C图片管理器Doc()
@@ -135,3 +138,5 @@ void C图片管理器Doc::Dump(CDumpContext& dc) const
 
 
 // C图片管理器Doc 命令
+
+
