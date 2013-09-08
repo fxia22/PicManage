@@ -54,4 +54,9 @@ protected:
 #endif // SHARED_HANDLERS
 public:
 	afx_msg void OnFileUpdate();
+	afx_msg void OnFileSave();
+	CString m_path_name;
+//	CImage m_img;
+	afx_msg void OnFileOpen();
+	CImage* m_img;
 };

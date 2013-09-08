@@ -91,13 +91,15 @@
 #define ID_BAR_STATIC2                  32839
 #define ID_BAR_EDIT2                    32840
 #define ID_DRAW_ELLIPSE                 32845
+#define ID_32846                        32846
+#define ID_SAVECURRENT                  32847
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        322
-#define _APS_NEXT_COMMAND_VALUE         32846
+#define _APS_NEXT_RESOURCE_VALUE        323
+#define _APS_NEXT_COMMAND_VALUE         32848
 #define _APS_NEXT_CONTROL_VALUE         1019
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

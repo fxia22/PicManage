@@ -181,8 +181,6 @@ void CMainFrame::OnEnabledraw()
 	// TODO: 在此添加命令处理程序代码
 	enabledraw = !enabledraw;
 	drawstatus = enabledraw?DRAW_BRUSH:DRAW_CONNOTDRAW;
-	
-	
 }
 
 
@@ -450,7 +448,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.SetWindowText("");//清空以前的命令
-	
+	MessageBox(buf);
 	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
 

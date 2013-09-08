@@ -35,7 +35,6 @@ BEGIN_MESSAGE_MAP(C图片管理器View, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_WM_ERASEBKGND()
-	
 END_MESSAGE_MAP()
 
 // C图片管理器View 构造/析构
@@ -74,11 +73,36 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	RECT rect;
 	GetClientRect(&rect);
 	CDC MemDC;
+	CBitmap* bm=NULL;
 	//MemDC.SetBkColor(cm->m_bkgclr);
+	CBitmap bitmap;
+	if (pDoc->m_img!=NULL)
+	{
+		int width=pDoc->m_img->GetWidth();
+		int height=pDoc->m_img->GetHeight();
+
+	
+	
+		
+
+		CClientDC dc(this);
+		CDC MemDC;
+		MemDC.CreateCompatibleDC(&dc);
+		HBITMAP bit=/*(HBITMAP)img.operator HBITMAP();*/pDoc->m_img->Detach();//这里可采用两种方法得到图像句柄
+		bitmap.DeleteObject();
+		bitmap.Attach(bit);
+		MemDC.SelectObject(&bitmap);
+		dc.StretchBlt(rect.left,rect.top,abs(rect.right-rect.left),abs(rect.bottom-rect.top),&MemDC,0,0,width,height,SRCCOPY);
+	}
+	
+	{
+		
+	
+
 	MemDC.CreateCompatibleDC(NULL);
 	CBitmap MemBitmap;
 	MemBitmap.CreateCompatibleBitmap(pDC,rect.right-rect.left,rect.bottom-rect.top);
-	//MemBitmap.LoadBitmap(IDR_IDB_BITMAP11); 
+	
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);
 	MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
 	//给MeMDC绘图
@@ -102,9 +126,11 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	}
 	//先绘制文件中的，再绘制内存中的
 	pDC->BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,&MemDC,0,0,SRCCOPY);
+	
 	MemDC.SelectObject(pOldBit);
 	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();
+	}
 	// TODO: 在此处为本机数据添加绘制代码
 }
 
@@ -302,7 +328,6 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 				}
 				Invalidate();
 				UpdateWindow();
-				SaveCurrentImage("2.bmp");
 			}
 			break;
 
@@ -363,23 +388,27 @@ bool C图片管理器View::SaveBitmap(HBITMAP  hBitmap, char* filename)
 }
 
 
-bool C图片管理器View::SaveCurrentImage(char* filename)
+bool C图片管理器View::SaveCurrentImage(char* filename1)
 {
 	bool flag;
 	C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
-		return FALSE;
-	
+		{
+			return FALSE;
+			MessageBox("Cannot open file");
+	}
 	RECT rect;
 	GetClientRect(&rect);
 	CDC MemDC;
-	MemDC.CreateCompatibleDC(CDC::FromHandle(::GetDC(NULL)));
-	CBitmap MemBitmap;
 	CDC *pDC=GetDC();
-	MemBitmap.CreateCompatibleBitmap(CDC::FromHandle(::GetDC(NULL)),rect.right-rect.left,rect.bottom-rect.top);
-	//MemBitmap.LoadBitmap(IDR_IDB_BITMAP11); 
+	if (pDC==NULL) MessageBox("PDC==NUll");
+	MemDC.CreateCompatibleDC(CDC::FromHandle(::GetDC(NULL)));
+
+	CBitmap MemBitmap;
+	
+	MemBitmap.CreateCompatibleBitmap(pDC,rect.right-rect.left,rect.bottom-rect.top);
 	MemDC.SelectObject(&MemBitmap);
 	MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
 	//给MeMDC绘图
@@ -388,24 +417,15 @@ bool C图片管理器View::SaveCurrentImage(char* filename)
 	for(int i=0;i<pDoc->data.size();i++)
 	{
 		
-
 		pDoc->data[i]->draw(MemDC);
 		
 	}
 	
 	MemDC.BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,GetDC(),rect.left,rect.top,SRCCOPY);
-	flag = SaveBitmap(*(MemDC.GetCurrentBitmap()),"1.bmp");
+	flag = SaveBitmap(*(MemDC.GetCurrentBitmap()),filename1);
 	
 
 	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();
-
-
-
-	
-
-
-
-
 	return flag;
 }

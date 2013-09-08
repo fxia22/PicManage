@@ -111,6 +111,7 @@
     <ClInclude Include="MyCircle.h" />
     <ClInclude Include="MyEllipse.h" />
     <ClInclude Include="myEdit.h" />
+    <ClInclude Include="MyFileDialog.h" />
     <ClInclude Include="MyLine.h" />
     <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyPoint.h" />
@@ -136,6 +137,7 @@
     <ClCompile Include="MyCircle.cpp" />
     <ClCompile Include="MyEllipse.cpp" />
     <ClCompile Include="myEdit.cpp" />
+    <ClCompile Include="MyFileDialog.cpp" />
     <ClCompile Include="MyLine.cpp" />
     <ClCompile Include="MyPoint.cpp" />
     <ClCompile Include="MyRectangle.cpp" />

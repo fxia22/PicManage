@@ -10,8 +10,9 @@
 #endif
 
 #include "图片管理器Doc.h"
-
+#include "图片管理器View.h"
 #include <propkey.h>
+#include "MyFileDialog.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -25,6 +26,8 @@ BEGIN_MESSAGE_MAP(C图片管理器Doc, CDocument)
 
 
 
+	ON_COMMAND(ID_FILE_SAVE, &C图片管理器Doc::OnFileSave)
+	ON_COMMAND(ID_FILE_OPEN, &C图片管理器Doc::OnFileOpen)
 END_MESSAGE_MAP()
 
 
@@ -34,6 +37,7 @@ C图片管理器Doc::C图片管理器Doc()
 {
 	// TODO: 在此添加一次性构造代码
 	m_bkgclr = RGB(255,255,255);
+	m_path_name = _T("");
 }
 
 C图片管理器Doc::~C图片管理器Doc()
@@ -140,3 +144,35 @@ void C图片管理器Doc::Dump(CDumpContext& dc) const
 // C图片管理器Doc 命令
 
 
+
+
+void C图片管理器Doc::OnFileSave()
+{
+	// TODO: 在此添加命令处理程序代码
+	CFileDialog fdlg(FALSE,NULL,NULL,OFN_HIDEREADONLY,"bmp格式 (*.bmp)|*.bmp||",NULL);
+	if (m_path_name=="")
+	{
+		if(fdlg.DoModal() == IDOK) 
+		{  
+			m_path_name = fdlg.GetPathName()+".bmp"; 
+		}
+	}
+	POSITION  POS = GetFirstViewPosition();
+	C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
+	cv->SaveCurrentImage((LPSTR)(LPCTSTR)m_path_name);
+
+}
+
+
+void C图片管理器Doc::OnFileOpen()
+{
+	CFileDialog dlg(TRUE,NULL,NULL,OFN_HIDEREADONLY,"jpg格式 (*.jpg)|*.jpg|bmp格式 (*.bmp)|*.bmp||",NULL);
+	if(dlg.DoModal()==IDOK)
+	{
+		if(m_img==NULL) m_img=new CImage();
+		else m_img->Destroy();//释放以前的图片
+		m_img->Load(dlg.GetPathName());
+		UpdateAllViews(NULL);
+	}
+	// TODO: 在此添加命令处理程序代码
+}

@@ -66,6 +66,7 @@ public:
 	MyObject* tmp;
 	bool SaveBitmap(HBITMAP  Bipmap, char* filename);
 	bool SaveCurrentImage(char* filename);
+	
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本
