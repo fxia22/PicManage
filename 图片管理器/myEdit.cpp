@@ -26,7 +26,7 @@ BOOL myEdit::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->wParam == 0x0d)//如果是回车
 		{
 			//向父窗口发送消息
-			MessageBeep(0xFFFFFF);
+			//MessageBeep(0xFFFFFF);
 			((CMainFrame*)AfxGetMainWnd())->PostMessage(ID_RETURN_PRESSED,0,0);
 
 			return true;

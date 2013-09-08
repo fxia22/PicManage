@@ -13,7 +13,7 @@ Line::~Line(void)
 {
 }
 
-void Line::draw(CDC& dc)
+void Line::draw(CDC& dc)const
 {
 	//CPen pen(m_linestyle, m_linewidth, m_lineclr); 
 	//CPen* pOldpen = dc.SelectObject(&pen);
@@ -26,7 +26,7 @@ void Line::draw(CDC& dc)
 	
 }
 
-bool Line::isPoint()
+bool Line::isPoint()const
 {
 	return ((x1==x2)&&(y1==y2));
 }

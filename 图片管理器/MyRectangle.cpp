@@ -1,0 +1,43 @@
+#include "stdafx.h"
+#include "MyRectangle.h"
+
+
+MyRectangle::MyRectangle(void):MyLine()
+{
+}
+
+MyRectangle::MyRectangle(int x1,int y1,int x2,int y2,int style,int width,COLORREF clr):MyLine(x1,y1,x2,y2,style,width,clr)
+{
+}
+
+MyRectangle::MyRectangle(MyLine& L):MyLine(L)
+{
+}
+
+MyRectangle::~MyRectangle(void)
+{
+}
+
+bool MyRectangle::isLine()const
+{
+	return ((_x1==_x2) ||(_y1 == _y2));
+}
+
+void  MyRectangle::draw(CDC& dc)const
+{
+	if (isLine())
+	{
+		this->MyLine::draw(dc);
+		return ;
+	}
+	else
+	{
+		CPen pen(m_style,m_width,m_clr); 
+		CPen *penOld = dc.SelectObject( &pen ); 
+		dc.SelectStockObject(NULL_BRUSH);   
+		dc.Rectangle(_x1,_y1,_x2,_y2);
+
+		dc.SelectObject(penOld);
+		pen.DeleteObject();
+	}
+}

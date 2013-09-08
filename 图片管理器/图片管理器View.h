@@ -3,8 +3,6 @@
 //
 
 #pragma once
-#include "Line.h"
-#include <vector>
 using namespace std;
 
 class C图片管理器View : public CView
@@ -32,8 +30,9 @@ public:
 public:
 	CRect m_client;
 	CPoint m_pre_point;
-	Line* tmp;//用于跟踪鼠标的信息
-	vector<Line*> data;
+//	Line* tmp;
+	//用于跟踪鼠标的信息
+//	vector<Line*> data;
 // 重写
 public:
 	virtual void OnDraw(CDC* pDC);  // 重写以绘制该视图
@@ -64,6 +63,9 @@ public:
 	afx_msg void OnMouseMove(UINT nFlags, CPoint point);
 	afx_msg BOOL OnEraseBkgnd(CDC* pDC);
 	
+	MyObject* tmp;
+	bool SaveBitmap(HBITMAP  Bipmap, char* filename);
+	bool SaveCurrentImage(char* filename);
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

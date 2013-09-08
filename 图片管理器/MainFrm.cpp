@@ -8,6 +8,7 @@
 #include "图片管理器Doc.h"
 #include "图片管理器View.h"
 #include "StyleDlg.h"
+#include "MyLine.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -66,8 +67,8 @@ CMainFrame::CMainFrame()
 {
 	// TODO: 在此添加成员初始化代码
 	m_clr= RGB(0,255,255);
-	m_nLineStyle = 0;
-	m_nLineWidth = 0;
+	m_nLineStyle = PS_SOLID;
+	m_nLineWidth = 1;
 	m_bkgclr = RGB(255,255,255);
 	
 }
@@ -275,9 +276,9 @@ void CMainFrame::OnUpdateDrawLine(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
 	if (!enabledraw) pCmdUI->Enable(FALSE);
-	else pCmdUI->Enable(TRUE);
+		else pCmdUI->Enable(TRUE);
 	if (enabledraw&&(drawstatus==DRAW_LINE)) pCmdUI->SetCheck(1);
-	else pCmdUI->SetCheck(0);
+		else pCmdUI->SetCheck(0);
 }
 
 
@@ -465,8 +466,8 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
 		free(buf);
 		free(buf2);
-		Line* n = new Line(100,100,200,200);
-		if (strcmp(buf,"LINE(100,100,200,200)")==0)
+		MyObject* n = new MyLine(100,100,200,200,0,20,RGB(0,0,0));
+	//	if (strcmp(buf,"LINE(100,100,200,200)")==0)
 			pDoc->data.push_back(n);
 		
 		pDoc->UpdateAllViews(NULL);

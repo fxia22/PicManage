@@ -1,5 +1,6 @@
 #pragma once
-class Line
+#include "MyObject.h"
+class Line:public MyObject
 {
 public:
 	
@@ -10,7 +11,7 @@ public:
 	Line(void);
 	Line(int,int,int,int);
 	~Line(void);
-	void draw(CDC& dc);
-	bool isPoint();
+	void draw(CDC& dc)const;
+	bool isPoint()const;
 };
 

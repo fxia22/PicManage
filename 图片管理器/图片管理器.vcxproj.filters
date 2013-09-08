@@ -69,6 +69,24 @@
     <ClInclude Include="StyleDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MyObject.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyLine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyPoint.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyRectangle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyEllipse.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyCircle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="图片管理器.cpp">
@@ -114,6 +132,21 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="StyleDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyLine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyPoint.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyRectangle.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyEllipse.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyCircle.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

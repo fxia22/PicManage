@@ -6,6 +6,7 @@
 #pragma once
 #include "Line.h"
 #include <vector>
+
 using namespace std;
 class C图片管理器Doc : public CDocument
 {
@@ -15,7 +16,7 @@ protected: // 仅从序列化创建
 
 // 特性
 public:
-		vector<Line*> data;//用于保存所有需要绘制的直线
+		vector<MyObject*> data;//用于保存所有需要绘制的直线
 		COLORREF m_bkgclr;
 		// 操作
 public:

@@ -29,8 +29,14 @@ public:
 
 	CSliderCtrl m_csc;
 	CEdit m_linewidth;
-
+	int m_width;
+	int m_style;
 	void OnBnClickedRadio(UINT ID);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio3();
+	afx_msg void OnPaint();
+//	afx_msg void OnTRBNThumbPosChangingStSlider(NMHDR *pNMHDR, LRESULT *pResult);
+//	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
+	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
+	afx_msg void OnBnClickedOk();
 };

@@ -108,7 +108,13 @@
     <ClInclude Include="Line.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MyCircle.h" />
+    <ClInclude Include="MyEllipse.h" />
     <ClInclude Include="myEdit.h" />
+    <ClInclude Include="MyLine.h" />
+    <ClInclude Include="MyObject.h" />
+    <ClInclude Include="MyPoint.h" />
+    <ClInclude Include="MyRectangle.h" />
     <ClInclude Include="NewClientBox.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -127,7 +133,12 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MyCircle.cpp" />
+    <ClCompile Include="MyEllipse.cpp" />
     <ClCompile Include="myEdit.cpp" />
+    <ClCompile Include="MyLine.cpp" />
+    <ClCompile Include="MyPoint.cpp" />
+    <ClCompile Include="MyRectangle.cpp" />
     <ClCompile Include="NewClientBox.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
