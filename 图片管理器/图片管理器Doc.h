@@ -59,4 +59,5 @@ public:
 //	CImage m_img;
 	afx_msg void OnFileOpen();
 	CImage* m_img;
+	afx_msg void OnEditUndo();
 };

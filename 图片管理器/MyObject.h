@@ -3,7 +3,7 @@ class MyObject
 {
 public:
 
-	MyObject(void)
+	MyObject(void):enable(true)
 	{
 	}
 
@@ -13,5 +13,6 @@ public:
 
 	virtual void draw(CDC& dc)const =0;
 
+	bool enable;
 };
 

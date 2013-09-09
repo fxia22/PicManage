@@ -25,6 +25,7 @@ bool MyRectangle::isLine()const
 
 void  MyRectangle::draw(CDC& dc)const
 {
+if (enable)
 	if (isLine())
 	{
 		this->MyLine::draw(dc);
@@ -40,4 +41,18 @@ void  MyRectangle::draw(CDC& dc)const
 		dc.SelectObject(penOld);
 		pen.DeleteObject();
 	}
+}
+
+bool MyRectangle::includeLine( MyLine* L)
+{
+	
+	
+	int minx = min(_x1,_x2);
+	int maxx = max(_x1,_x2);
+	int miny = min(_y1,_y2);
+	int maxy = max(_y1,_y2);
+
+	if ((L->_x1>minx)&&(L->_x1<maxx)&&(L->_x2>minx)&&(L->_x2<maxx)&&(L->_y1>miny)&&(L->_y1<maxy)&&(L->_y2>miny)&&(L->_y2<maxy))
+		return true;
+	return false;
 }

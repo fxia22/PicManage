@@ -10,5 +10,6 @@ public:
 	virtual ~MyRectangle(void);
 	void virtual draw(CDC& dc)const;
 	bool isLine()const;
+	bool includeLine( MyLine* L);
 };
 

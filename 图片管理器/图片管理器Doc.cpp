@@ -13,7 +13,7 @@
 #include "图片管理器View.h"
 #include <propkey.h>
 #include "MyFileDialog.h"
-
+#include "MainFrm.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -28,6 +28,7 @@ BEGIN_MESSAGE_MAP(C图片管理器Doc, CDocument)
 
 	ON_COMMAND(ID_FILE_SAVE, &C图片管理器Doc::OnFileSave)
 	ON_COMMAND(ID_FILE_OPEN, &C图片管理器Doc::OnFileOpen)
+	ON_COMMAND(ID_EDIT_UNDO, &C图片管理器Doc::OnEditUndo)
 END_MESSAGE_MAP()
 
 
@@ -172,7 +173,23 @@ void C图片管理器Doc::OnFileOpen()
 		if(m_img==NULL) m_img=new CImage();
 		else m_img->Destroy();//释放以前的图片
 		m_img->Load(dlg.GetPathName());
+		POSITION  POS = GetFirstViewPosition();
+		C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
+		CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+		cm->enabledraw = false;
+
 		UpdateAllViews(NULL);
 	}
 	// TODO: 在此添加命令处理程序代码
+}
+
+
+void C图片管理器Doc::OnEditUndo()
+{
+	// TODO: 在此添加命令处理程序代码
+	if (!data.empty())
+	{
+		 data.pop_back(); 
+	}
+		 UpdateAllViews(NULL);
 }

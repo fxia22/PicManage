@@ -102,6 +102,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AdminDlg.h" />
+    <ClInclude Include="Adomdb.h" />
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CommandDlg.h" />
     <ClInclude Include="CommanddlgObj.h" />
@@ -129,6 +130,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdminDlg.cpp" />
+    <ClCompile Include="Adomdb.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CommandDlg.cpp" />
     <ClCompile Include="CommanddlgObj.cpp" />

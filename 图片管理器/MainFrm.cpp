@@ -9,6 +9,7 @@
 #include "图片管理器View.h"
 #include "StyleDlg.h"
 #include "MyLine.h"
+#include "Adomdb.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -51,6 +52,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_BKGCOLOR, &CMainFrame::OnUpdateDrawBkgcolor)
 	ON_COMMAND(ID_DRAW_STYLE, &CMainFrame::OnDrawStyle)
 	ON_MESSAGE(ID_RETURN_PRESSED, OnReturnPressed)
+	ON_COMMAND(ID_COMMAND_SET, &CMainFrame::OnCommandSet)
+	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, &CMainFrame::OnUpdateEditUndo)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -131,7 +134,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_CmdBar.SetButtonInfo(2, ID_BAR_STATIC2, TBBS_SEPARATOR, 320 ); 
 	if(!m_CmdBar.m_Static2.Create ("创建对象:",WS_CHILD|WS_VISIBLE,CRect(400,0,500,25), &m_CmdBar, ID_BAR_STATIC2))
 		return -1;
-	m_CmdBar.SetButtonInfo(3, ID_BAR_EDIT2, TBBS_SEPARATOR, 160 ); 
+	m_CmdBar.SetButtonInfo(3, ID_BAR_EDIT2, TBBS_SEPARATOR, 120 ); 
 	if(!m_CmdBar.m_Edit2.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(500,0,760,22), &m_CmdBar, ID_BAR_EDIT2))
 		return -1;
 	
@@ -141,7 +144,7 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	viewtoolbar = true;
 	//创建编辑框
 	
-
+	
 
 
 	return 0;
@@ -153,7 +156,7 @@ BOOL CMainFrame::PreCreateWindow(CREATESTRUCT& cs)
 		return FALSE;
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
-
+	
 	return TRUE;
 }
 
@@ -471,5 +474,48 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 		pDoc->UpdateAllViews(NULL);
 
 	return TRUE;
+}		
+
+
+
+void CMainFrame::OnCommandSet()
+{
+	
+	// TODO: 在此添加命令处理程序代码
+	ado.OnInitADOConn("Lib");
+	try{
+		//增加数据到数据库操作
+		ado.m_pRecordset->AddNew(); 
+		ado.m_pRecordset->PutCollect("Number", atol("12"));
+		ado.m_pRecordset->PutCollect("Name", _variant_t("xf"));
+		ado.m_pRecordset->PutCollect("Age", atol("15"));
+		ado.m_pRecordset->PutCollect("Address", _variant_t("Eureka"));
+		ado.m_pRecordset->PutCollect("Tel", atol("5613780"));
+		ado.m_pRecordset->Update();
+	}
+	catch(_com_error e)
+	{ 
+		
+		MessageBox(e.ErrorMessage());
+	}
+	
+
+
+	ado.ExitConnect();
+
+	//MessageBox("haha");
 }
 
+
+void CMainFrame::OnUpdateEditUndo(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+	if (pDoc->data.empty())  pCmdUI->Enable(FALSE);
+	else pCmdUI->Enable(TRUE);
+}
+
+
+//void CMainFrame::OnInitADOConn(void)
+//{
+//}

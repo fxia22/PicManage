@@ -5,7 +5,7 @@
 #pragma once
 #include "myEdit.h"
 #include "ToolBarEditStatic.h"
-
+#include "Adomdb.h"
 class CMainFrame : public CMDIFrameWnd
 {
 	enum
@@ -100,6 +100,12 @@ public:
 	afx_msg void OnUpdateDrawBkgcolor(CCmdUI *pCmdUI);
 	afx_msg void OnDrawStyle();
 	afx_msg LRESULT OnReturnPressed(WPARAM,LPARAM);//处理自定义消息的函数
+	afx_msg void OnCommandSet();
+	afx_msg void OnUpdateEditUndo(CCmdUI *pCmdUI);
+//	_ConnectionPtr m_pConnection;
+//	_RecordsetPtr m_pRecordset;
+//	void OnInitADOConn(void);
+	Adomdb ado;
 };
 
 

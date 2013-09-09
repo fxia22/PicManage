@@ -21,6 +21,7 @@ MyCircle::~MyCircle(void)
 
 void  MyCircle::draw(CDC& dc)const
 {
+	if (enable)
 	if (isPoint())
 	{
 		return ;

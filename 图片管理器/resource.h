@@ -93,13 +93,16 @@
 #define ID_DRAW_ELLIPSE                 32845
 #define ID_32846                        32846
 #define ID_SAVECURRENT                  32847
+#define ID_COMMAND_SET                  32848
+#define ID_32849                        32849
+#define ID_DRAW_SELECT                  32850
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        323
-#define _APS_NEXT_COMMAND_VALUE         32848
+#define _APS_NEXT_RESOURCE_VALUE        327
+#define _APS_NEXT_COMMAND_VALUE         32851
 #define _APS_NEXT_CONTROL_VALUE         1019
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

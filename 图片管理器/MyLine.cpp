@@ -22,20 +22,23 @@ MyLine::MyLine(MyLine& L):_x1(L._x1),_x2(L._x2),_y1(L._y1),_y2(L._y2),m_clr(L.m_
 
 void MyLine::draw(CDC& dc)const
 {
-	if (isPoint())
+	if (enable)
 	{
-		MyPoint p;
-		p.draw(dc);
-		return;
-	}
-	CPen pen(m_style,m_width,m_clr); 
-	CPen *penOld = dc.SelectObject( &pen ); 
+		if (isPoint())
+		{
+			MyPoint p;
+			p.draw(dc);
+			return;
+		}
+		CPen pen(m_style,m_width,m_clr); 
+		CPen *penOld = dc.SelectObject( &pen ); 
 	
-	dc.MoveTo(_x1,_y1);
-	dc.LineTo(_x2,_y2);
+		dc.MoveTo(_x1,_y1);
+		dc.LineTo(_x2,_y2);
 
-	dc.SelectObject(penOld);
-	pen.DeleteObject();
+		dc.SelectObject(penOld);
+		pen.DeleteObject();
+	}
 }
 
 bool MyLine::isPoint()const

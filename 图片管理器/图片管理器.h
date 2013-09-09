@@ -34,6 +34,8 @@ public:
 	afx_msg void OnCreateobj();
 	afx_msg void OnCalladmin();
 	
+//	afx_msg void OnFileNew();
+	afx_msg void OnFileNew();
 };
 
 extern CÕº∆¨π‹¿Ì∆˜App theApp;

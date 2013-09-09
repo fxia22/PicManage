@@ -109,7 +109,6 @@ BEGIN
     BUTTON      ID_DRAW_CIRCLE
     BUTTON      ID_DRAW_BRUSH
     BUTTON      ID_DRAW_CURL
-    BUTTON      ID_BUTTON32806
     BUTTON      ID_DRAW_STYLE
     BUTTON      ID_DRAW_ERASE
     BUTTON      ID_DRAW_COLOR
@@ -126,6 +125,7 @@ BEGIN
     SEPARATOR
     BUTTON      ID_BAR_STATIC2
     BUTTON      ID_BAR_EDIT2
+    BUTTON      ID_COMMAND_SET
 END
 
 
@@ -226,6 +226,8 @@ BEGIN
         BEGIN
             MENUITEM "创建元件(&E)",                    ID_CREATEELE
             MENUITEM "创建对象(&O)",                    ID_CREATEOBJ
+            MENUITEM SEPARATOR
+            MENUITEM "设置命令集合(&S)",                  ID_COMMAND_SET
         END
     END
     POPUP "视图(&V)"
@@ -622,6 +624,11 @@ END
 STRINGTABLE
 BEGIN
     ID_ENABLEDRAW           "开启/关闭绘图"
+END
+
+STRINGTABLE
+BEGIN
+    ID_DRAW_SELECT          "选择内容"
 END
 
 #endif    // 中文(简体，中国) resources

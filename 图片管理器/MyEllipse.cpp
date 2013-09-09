@@ -25,6 +25,7 @@ bool MyEllipse::isLine()const
 
 void  MyEllipse::draw(CDC& dc)const
 {
+	if (enable)
 	if (isLine())
 	{
 		this->MyLine::draw(dc);

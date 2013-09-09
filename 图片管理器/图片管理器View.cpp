@@ -94,7 +94,8 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	
 	
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);
-	if (pDoc->m_img==NULL) MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
+	if (pDoc->m_img==NULL)
+	MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
 	//给MeMDC绘图
 	
 	MemDC.SetBkMode(TRANSPARENT);
@@ -170,10 +171,6 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		switch (cm->drawstatus)
 		{
-		case DRAW_BRUSH:
-			if(tmp==NULL)tmp=new MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
-			else {delete tmp;tmp=new  MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
-			break;
 		case DRAW_LINE:
 			if(tmp==NULL)tmp=new MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
 			else {delete tmp;tmp=new  MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
@@ -192,7 +189,10 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 			if(tmp==NULL)tmp=new MyCircle(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
 			else {delete tmp;tmp=new MyCircle(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
 			break;
-
+		case DRAW_ERASER:
+			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));
+			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));}
+			break;
 		}
 		
 	
@@ -214,14 +214,33 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	//m_mousestatus = false;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	C图片管理器Doc* pDoc = GetDocument();
 	if (cm->enabledraw)
 	{
-		if(tmp)GetDocument()->data.push_back(tmp);
+		if (cm->drawstatus == DRAW_ERASER)
+		{
+			//删除一些元素
+		MyRectangle * mr = (MyRectangle *)tmp;
+		for (int i = 0 ; i<pDoc->data.size();i++)
+			{
+				
+				MyLine* ml = (MyLine*)pDoc->data[i];
+				if ((mr!=NULL)&&(ml!=NULL))
+				if (mr->includeLine(ml))
+					{
+						ml->enable = false;
+				}
+			}
+			
+		}
+		else
+		if(tmp) pDoc->data.push_back(tmp);
 		tmp=NULL;
 	
 	}
 
-
+	Invalidate(TRUE);
+	UpdateWindow();
 	CView::OnLButtonUp(nFlags, point);
 }
 
@@ -239,16 +258,15 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 		case (DRAW_BRUSH) : 
 			if (nFlags&MK_LBUTTON)
 			{
-
-				MyLine* my = (MyLine*)tmp;
-				my->_x2 = point.x;
-				my->_y2 = point.y;
+				//dc.SetDCBrushColor(cm->m_clr);
+				//dc.MoveTo(m_pre_point);
+				//dc.LineTo(point);
+				tmp=new MyLine(m_pre_point.x,m_pre_point.y,point.x,point.y, cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
 				GetDocument()->data.push_back(tmp);
-				tmp = NULL;
-				//GetDocument()->data.push_back(tmp);
-				m_pre_point = point;
-				Invalidate();
+				Invalidate(1);
 				UpdateWindow();
+				//dc.SetPixel(point, cm->m_clr);
+				m_pre_point = point;
 			};
 			break;
 		case (DRAW_LINE):
@@ -316,7 +334,17 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 				UpdateWindow();
 			}
 			break;
+		case DRAW_ERASER:
+			if (tmp)
+			{
+				MyRectangle* mr = (MyRectangle*) tmp;
+				mr->_x2 = point.x;
+				mr->_y2 = point.y;
 
+			}
+			Invalidate();
+			UpdateWindow();
+			break;
 
 		default:
 		break;

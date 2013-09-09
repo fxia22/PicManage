@@ -28,7 +28,7 @@
 BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &C图片管理器App::OnAppAbout)
 	// 基于文件的标准文档命令
-	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
+//	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
 	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	// 标准打印设置命令
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
@@ -38,6 +38,8 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_CREATEELE, &C图片管理器App::OnCreateele)
 	ON_COMMAND(ID_CREATEOBJ, &C图片管理器App::OnCreateobj)
 	ON_COMMAND(ID_CALLADMIN, &C图片管理器App::OnCalladmin)
+	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
+	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
 END_MESSAGE_MAP()
 
 
@@ -74,12 +76,14 @@ BOOL C图片管理器App::InitInstance()
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
+	
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	// 将它设置为包括所有要在应用程序中使用的
 	// 公共控件类。
 	InitCtrls.dwICC = ICC_WIN95_CLASSES;
 	InitCommonControlsEx(&InitCtrls);
+	::CoInitialize(NULL);//初始化数据库连接
 	CWinApp::InitInstance();
 
 
@@ -150,7 +154,7 @@ int C图片管理器App::ExitInstance()
 {
 	//TODO: 处理可能已添加的附加资源
 	AfxOleTerm(FALSE);
-
+	::CoUninitialize();//关闭COM环境
 	return CWinApp::ExitInstance();
 }
 
@@ -215,3 +219,17 @@ void C图片管理器App::OnCalladmin()
 }
 
 
+
+
+//void C图片管理器App::OnFileNew()
+//{
+//	// TODO: 在此添加命令处理程序代码]
+//	CWin::OnFileNew()
+//}
+
+
+void C图片管理器App::OnFileNew()
+{
+	// TODO: 在此添加命令处理程序代码
+	CWinApp::OnFileNew();
+}
