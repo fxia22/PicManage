@@ -115,6 +115,7 @@
     <ClInclude Include="MyLine.h" />
     <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyPoint.h" />
+    <ClInclude Include="MyPolyLine.h" />
     <ClInclude Include="MyRectangle.h" />
     <ClInclude Include="NewClientBox.h" />
     <ClInclude Include="Resource.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="MyFileDialog.cpp" />
     <ClCompile Include="MyLine.cpp" />
     <ClCompile Include="MyPoint.cpp" />
+    <ClCompile Include="MyPolyLine.cpp" />
     <ClCompile Include="MyRectangle.cpp" />
     <ClCompile Include="NewClientBox.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -67,70 +67,50 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
-	//CClientDC dc(this);
-	//pDC->MoveTo(100,100);
-	//pDC->LineTo(200,200);
 	RECT rect;
 	GetClientRect(&rect);
 	CDC MemDC;
-	CBitmap* bm=NULL;
-	//MemDC.SetBkColor(cm->m_bkgclr);
 	CBitmap bitmap;
-	if (pDoc->m_img!=NULL)
-	{
-		int width=pDoc->m_img->GetWidth();
-		int height=pDoc->m_img->GetHeight();
 
-	
-	
-		
-
-		CClientDC dc(this);
-		CDC MemDC;
-		MemDC.CreateCompatibleDC(&dc);
-		HBITMAP bit=/*(HBITMAP)img.operator HBITMAP();*/pDoc->m_img->Detach();//这里可采用两种方法得到图像句柄
-		bitmap.DeleteObject();
-		bitmap.Attach(bit);
-		MemDC.SelectObject(&bitmap);
-		dc.StretchBlt(rect.left,rect.top,abs(rect.right-rect.left),abs(rect.bottom-rect.top),&MemDC,0,0,width,height,SRCCOPY);
-	}
-	
-	{
-		
-	
 
 	MemDC.CreateCompatibleDC(NULL);
 	CBitmap MemBitmap;
 	MemBitmap.CreateCompatibleBitmap(pDC,rect.right-rect.left,rect.bottom-rect.top);
+	HBITMAP bit=NULL;
+	CImage imgcopy;
+	
+
+	if (pDoc->m_img!=NULL )
+		{
+			ImageCopy(*(pDoc->m_img),imgcopy);
+			bit = imgcopy.Detach();
+			MemBitmap.Attach(bit);
+		
+	}
+	
+	
 	
 	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);
-	MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
+	if (pDoc->m_img==NULL) MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
 	//给MeMDC绘图
 	
-	
+	MemDC.SetBkMode(TRANSPARENT);
 	for(int i=0;i<pDoc->data.size();i++)
 	{
-		//CBrush brush(RGB(rand()%255,rand()%255,rand()%255)); 
-		//CBrush *pOld = MemDC.SelectObject( &brush ); 
-		//CPen pen(pDoc->data[i]->m_linestyle,pDoc->data[i]->m_linewidth,pDoc->data[i]->m_lineclr); 
-		//CPen *penOld = MemDC.SelectObject( &pen ); 
-
 		pDoc->data[i]->draw(MemDC);
-		//MemDC.SelectObject(pOld);
-		//MemDC.SelectObject(penOld);
-		//pen.DeleteObject();
 	}
 	if(tmp)
 	{
 		tmp->draw(MemDC);
 	}
+	
 	//先绘制文件中的，再绘制内存中的
 	pDC->BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,&MemDC,0,0,SRCCOPY);
 	
 	MemDC.SelectObject(pOldBit);
 	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();
-	}
+	
 	// TODO: 在此处为本机数据添加绘制代码
 }
 
@@ -391,7 +371,7 @@ bool C图片管理器View::SaveBitmap(HBITMAP  hBitmap, char* filename)
 bool C图片管理器View::SaveCurrentImage(char* filename1)
 {
 	bool flag;
-	C图片管理器Doc* pDoc = GetDocument();
+	/*C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
@@ -426,6 +406,140 @@ bool C图片管理器View::SaveCurrentImage(char* filename1)
 	
 
 	MemBitmap.DeleteObject();
+	MemDC.DeleteDC();*/
+
+	C图片管理器Doc* pDoc = GetDocument();
+	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	ASSERT_VALID(pDoc);
+	if (!pDoc)
+		return false;
+	RECT rect;
+	GetClientRect(&rect);
+	CDC MemDC;
+	CDC *pDC=GetDC();
+	CBitmap bitmap;
+
+
+	MemDC.CreateCompatibleDC(CDC::FromHandle(::GetDC(NULL)));
+	CBitmap MemBitmap;
+	MemBitmap.CreateCompatibleBitmap(pDC,rect.right-rect.left,rect.bottom-rect.top);
+	HBITMAP bit=NULL;
+	CImage imgcopy;
+
+
+	if (pDoc->m_img!=NULL )
+	{
+		ImageCopy(*(pDoc->m_img),imgcopy);
+		bit = imgcopy.Detach();
+		MemBitmap.Attach(bit);
+
+	}
+
+
+
+	CBitmap *pOldBit=MemDC.SelectObject(&MemBitmap);
+	if (pDoc->m_img==NULL) MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
+	//给MeMDC绘图
+
+	MemDC.SetBkMode(TRANSPARENT);
+	for(int i=0;i<pDoc->data.size();i++)
+	{
+		pDoc->data[i]->draw(MemDC);
+	}
+	if(tmp)
+	{
+		tmp->draw(MemDC);
+	}
+
+	//先绘制文件中的，再绘制内存中的
+	MemDC.BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,&MemDC,0,0,SRCCOPY);
+	flag = SaveBitmap(*(MemDC.GetCurrentBitmap()),filename1);
+	MemDC.SelectObject(pOldBit);
+	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();
 	return flag;
 }
+
+/*
+BOOL C图片管理器View::TranslateBitmapSize(
+	HDC hCurScreemDC,	//当前屏幕DC，可通过GetDC获得
+	HBITMAP hBmpSrc,	//原BITMAP句柄
+	int nSrcWidth,		//原BITMAP的宽度
+	int nSrcHeight,		//原BITMAP的高度
+	HBITMAP &hBmpDst,	//改变大小后的BITMAP的句柄
+	int nDstWidth,		//改变大小后的BITMAP的宽度
+	int nDstHeight		//改变大小后的BITMAP的高度
+	)
+{
+	if (hBmpSrc == NULL || hCurScreemDC == NULL)
+	{
+		return FALSE;
+	}
+	if (hBmpDst != NULL)
+	{
+		DeleteObject(hBmpDst);
+	}
+	HDC hOldSrcDC = NULL;
+	HDC hOldDstDC = NULL;
+	HDC hSrcDC = CreateCompatibleDC(hCurScreemDC);
+	HDC hDstDC = CreateCompatibleDC(hCurScreemDC);
+	hBmpDst = CreateCompatibleBitmap(hCurScreemDC,nDstWidth,nDstHeight);
+	hOldSrcDC = (HDC)SelectObject(hSrcDC,hBmpSrc);
+	hOldDstDC = (HDC)SelectObject(hDstDC,hBmpDst);
+	StretchBlt(hDstDC,0,0,nDstWidth,nDstHeight,hSrcDC,0,0,nSrcWidth,nSrcHeight,SRCCOPY);
+	SelectObject(hSrcDC,hOldSrcDC);
+	SelectObject(hDstDC,hOldDstDC);
+	DeleteObject(hSrcDC);
+	DeleteObject(hDstDC);
+	return TRUE;	
+}
+*/
+
+
+bool C图片管理器View::ImageCopy(const CImage &srcImage, CImage &destImage)
+{
+	int i;//循环变量
+	if(srcImage.IsNull())
+		return FALSE;
+	//源图像参数
+	BYTE* srcPtr=(BYTE*)srcImage.GetBits();
+	int srcBitsCount=srcImage.GetBPP();
+	int srcWidth=srcImage.GetWidth();
+	int srcHeight=srcImage.GetHeight();
+	int srcPitch=srcImage.GetPitch(); 
+	//销毁原有图像
+	if( !destImage.IsNull())
+	{
+		destImage.Destroy();
+	}
+	//创建新图像
+	if(srcBitsCount==32)   //支持alpha通道
+	{
+		destImage.Create(srcWidth,srcHeight,srcBitsCount,1);
+	}
+	else
+	{
+		destImage.Create(srcWidth,srcHeight,srcBitsCount,0);
+	}
+	//加载调色板
+	if(srcBitsCount<=8&&srcImage.IsIndexed())//需要调色板
+	{
+		RGBQUAD pal[256];
+		int nColors=srcImage.GetMaxColorTableEntries();
+		if(nColors>0)
+		{     
+			srcImage.GetColorTable(0,nColors,pal);
+			destImage.SetColorTable(0,nColors,pal);//复制调色板程序
+		}   
+	} 
+	//目标图像参数
+	BYTE *destPtr=(BYTE*)destImage.GetBits();
+	int destPitch=destImage.GetPitch();
+	//复制图像数据
+	for(i=0 ; i<srcHeight;i++)
+	{
+		memcpy( destPtr+i*destPitch, srcPtr+i*srcPitch, abs(srcPitch) );
+	} 
+
+	return TRUE;
+} 
