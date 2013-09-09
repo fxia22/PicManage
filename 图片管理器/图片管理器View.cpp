@@ -3,6 +3,7 @@
 //
 
 #include "stdafx.h"
+#include <typeinfo>
 // SHARED_HANDLERS 可以在实现预览、缩略图和搜索筛选器句柄的
 // ATL 项目中进行定义，并允许与该项目共享文档代码。
 #ifndef SHARED_HANDLERS
@@ -16,6 +17,8 @@
 #include "MyRectangle.h"
 #include "MyEllipse.h"
 #include "MyCircle.h"
+#include "MyPolyLine.h"
+
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -167,6 +170,10 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 	{
 		switch (cm->drawstatus)
 		{
+		case DRAW_BRUSH:
+			if(tmp==NULL)tmp=new MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
+			else {delete tmp;tmp=new  MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
+			break;
 		case DRAW_LINE:
 			if(tmp==NULL)tmp=new MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
 			else {delete tmp;tmp=new  MyLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
@@ -211,11 +218,7 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 	{
 		if(tmp)GetDocument()->data.push_back(tmp);
 		tmp=NULL;
-		if (cm->drawstatus==DRAW_BRUSH)
-		{
-			Invalidate();
-			UpdateWindow();
-		}
+	
 	}
 
 
@@ -236,13 +239,16 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 		case (DRAW_BRUSH) : 
 			if (nFlags&MK_LBUTTON)
 			{
-				//dc.SetDCBrushColor(cm->m_clr);
-				dc.MoveTo(m_pre_point);
-				dc.LineTo(point);
-				tmp=new MyLine(m_pre_point.x,m_pre_point.y,point.x,point.y, cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
+
+				MyLine* my = (MyLine*)tmp;
+				my->_x2 = point.x;
+				my->_y2 = point.y;
 				GetDocument()->data.push_back(tmp);
-				//dc.SetPixel(point, cm->m_clr);
+				tmp = NULL;
+				//GetDocument()->data.push_back(tmp);
 				m_pre_point = point;
+				Invalidate();
+				UpdateWindow();
 			};
 			break;
 		case (DRAW_LINE):
@@ -407,16 +413,15 @@ bool C图片管理器View::SaveCurrentImage(char* filename1)
 
 	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();*/
-
 	C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	CDC *pDC=GetDC();
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
-		return false;
+		return FALSE;
 	RECT rect;
 	GetClientRect(&rect);
 	CDC MemDC;
-	CDC *pDC=GetDC();
 	CBitmap bitmap;
 
 
@@ -457,6 +462,8 @@ bool C图片管理器View::SaveCurrentImage(char* filename1)
 	MemDC.SelectObject(pOldBit);
 	MemBitmap.DeleteObject();
 	MemDC.DeleteDC();
+
+	
 	return flag;
 }
 

@@ -13,6 +13,5 @@ public:
 
 	virtual void draw(CDC& dc)const =0;
 
-
 };
 
