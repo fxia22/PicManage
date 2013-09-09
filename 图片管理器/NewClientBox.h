@@ -1,4 +1,5 @@
 #pragma once
+#include "afxwin.h"
 
 
 // NewClientBox 对话框
@@ -18,4 +19,11 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV 支持
 
 	DECLARE_MESSAGE_MAP()
+public:
+	afx_msg void OnBnClickedOk();
+	CEdit username;
+	CEdit password1;
+	CEdit password2;
+	CString m_user;
+	CString m_pass;
 };

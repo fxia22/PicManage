@@ -482,27 +482,6 @@ void CMainFrame::OnCommandSet()
 {
 	
 	// TODO: 在此添加命令处理程序代码
-	ado.OnInitADOConn("Lib");
-	try{
-		//增加数据到数据库操作
-		ado.m_pRecordset->AddNew(); 
-		ado.m_pRecordset->PutCollect("Number", atol("12"));
-		ado.m_pRecordset->PutCollect("Name", _variant_t("xf"));
-		ado.m_pRecordset->PutCollect("Age", atol("15"));
-		ado.m_pRecordset->PutCollect("Address", _variant_t("Eureka"));
-		ado.m_pRecordset->PutCollect("Tel", atol("5613780"));
-		ado.m_pRecordset->Update();
-	}
-	catch(_com_error e)
-	{ 
-		
-		MessageBox(e.ErrorMessage());
-	}
-	
-
-
-	ado.ExitConnect();
-
 	//MessageBox("haha");
 }
 

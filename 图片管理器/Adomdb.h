@@ -9,5 +9,6 @@ public:
 	_CommandPtr m_pCommand;
 	void OnInitADOConn(CString);
 	void ExitConnect(void);
+	bool NewUser(CString name, CString password);
 };
 

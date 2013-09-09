@@ -62,6 +62,8 @@ C图片管理器App::C图片管理器App()
 
 	// TODO: 在此处添加构造代码，
 	// 将所有重要的初始化放置在 InitInstance 中
+	CurrentUser = _T("");
+	m_LoginStatus = false;
 }
 
 // 唯一的一个 C图片管理器App 对象
@@ -192,6 +194,10 @@ void C图片管理器App::OnLogout()
 void CAboutDlg::OnBnClickedNewclient()
 {
 	// TODO: 在此添加控件通知处理程序代码
+
+
+
+
 }
 
 
@@ -231,5 +237,6 @@ void C图片管理器App::OnCalladmin()
 void C图片管理器App::OnFileNew()
 {
 	// TODO: 在此添加命令处理程序代码
+	if (!m_LoginStatus) return ;
 	CWinApp::OnFileNew();
 }

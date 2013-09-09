@@ -8,7 +8,7 @@
 #endif
 
 #include "resource.h"       // 主符号
-
+#include "Adomdb.h"
 
 // C图片管理器App:
 // 有关此类的实现，请参阅 图片管理器.cpp
@@ -36,6 +36,10 @@ public:
 	
 //	afx_msg void OnFileNew();
 	afx_msg void OnFileNew();
+public://自己定义的变量
+	CString CurrentUser;
+	Adomdb ado;
+	bool m_LoginStatus;
 };
 
 extern C图片管理器App theApp;

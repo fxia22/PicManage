@@ -29,7 +29,6 @@ void Adomdb::OnInitADOConn(CString sheetname)
 	m_pRecordset.CreateInstance(__uuidof(Recordset));
 	//*****************************************************************************
 
-	
 	CString str = "SELECT * FROM "+sheetname;
 	try
 	{
@@ -51,7 +50,7 @@ void Adomdb::OnInitADOConn(CString sheetname)
 	}
 	catch(_com_error e)
 	{
-		printf(e.ErrorMessage()); //输出错误信息
+		AfxMessageBox(e.ErrorMessage()); //输出错误信息
 	}
 }
 
@@ -69,4 +68,25 @@ void Adomdb::ExitConnect(void)
 		m_pConnection= NULL;
 	}
 	//
+}
+
+
+bool Adomdb::NewUser(CString name, CString password)
+{
+	bool flag = true;
+	try{
+		//增加数据到数据库操作
+		m_pRecordset->AddNew(); 
+		m_pRecordset->PutCollect("用户名", _variant_t(name));
+		m_pRecordset->PutCollect("密码", _variant_t(password));
+		m_pRecordset->Update();
+	}
+	catch(_com_error e)
+	{ 
+		flag = false;
+		AfxMessageBox(e.ErrorMessage());
+	}
+
+	
+	return flag;
 }
