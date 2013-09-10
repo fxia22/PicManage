@@ -10,5 +10,6 @@ public:
 	void OnInitADOConn(CString);
 	void ExitConnect(void);
 	bool NewUser(CString name, CString password);
+	bool NewFile(CString username, CString filename, CString sudo);
 };
 

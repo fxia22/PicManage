@@ -109,6 +109,7 @@ public:
 //	afx_msg void OnFileOpen();
 	CPtrList m_ChildFramePtrList;
 	afx_msg void OnClose();
+	void ExitAllChildFrame(void);
 };
 
 

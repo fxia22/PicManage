@@ -45,6 +45,11 @@ public://自己定义的变量
 //	afx_msg void OnFileOpen();
 	afx_msg void OnFileOpen();
 //	bool firstdoc;
+//	void NewFile(void);
+	//afx_msg void OnMyFileOpen();
+	Adomdb appado;
+	afx_msg void OnUpdateMyfile(CCmdUI *pCmdUI);
+	afx_msg void OnMyfile();
 };
 
 extern C图片管理器App theApp;

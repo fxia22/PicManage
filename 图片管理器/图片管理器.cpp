@@ -39,11 +39,14 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_CREATEOBJ, &C图片管理器App::OnCreateobj)
 	ON_COMMAND(ID_CALLADMIN, &C图片管理器App::OnCalladmin)
 	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
-	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
+	//ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
 	ON_UPDATE_COMMAND_UI(ID_FILE_NEW, &C图片管理器App::OnUpdateFileNew)
 	ON_UPDATE_COMMAND_UI(ID_FILE_OPEN, &C图片管理器App::OnUpdateFileOpen)
 	ON_COMMAND(ID_FILE_OPEN, &C图片管理器App::OnFileOpen)
 	
+	
+	ON_UPDATE_COMMAND_UI(ID_MYFILE, &C图片管理器App::OnUpdateMyfile)
+	ON_COMMAND(ID_MYFILE, &C图片管理器App::OnMyfile)
 END_MESSAGE_MAP()
 
 
@@ -191,10 +194,10 @@ void C图片管理器App::OnLogin()
 
 void C图片管理器App::OnLogout()
 {
-	MessageBox(NULL,"注销成功","注销",MB_OK);
+	((CMainFrame*)m_pMainWnd)->ExitAllChildFrame();
 	CurrentUser = "";
 	m_LoginStatus = false;
-
+	MessageBox(NULL,"注销成功","注销",MB_OK);
 }
 
 
@@ -244,10 +247,10 @@ void C图片管理器App::OnCalladmin()
 void C图片管理器App::OnFileNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	if (!m_LoginStatus) 
+	while (!m_LoginStatus) 
 		{	
-			AfxMessageBox("欢迎来到本系统，请您登陆");
-			return ;
+		//	AfxMessageBox("欢迎来到本系统，请您登陆");
+			OnLogin();
 	}
 	CWinApp::OnFileNew();
 
@@ -284,4 +287,34 @@ void C图片管理器App::OnFileOpen()
 	cd->OnFileOpen();
 	return;
 	// TODO: 在此添加命令处理程序代码
+}
+
+
+
+//void C图片管理器App::NewFile(void)
+//{
+//	OnFileNew();
+//}
+
+
+
+
+void C图片管理器App::OnUpdateMyfile(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!m_LoginStatus)
+		pCmdUI->Enable(FALSE);
+	else
+		pCmdUI->Enable();
+}
+
+
+void C图片管理器App::OnMyfile()
+{
+	// TODO: 在此添加命令处理程序代码
+	OnFileNew();
+	CMainFrame* cm = (CMainFrame*)m_pMainWnd;
+	C图片管理器Doc* cd = (C图片管理器Doc*)cm->GetActiveFrame()->GetActiveDocument();
+	if (!cd->LoadImage())
+		((CChildFrame*)cm->GetActiveFrame())->ExitWithoutQuery();
 }

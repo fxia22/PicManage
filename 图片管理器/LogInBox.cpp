@@ -31,6 +31,7 @@ void LogInBox::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(LogInBox, CDialogEx)
 	ON_BN_CLICKED(IDC_NEWCLIENT, &LogInBox::OnBnClickedNewclient)
 	ON_BN_CLICKED(IDOK, &LogInBox::OnBnClickedOk)
+	ON_BN_CLICKED(IDC_BUTTON_EXIT, &LogInBox::OnBnClickedButtonExit)
 END_MESSAGE_MAP()
 
 
@@ -50,8 +51,6 @@ void LogInBox::OnBnClickedNewclient()
 	
 	}
 	
-
-
 	// TODO: 在此添加控件通知处理程序代码
 }
 
@@ -124,4 +123,13 @@ void LogInBox::OnBnClickedOk()
 
 
 	CDialogEx::OnOK();
+}
+
+
+void LogInBox::OnBnClickedButtonExit()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	ExitProcess( -1 );
+
+
 }

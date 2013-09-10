@@ -256,6 +256,7 @@ void CMainFrame::OnDrawColor()
 void CMainFrame::OnUpdateEnabledraw(CCmdUI *pCmdUI)
 {
 	// TODO: 在此添加命令更新用户界面处理程序代码
+	
 	GetMenu()->GetSubMenu(3)->CheckMenuItem(0,(enabledraw?MF_CHECKED:MF_UNCHECKED)|MF_BYPOSITION);
 	if (enabledraw) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
@@ -514,10 +515,26 @@ void CMainFrame::OnClose()
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	POSITION pos=m_ChildFramePtrList.GetHeadPosition();
 	CChildFrame* pChildFrame;
+
 	while(pos != NULL)
 	{
 		pChildFrame=(CChildFrame*)m_ChildFramePtrList.GetNext(pos);
 		pChildFrame->OnClose();
 	}
+	if (NULL==m_ChildFramePtrList.GetHeadPosition())
 	CMDIFrameWnd::OnClose();
+}
+
+
+void CMainFrame::ExitAllChildFrame(void)
+{
+	POSITION pos=m_ChildFramePtrList.GetHeadPosition();
+	CChildFrame* pChildFrame;
+
+	while(pos != NULL)
+	{
+		pChildFrame=(CChildFrame*)m_ChildFramePtrList.GetNext(pos);
+		pChildFrame->OnClose();
+		pos=m_ChildFramePtrList.GetHeadPosition();
+	}
 }

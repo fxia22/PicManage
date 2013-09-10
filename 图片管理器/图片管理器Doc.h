@@ -10,6 +10,12 @@
 using namespace std;
 class C图片管理器Doc : public CDocument
 {
+public:enum 
+	   {
+		   CAN_WRITE,
+		   READ_ONLY,
+		   NO_ACCESS
+	   };
 protected: // 仅从序列化创建
 	C图片管理器Doc();
 	DECLARE_DYNCREATE(C图片管理器Doc)
@@ -63,5 +69,14 @@ public:
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnUpdateChangeSize(CCmdUI *pCmdUI);
 	afx_msg void OnChangeSize();
-	Adomdb ado;
+//	Adomdb ado;
+	Adomdb myado;
+//	int CheckFileState(void);
+	int CheckFileState(CString username, CString filepath);
+	bool allowdraw;
+	int LoadImage();
+	void CreateStretchedImage(CImage *pImage,CImage *ResultImage,int StretchHeight,int StretchWidth);
+	bool ImageCopy(const CImage &srcImage, CImage &destImage);
+	CImage* m_srcimg;
+	bool IsEmpty(void);
 };

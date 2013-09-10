@@ -47,6 +47,9 @@ BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改 CREATESTRUCT cs 来修改窗口类或样式
 	cs.style &= ~WS_THICKFRAME;
+	cs.style &= ~WS_MAXIMIZEBOX;
+	cs.style &= ~WS_MINIMIZEBOX;
+	cs.lpszClass = AfxRegisterWndClass(0);
 	if( !CMDIChildWnd::PreCreateWindow(cs) )
 		return FALSE;
 
@@ -73,10 +76,17 @@ void CChildFrame::Dump(CDumpContext& dc) const
 void CChildFrame::OnClose()
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
-	if (((C图片管理器Doc*)GetActiveDocument())->m_path_name=="")
+	
+	if (!((C图片管理器Doc*)GetActiveDocument())->IsEmpty())
 		{
-			if (MessageBox("您没有保存，确定要退出吗","警告",MB_OKCANCEL)==IDOK);
+			if (MessageBox("您没有保存，确定要退出吗",((C图片管理器Doc*)GetActiveDocument())->GetTitle(),MB_OKCANCEL)==IDOK);
 			else return ;
 	}
 	CMDIChildWnd::OnClose();
+}
+
+
+void CChildFrame::ExitWithoutQuery(void)
+{
+		CMDIChildWnd::OnClose();
 }

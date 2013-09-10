@@ -27,4 +27,5 @@ public:
 	Adomdb ado;
 	int CheckState(CString& name, CString& pass);
 	afx_msg void OnBnClickedOk();
+	afx_msg void OnBnClickedButtonExit();
 };

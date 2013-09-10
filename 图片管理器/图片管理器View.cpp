@@ -67,6 +67,7 @@ void C图片管理器View::OnDraw(CDC* pDC)
 {
 	C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
@@ -167,7 +168,8 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	//m_mousestatus = true;
-	if (cm->enabledraw)
+		C图片管理器Doc* pDoc = GetDocument();
+	if ((pDoc->allowdraw)&&(cm->enabledraw))
 	{
 		switch (cm->drawstatus)
 		{
@@ -215,7 +217,7 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 	//m_mousestatus = false;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	C图片管理器Doc* pDoc = GetDocument();
-	if (cm->enabledraw)
+	if ((cm->enabledraw)&&(pDoc->allowdraw))
 	{
 		if (cm->drawstatus == DRAW_ERASER)
 		{
@@ -250,9 +252,10 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	CClientDC dc(this);
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+		C图片管理器Doc* pDoc = GetDocument();
 	CPen pen(cm->m_nLineStyle, cm->m_nLineWidth, cm->m_clr); 
 	CPen* pOldpen = dc.SelectObject(&pen);
-	if (cm->enabledraw)
+	if ((cm->enabledraw)&&(pDoc->allowdraw))
 		switch (cm->drawstatus)
 	{
 		case (DRAW_BRUSH) : 

@@ -90,3 +90,28 @@ bool Adomdb::NewUser(CString name, CString password)
 	
 	return flag;
 }
+
+
+
+
+bool Adomdb::NewFile(CString username, CString filename, CString sudo)
+{
+	bool flag = true;
+	try{
+		//增加数据到数据库操作
+		m_pRecordset->AddNew(); 
+		m_pRecordset->PutCollect("用户名", _variant_t(username));
+		m_pRecordset->PutCollect("文件路径", _variant_t(filename));
+		m_pRecordset->PutCollect("访问权限", _variant_t(sudo));
+		m_pRecordset->Update();
+
+	}
+	catch(_com_error e)
+	{ 
+		flag = false;
+		AfxMessageBox(e.ErrorMessage());
+	}
+
+
+	return flag;
+}

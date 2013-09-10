@@ -89,7 +89,9 @@ IDR_TOOLBAR_CMD         BITMAP                  "res\\bmp00001.bmp"
 IDR_MAINFRAME TOOLBAR 16, 15
 BEGIN
     BUTTON      ID_FILE_NEW
+    BUTTON      ID_MYFILE
     BUTTON      ID_FILE_OPEN
+    SEPARATOR
     BUTTON      ID_FILE_SAVE
     SEPARATOR
     BUTTON      ID_EDIT_CUT
@@ -149,7 +151,7 @@ BEGIN
     POPUP "文件(&F)"
     BEGIN
         MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
-        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "打开(&O)...\tCtrl+O",           ID_MYFILE
         MENUITEM "关闭(&C)",                      ID_FILE_CLOSE
         MENUITEM SEPARATOR
         MENUITEM "打印设置(&R)...",                 ID_FILE_PRINT_SETUP
@@ -181,7 +183,8 @@ BEGIN
     POPUP "文件(&F)"
     BEGIN
         MENUITEM "新建(&N)\tCtrl+N",              ID_FILE_NEW
-        MENUITEM "打开(&O)...\tCtrl+O",           ID_FILE_OPEN
+        MENUITEM "打开",                          ID_MYFILE
+        MENUITEM "载入(&O)...\tCtrl+O",           ID_FILE_OPEN
         MENUITEM "关闭(&C)",                      ID_FILE_CLOSE
         MENUITEM "暂存(&M)",                      ID_SAVECURRENT
         MENUITEM "保存(&S)\tCtrl+S",              ID_FILE_SAVE
@@ -406,6 +409,7 @@ BEGIN
     EDITTEXT        IDC_EDIT_LOGINUSERNAME,81,31,69,14,ES_AUTOHSCROLL
     EDITTEXT        IDC_EDIT_LOGINPASS,81,47,107,14,ES_PASSWORD | ES_AUTOHSCROLL
     PUSHBUTTON      "新用户(&N)",IDC_NEWCLIENT,157,30,50,14
+    PUSHBUTTON      "退出程序",IDC_BUTTON_EXIT,71,85,50,14
 END
 
 IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
