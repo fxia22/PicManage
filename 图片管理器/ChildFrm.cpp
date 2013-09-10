@@ -4,8 +4,9 @@
 
 #include "stdafx.h"
 #include "图片管理器.h"
-
+#include "图片管理器Doc.h"
 #include "ChildFrm.h"
+#include "MainFrm.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -18,18 +19,27 @@ IMPLEMENT_DYNCREATE(CChildFrame, CMDIChildWnd)
 BEGIN_MESSAGE_MAP(CChildFrame, CMDIChildWnd)
 //子文档消息映射
 
+	ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 // CChildFrame 构造/析构
 
 CChildFrame::CChildFrame()
 {
+	CMainFrame* pmain = (CMainFrame*)AfxGetMainWnd();
+	pmain->m_ChildFramePtrList.AddHead( this );
 	
 	// TODO: 在此添加成员初始化代码
 	}
 
 CChildFrame::~CChildFrame()
 {
+	CMainFrame* pmain = (CMainFrame*)AfxGetMainWnd();
+	POSITION pos = pmain->m_ChildFramePtrList.Find( this );
+	if ( pos != NULL )
+	{
+		pmain->m_ChildFramePtrList.RemoveAt( pos );
+	}
 }
 
 
@@ -58,3 +68,15 @@ void CChildFrame::Dump(CDumpContext& dc) const
 #endif //_DEBUG
 
 // CChildFrame 消息处理程序
+
+
+void CChildFrame::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (((C图片管理器Doc*)GetActiveDocument())->m_path_name=="")
+		{
+			if (MessageBox("您没有保存，确定要退出吗","警告",MB_OKCANCEL)==IDOK);
+			else return ;
+	}
+	CMDIChildWnd::OnClose();
+}

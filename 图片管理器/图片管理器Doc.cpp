@@ -55,6 +55,9 @@ BOOL C图片管理器Doc::OnNewDocument()
 {
 	if (!CDocument::OnNewDocument())
 		return FALSE;
+	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	cm->enabledraw = true;
+	cm->drawstatus = CMainFrame::DRAW_BRUSH;
 	SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-未命名");
 	
 	return TRUE;

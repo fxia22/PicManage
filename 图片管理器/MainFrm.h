@@ -8,7 +8,7 @@
 #include "Adomdb.h"
 class CMainFrame : public CMDIFrameWnd
 {
-	enum
+	public:	enum
 	{
 		DRAW_CONNOTDRAW,
 		DRAW_LINE,
@@ -107,6 +107,8 @@ public:
 //	void OnInitADOConn(void);
 	Adomdb ado;
 //	afx_msg void OnFileOpen();
+	CPtrList m_ChildFramePtrList;
+	afx_msg void OnClose();
 };
 
 

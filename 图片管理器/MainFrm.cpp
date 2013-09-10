@@ -10,7 +10,8 @@
 #include "StyleDlg.h"
 #include "MyLine.h"
 #include "Adomdb.h"
-
+#include "MyRectangle.h"
+#include "ChildFrm.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -55,6 +56,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_COMMAND(ID_COMMAND_SET, &CMainFrame::OnCommandSet)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, &CMainFrame::OnUpdateEditUndo)
 //	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
+ON_WM_CLOSE()
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -257,6 +259,12 @@ void CMainFrame::OnUpdateEnabledraw(CCmdUI *pCmdUI)
 	GetMenu()->GetSubMenu(3)->CheckMenuItem(0,(enabledraw?MF_CHECKED:MF_UNCHECKED)|MF_BYPOSITION);
 	if (enabledraw) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
+	if (((C图片管理器App*)AfxGetApp())->m_LoginStatus)
+		 pCmdUI->Enable(TRUE);
+	else
+	{
+		 pCmdUI->Enable(FALSE);
+	}
 }
 
 
@@ -441,37 +449,40 @@ void CMainFrame::OnDrawStyle()
 
 LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 {
-	/*char* buf=(char*)malloc(m_edit.GetWindowTextLength()+1);//将Edit里面的内容读入到buf中
-	m_edit.GetWindowText(buf,m_edit.GetWindowTextLength()+1);
-	m_edit.SetWindowText("");//清空以前的命令
-	MessageBox(buf);
-	free(buf);
-	*/
-
+	
 	char* buf=(char*)malloc(m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.SetWindowText("");//清空以前的命令
-	MessageBox(buf);
 	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
-
-		//MessageBox(buf);
-		//MessageBox(buf2);
-		//此处根据命令绘制图形
-		
-		
-		
-		
-		
-		
 	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
-		free(buf);
-		free(buf2);
-		MyObject* n = new MyLine(100,100,200,200,0,20,RGB(0,0,0));
-	//	if (strcmp(buf,"LINE(100,100,200,200)")==0)
+	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	int currentstyle = cm->m_nLineStyle;
+	int currentwidth = cm->m_nLineWidth;
+	COLORREF currentcolor = cm->m_clr;
+	free(buf);
+	free(buf2);
+		//请将代码添加至此
+
+		if (strcmp(buf,"LINE(100,100,200,200)")==0)
+		{
+			MyObject* n = new MyLine(100,100,200,200,currentstyle,currentwidth,currentcolor);
 			pDoc->data.push_back(n);
-		
+		}
+
+		if (strcmp(buf,"RECTANGLE(300,300,400,400)")==0)
+		{
+			MyObject* n = new MyRectangle(300,300,400,400,currentstyle,currentwidth,currentcolor);
+			pDoc->data.push_back(n);
+		}
+
+
+
+
+
+
+		//请不要更改其他代码
 		pDoc->UpdateAllViews(NULL);
 
 	return TRUE;
@@ -496,3 +507,17 @@ void CMainFrame::OnUpdateEditUndo(CCmdUI *pCmdUI)
 }
 
 
+
+
+void CMainFrame::OnClose()
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	POSITION pos=m_ChildFramePtrList.GetHeadPosition();
+	CChildFrame* pChildFrame;
+	while(pos != NULL)
+	{
+		pChildFrame=(CChildFrame*)m_ChildFramePtrList.GetNext(pos);
+		pChildFrame->OnClose();
+	}
+	CMDIFrameWnd::OnClose();
+}

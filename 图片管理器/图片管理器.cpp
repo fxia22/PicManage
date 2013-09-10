@@ -194,6 +194,7 @@ void C图片管理器App::OnLogout()
 	MessageBox(NULL,"注销成功","注销",MB_OK);
 	CurrentUser = "";
 	m_LoginStatus = false;
+
 }
 
 
