@@ -67,6 +67,9 @@ public:
 	bool SaveBitmap(HBITMAP  Bipmap, char* filename);
 	bool SaveCurrentImage(char* filename);
 	bool ImageCopy(const CImage &srcImage, CImage &destImage);
+	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
+	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
+	bool m_normalize;
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

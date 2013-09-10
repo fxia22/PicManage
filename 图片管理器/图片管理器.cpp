@@ -47,6 +47,7 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	
 	ON_UPDATE_COMMAND_UI(ID_MYFILE, &C图片管理器App::OnUpdateMyfile)
 	ON_COMMAND(ID_MYFILE, &C图片管理器App::OnMyfile)
+	ON_UPDATE_COMMAND_UI(ID_LOGIN, &C图片管理器App::OnUpdateLogin)
 END_MESSAGE_MAP()
 
 
@@ -317,4 +318,13 @@ void C图片管理器App::OnMyfile()
 	C图片管理器Doc* cd = (C图片管理器Doc*)cm->GetActiveFrame()->GetActiveDocument();
 	if (!cd->LoadImage())
 		((CChildFrame*)cm->GetActiveFrame())->ExitWithoutQuery();
+}
+
+
+void C图片管理器App::OnUpdateLogin(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (m_LoginStatus)
+		 pCmdUI->Enable(0);
+	else pCmdUI->Enable();
 }

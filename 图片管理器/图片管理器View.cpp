@@ -38,6 +38,8 @@ BEGIN_MESSAGE_MAP(C图片管理器View, CView)
 	ON_WM_LBUTTONUP()
 	ON_WM_MOUSEMOVE()
 	ON_WM_ERASEBKGND()
+	ON_WM_KEYDOWN()
+	ON_WM_KEYUP()
 END_MESSAGE_MAP()
 
 // C图片管理器View 构造/析构
@@ -51,6 +53,7 @@ C图片管理器View::C图片管理器View()
 
 C图片管理器View::~C图片管理器View()
 {
+	m_normalize = false;
 }
 
 BOOL C图片管理器View::PreCreateWindow(CREATESTRUCT& cs)
@@ -108,7 +111,6 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	{
 		tmp->draw(MemDC);
 	}
-	
 	//先绘制文件中的，再绘制内存中的
 	pDC->BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,&MemDC,0,0,SRCCOPY);
 	
@@ -215,6 +217,7 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	//m_mousestatus = false;
+	//m_normalize = false;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	C图片管理器Doc* pDoc = GetDocument();
 	if ((cm->enabledraw)&&(pDoc->allowdraw))
@@ -280,6 +283,11 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 					MyLine* ml = (MyLine*)tmp;
 					ml->_x2=point.x;
 					ml->_y2=point.y;
+					if (m_normalize)
+						if (abs(ml->_x1-point.x)<abs(ml->_y1-point.y))
+							 ml->_x2 = ml->_x1;
+						else 
+							 ml->_y2 = ml->_y1;
 				ml->m_clr = cm->m_clr;
 				ml->m_style = cm->m_nLineStyle;
 				ml->m_width = cm->m_nLineWidth;
@@ -297,6 +305,11 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 					MyRectangle* mr = (MyRectangle*)tmp;
 					mr->_x2=point.x;
 					mr->_y2=point.y;
+					if (m_normalize)
+					{
+						mr->_x2 = mr->_x1+(point.x-mr->_x1+point.y-mr->_y1)/2;
+						mr->_y2 = mr->_y1+(point.x-mr->_x1+point.y-mr->_y1)/2;
+					}
 					mr->m_clr = cm->m_clr;
 					mr->m_style = cm->m_nLineStyle;
 					mr->m_width = cm->m_nLineWidth;
@@ -313,6 +326,11 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 					MyEllipse* mr = (MyEllipse*)tmp;
 					mr->_x2=point.x;
 					mr->_y2=point.y;
+					if (m_normalize)
+					{
+						mr->_x2 = mr->_x1+(point.x-mr->_x1+point.y-mr->_y1)/2;
+						mr->_y2 = mr->_y1+(point.x-mr->_x1+point.y-mr->_y1)/2;
+					}
 					mr->m_clr = cm->m_clr;
 					mr->m_style = cm->m_nLineStyle;
 					mr->m_width = cm->m_nLineWidth;
@@ -581,3 +599,20 @@ bool C图片管理器View::ImageCopy(const CImage &srcImage, CImage &destImage)
 
 	return TRUE;
 } 
+
+void C图片管理器View::OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (GetKeyState(VK_SHIFT) & 0x80000000)
+	 m_normalize = true;
+	CView::OnKeyDown(nChar, nRepCnt, nFlags);
+}
+
+
+
+void C图片管理器View::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	m_normalize = false;
+	CView::OnKeyUp(nChar, nRepCnt, nFlags);
+}

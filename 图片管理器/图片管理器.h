@@ -50,6 +50,7 @@ public://自己定义的变量
 	Adomdb appado;
 	afx_msg void OnUpdateMyfile(CCmdUI *pCmdUI);
 	afx_msg void OnMyfile();
+	afx_msg void OnUpdateLogin(CCmdUI *pCmdUI);
 };
 
 extern C图片管理器App theApp;
