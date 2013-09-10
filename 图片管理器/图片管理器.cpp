@@ -29,7 +29,7 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_APP_ABOUT, &C图片管理器App::OnAppAbout)
 	// 基于文件的标准文档命令
 //	ON_COMMAND(ID_FILE_NEW, &CWinApp::OnFileNew)
-	ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
+	//ON_COMMAND(ID_FILE_OPEN, &CWinApp::OnFileOpen)
 	// 标准打印设置命令
 	ON_COMMAND(ID_FILE_PRINT_SETUP, &CWinApp::OnFilePrintSetup)
 	//自己定义的命令
@@ -40,6 +40,10 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_COMMAND(ID_CALLADMIN, &C图片管理器App::OnCalladmin)
 	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
 	ON_COMMAND(ID_FILE_NEW, &C图片管理器App::OnFileNew)
+	ON_UPDATE_COMMAND_UI(ID_FILE_NEW, &C图片管理器App::OnUpdateFileNew)
+	ON_UPDATE_COMMAND_UI(ID_FILE_OPEN, &C图片管理器App::OnUpdateFileOpen)
+	ON_COMMAND(ID_FILE_OPEN, &C图片管理器App::OnFileOpen)
+	
 END_MESSAGE_MAP()
 
 
@@ -78,7 +82,7 @@ BOOL C图片管理器App::InitInstance()
 	// 如果一个运行在 Windows XP 上的应用程序清单指定要
 	// 使用 ComCtl32.dll 版本 6 或更高版本来启用可视化方式，
 	//则需要 InitCommonControlsEx()。否则，将无法创建窗口。
-	
+
 	INITCOMMONCONTROLSEX InitCtrls;
 	InitCtrls.dwSize = sizeof(InitCtrls);
 	// 将它设置为包括所有要在应用程序中使用的
@@ -188,6 +192,8 @@ void C图片管理器App::OnLogin()
 void C图片管理器App::OnLogout()
 {
 	MessageBox(NULL,"注销成功","注销",MB_OK);
+	CurrentUser = "";
+	m_LoginStatus = false;
 }
 
 
@@ -237,6 +243,44 @@ void C图片管理器App::OnCalladmin()
 void C图片管理器App::OnFileNew()
 {
 	// TODO: 在此添加命令处理程序代码
-	if (!m_LoginStatus) return ;
+	if (!m_LoginStatus) 
+		{	
+			AfxMessageBox("欢迎来到本系统，请您登陆");
+			return ;
+	}
 	CWinApp::OnFileNew();
+
+}
+
+
+void C图片管理器App::OnUpdateFileNew(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!m_LoginStatus)
+		 pCmdUI->Enable(FALSE);
+	else
+	 pCmdUI->Enable();
+}
+
+
+void C图片管理器App::OnUpdateFileOpen(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!m_LoginStatus)
+		pCmdUI->Enable(FALSE);
+	else
+		pCmdUI->Enable();
+}
+
+
+
+void C图片管理器App::OnFileOpen()
+{
+	OnFileNew();
+	CMainFrame* cm = (CMainFrame*)m_pMainWnd;
+	C图片管理器Doc* cd = (C图片管理器Doc*)cm->GetActiveFrame()->GetActiveDocument();
+	if (!cd) return;
+	cd->OnFileOpen();
+	return;
+	// TODO: 在此添加命令处理程序代码
 }
