@@ -106,6 +106,7 @@ public:
 //	_RecordsetPtr m_pRecordset;
 //	void OnInitADOConn(void);
 	Adomdb ado;
+//	afx_msg void OnFileOpen();
 };
 
 

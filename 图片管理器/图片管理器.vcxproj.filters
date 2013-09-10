@@ -96,6 +96,9 @@
     <ClInclude Include="Adomdb.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SizeDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="图片管理器.cpp">
@@ -165,6 +168,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Adomdb.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="SizeDlg.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

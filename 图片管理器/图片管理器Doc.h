@@ -60,4 +60,8 @@ public:
 	afx_msg void OnFileOpen();
 	CImage* m_img;
 	afx_msg void OnEditUndo();
+	afx_msg void OnFileSaveAs();
+	afx_msg void OnUpdateChangeSize(CCmdUI *pCmdUI);
+	afx_msg void OnChangeSize();
+	Adomdb ado;
 };

@@ -36,6 +36,7 @@ CChildFrame::~CChildFrame()
 BOOL CChildFrame::PreCreateWindow(CREATESTRUCT& cs)
 {
 	// TODO: 在此处通过修改 CREATESTRUCT cs 来修改窗口类或样式
+	cs.style &= ~WS_THICKFRAME;
 	if( !CMDIChildWnd::PreCreateWindow(cs) )
 		return FALSE;
 

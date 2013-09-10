@@ -40,6 +40,11 @@ public://自己定义的变量
 	CString CurrentUser;
 	Adomdb ado;
 	bool m_LoginStatus;
+	afx_msg void OnUpdateFileNew(CCmdUI *pCmdUI);
+	afx_msg void OnUpdateFileOpen(CCmdUI *pCmdUI);
+//	afx_msg void OnFileOpen();
+	afx_msg void OnFileOpen();
+//	bool firstdoc;
 };
 
 extern C图片管理器App theApp;

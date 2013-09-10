@@ -54,6 +54,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_MESSAGE(ID_RETURN_PRESSED, OnReturnPressed)
 	ON_COMMAND(ID_COMMAND_SET, &CMainFrame::OnCommandSet)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, &CMainFrame::OnUpdateEditUndo)
+//	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -495,6 +496,3 @@ void CMainFrame::OnUpdateEditUndo(CCmdUI *pCmdUI)
 }
 
 
-//void CMainFrame::OnInitADOConn(void)
-//{
-//}
