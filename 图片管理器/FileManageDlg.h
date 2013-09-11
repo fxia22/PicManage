@@ -28,4 +28,10 @@ public:
 	Adomdb fileado;
 	virtual BOOL OnInitDialog();
 	CString  m_currentuser;
+	afx_msg void OnBnClickedButtonAddToGroup();
+	CString currentfile;
+	CString currentsudo;
+	CString currentgroup;
+	afx_msg void OnLbnSelchangeListVisiblefile();
+	afx_msg void OnLbnSelchangeListFilegroup();
 };

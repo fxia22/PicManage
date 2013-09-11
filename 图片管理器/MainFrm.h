@@ -113,6 +113,12 @@ public:
 	void ExitAllChildFrame(void);
 	afx_msg void OnDrawMove();
 	afx_msg void OnUpdateDrawMove(CCmdUI *pCmdUI);
+	void getorder(char* fullorder, int* arr, int i);
+	void getword(int i, char* fullorder);
+	int geti(char* fullorder);
+
+
+
 };
 
 

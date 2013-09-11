@@ -17,7 +17,8 @@ public:
 	void OnInitADOConn(CString);
 	void ExitConnect(void);
 	bool NewUser(CString name, CString password);
-	bool NewFile(CString username, CString filename, CString sudo);
+	bool NewFile(CString username, CString filename, CString sudo,CString group="");
 	int CheckFileState(CString username, CString filepath);
+	bool NewFileToGroup(CString username, CString filename, CString sudo,CString group);
 };
 

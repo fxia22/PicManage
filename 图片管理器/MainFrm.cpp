@@ -12,6 +12,9 @@
 #include "Adomdb.h"
 #include "MyRectangle.h"
 #include "ChildFrm.h"
+#include "MyCircle.h"
+#include "MyEllipse.h"
+
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -465,22 +468,39 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	int currentstyle = cm->m_nLineStyle;
 	int currentwidth = cm->m_nLineWidth;
 	COLORREF currentcolor = cm->m_clr;
+	
+	int arr[4];
+	getorder(buf,arr,geti(buf));
+	getword(geti(buf),buf);
+	for(int i=0;i<strlen(buf);i++){
+		buf[i]=toupper(buf[i]);}
+	if(strcmp(buf,"LINE")==0)
+	{
+		MyObject * n =new MyLine(arr[0],arr[1],arr[2],arr[3],currentstyle,currentwidth,currentcolor);
+		pDoc->data.push_back(n);
+	}
+	if(strcmp(buf,"RECTANGLE")==0)
+	{			
+		MyObject * n =new MyRectangle(arr[0],arr[1],arr[2],arr[3],currentstyle,currentwidth,currentcolor);
+		pDoc->data.push_back(n);
+	}
+	if(strcmp(buf,"CIRCLE")==0)
+	{			
+		MyObject * n =new MyCircle(arr[0],arr[1],arr[2],arr[3],currentstyle,currentwidth,currentcolor);
+		pDoc->data.push_back(n);
+	}
+	if(strcmp(buf,"ELLIPSE")==0)
+	{
+		MyObject * n =new MyEllipse(arr[0],arr[1],arr[2],arr[3],currentstyle,currentwidth,currentcolor);
+		pDoc->data.push_back(n);
+	}
+		
+	
 	free(buf);
 	free(buf2);
 		//请将代码添加至此
 	
-		if (strcmp(buf,"LINE(100,100,200,200)")==0)
-		{
-			MyObject* n = new MyLine(100,100,200,200,currentstyle,currentwidth,currentcolor);
-			pDoc->data.push_back(n);
-		}
-
-		if (strcmp(buf,"RECTANGLE(300,300,400,400)")==0)
-		{
-			MyObject* n = new MyRectangle(300,300,400,400,currentstyle,currentwidth,currentcolor);
-			pDoc->data.push_back(n);
-		}
-
+	
 
 
 
@@ -557,4 +577,31 @@ void CMainFrame::OnUpdateDrawMove(CCmdUI *pCmdUI)
 	else pCmdUI->Enable(TRUE);
 	if (enabledraw&&(drawstatus==DRAW_MOVE)) pCmdUI->SetCheck(1);
 	else pCmdUI->SetCheck(0);
+}
+
+
+void CMainFrame::getorder(char* fullorder, int* arr, int i)
+{
+	char *p=fullorder+i;
+	sscanf_s(p,"(%d,%d,%d,%d)",&arr[0],&arr[1],&arr[2],&arr[3]);
+}
+
+
+
+void CMainFrame::getword(int i, char* fullorder)
+{
+	char *p=fullorder+i;
+	*p=0;
+}
+
+
+int CMainFrame::geti(char* fullorder)
+{
+	int i;
+	for(i=0;fullorder[i]!='\0';i++)
+	{
+		if(fullorder[i]=='(')
+			return i;
+	}
+	return 0;
 }

@@ -58,6 +58,8 @@
 #define IDC_LIST_FILE_IN_GROUP          1039
 #define IDC_STATIC_INGROUP              1040
 #define IDC_BUTTON_ADD_TO_GROUP         1041
+#define IDC_STATIC_MAN1                 1042
+#define IDC_STATIC_MAN2                 1043
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -136,7 +138,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        330
 #define _APS_NEXT_COMMAND_VALUE         32864
-#define _APS_NEXT_CONTROL_VALUE         1042
+#define _APS_NEXT_CONTROL_VALUE         1044
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

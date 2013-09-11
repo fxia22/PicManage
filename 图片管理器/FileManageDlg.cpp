@@ -16,6 +16,9 @@ CFileManageDlg::CFileManageDlg(CWnd* pParent /*=NULL*/)
 {
 
 	m_currentuser = _T("");
+	currentfile = _T("");
+	currentsudo = _T("");
+	currentgroup = _T("");
 }
 
 CFileManageDlg::~CFileManageDlg()
@@ -34,6 +37,9 @@ void CFileManageDlg::DoDataExchange(CDataExchange* pDX)
 
 BEGIN_MESSAGE_MAP(CFileManageDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_ADDGROUP, &CFileManageDlg::OnBnClickedButtonAddgroup)
+	ON_BN_CLICKED(IDC_BUTTON_ADD_TO_GROUP, &CFileManageDlg::OnBnClickedButtonAddToGroup)
+	ON_LBN_SELCHANGE(IDC_LIST_VISIBLEFILE, &CFileManageDlg::OnLbnSelchangeListVisiblefile)
+	ON_LBN_SELCHANGE(IDC_LIST_FILEGROUP, &CFileManageDlg::OnLbnSelchangeListFilegroup)
 END_MESSAGE_MAP()
 
 
@@ -68,14 +74,115 @@ BOOL CFileManageDlg::OnInitDialog()
 			CString name = (_bstr_t)(fileado.m_pRecordset->GetCollect("文件路径"));
 			if (du.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("访问权限")))==0)
 				name+="(只读)";
-			m_VisibleFile.AddString(name);
+			if (m_VisibleFile.FindString(-1,name)==-1)
+			{m_VisibleFile.AddString(name);
+			}
+			
 		}
 		fileado.m_pRecordset->MoveNext();
 	}
 	fileado.m_pRecordset->MoveFirst();
 	fileado.ExitConnect();
+
+
+	fileado.OnInitADOConn("图片组");
+	fileado.m_pRecordset->MoveFirst();
+	while (!fileado.m_pRecordset->adoEOF)
+	{
+		if (m_currentuser.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("用户名")))==0)
+		{
+			CString group =  (_bstr_t)(fileado.m_pRecordset->GetCollect("图片组"));
+			if (m_Group.FindString(-1,group)==-1)m_Group.AddString(group);
+		}
+		fileado.m_pRecordset->MoveNext();
+	}
+	fileado.m_pRecordset->MoveFirst();
+	fileado.ExitConnect();
+
+
+
+
+
 	// TODO:  在此添加额外的初始化
 
 	return TRUE;  // return TRUE unless you set the focus to a control
 	// 异常: OCX 属性页应返回 FALSE
+}
+
+
+void CFileManageDlg::OnBnClickedButtonAddToGroup()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if ((currentfile=="")||(currentgroup==""))
+	{
+		AfxMessageBox("请选择项");
+		return;
+	}
+	fileado.OnInitADOConn("图片组");
+	fileado.NewFileToGroup(m_currentuser,currentfile,currentsudo,currentgroup);
+	fileado.ExitConnect();
+
+	fileado.OnInitADOConn("图片组");
+	fileado.m_pRecordset->MoveFirst();
+	while (!fileado.m_pRecordset->adoEOF)
+	{
+		if ((m_currentuser.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("用户名")))==0)&& (currentgroup.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("图片组")))==0))
+		{
+			CString name =  (_bstr_t)(fileado.m_pRecordset->GetCollect("文件路径"));
+			if (m_FileInGroup.FindString(-1,name)==-1)
+			{
+				m_FileInGroup.AddString(name);
+			}
+
+		}
+		fileado.m_pRecordset->MoveNext();
+	}
+	fileado.m_pRecordset->MoveFirst();
+	fileado.ExitConnect();
+
+	
+}
+
+
+void CFileManageDlg::OnLbnSelchangeListVisiblefile()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CString str;
+	m_VisibleFile.GetText(m_VisibleFile.GetCurSel(),str);
+	if (str.Find("只读")!=-1) 
+		{currentsudo ="读";
+		currentfile = str.Left(str.GetLength()-6);
+	
+	}
+	else {
+		currentsudo = "写";
+		currentfile = str;
+	}
+
+}
+
+
+void CFileManageDlg::OnLbnSelchangeListFilegroup()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	 m_Group.GetText(m_Group.GetCurSel(),currentgroup);
+	 m_FileInGroup.ResetContent();
+	 //AfxMessageBox(currentgroup);
+	 fileado.OnInitADOConn("图片组");
+	 fileado.m_pRecordset->MoveFirst();
+	 while (!fileado.m_pRecordset->adoEOF)
+	 {
+		 if ((m_currentuser.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("用户名")))==0)&& (currentgroup.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("图片组")))==0))
+		 {
+			 CString name =  (_bstr_t)(fileado.m_pRecordset->GetCollect("文件路径"));
+			if (m_FileInGroup.FindString(-1,name)==-1)
+			{
+					m_FileInGroup.AddString(name);
+			}
+		
+		 }
+		 fileado.m_pRecordset->MoveNext();
+	 }
+	 fileado.m_pRecordset->MoveFirst();
+	 fileado.ExitConnect();
 }
