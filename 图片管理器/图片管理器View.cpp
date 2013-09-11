@@ -62,6 +62,7 @@ BOOL C图片管理器View::PreCreateWindow(CREATESTRUCT& cs)
 	//  CREATESTRUCT cs 来修改窗口类或样式
 	//m_mousestatus = false;
 	return CView::PreCreateWindow(cs);
+	m_normalize = false;
 }
 
 // C图片管理器View 绘制
@@ -197,6 +198,12 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));
 			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));}
 			break;
+		case DRAW_MOVE:
+			if (pDoc->data.size()!=0)
+			{
+				tmp = pDoc->data.back();
+				point_of_drag = MyPoint(point.x,point.y);
+			}
 		}
 		
 	
@@ -356,6 +363,7 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 			}
 			break;
 		case DRAW_ERASER:
+			if(nFlags&MK_LBUTTON)
 			if (tmp)
 			{
 				MyRectangle* mr = (MyRectangle*) tmp;
@@ -367,6 +375,24 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 			UpdateWindow();
 			break;
 
+		case DRAW_MOVE:
+			if(nFlags&MK_LBUTTON)
+			if (tmp)
+			{
+				MyLine* ml = (MyLine*) tmp;
+				int tempx;int tempy;
+				tempx = ml->_x2- ml->_x1;
+				tempy = ml->_y2 - ml->_y1 ;
+				ml->_x1 = point.x ;
+				ml->_y1 = point.y ;
+				ml->_x2 = point.x +tempx;
+				ml->_y2 = point.y +tempy;
+			}
+			
+			Invalidate();
+			UpdateWindow();
+
+			break;
 		default:
 		break;
 	} 

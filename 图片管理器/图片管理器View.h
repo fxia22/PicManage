@@ -4,6 +4,7 @@
 
 #pragma once
 using namespace std;
+#include "MyPoint.h"
 
 class C图片管理器View : public CView
 {
@@ -16,7 +17,8 @@ class C图片管理器View : public CView
 		DRAW_ECLIPSE,
 		DRAW_RECT,
 		DRAW_CURL,
-		DRAW_ERASER
+		DRAW_ERASER,
+		DRAW_MOVE
 	};
 protected: // 仅从序列化创建
 	C图片管理器View();
@@ -70,6 +72,7 @@ public:
 	afx_msg void OnKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
 	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	bool m_normalize;
+	MyPoint point_of_drag;
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

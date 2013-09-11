@@ -158,6 +158,13 @@ void C图片管理器Doc::Dump(CDumpContext& dc) const
 void C图片管理器Doc::OnFileSave()
 {
 	// TODO: 在此添加命令处理程序代码
+
+
+	if (!allowdraw) 
+	{
+		AfxMessageBox("在只读状态下无法保存");
+		return;
+	}
 	CFileDialog fdlg(FALSE,NULL,NULL,OFN_HIDEREADONLY,"bmp格式 (*.bmp)|*.bmp||",NULL);
 	if (m_path_name=="")
 	{
@@ -171,12 +178,10 @@ void C图片管理器Doc::OnFileSave()
 	C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
 	cv->SaveCurrentImage((LPSTR)(LPCTSTR)m_path_name);
 	C图片管理器App* thisapp = (C图片管理器App*)AfxGetApp();
-	
-	
-	
-	myado.OnInitADOConn("权限");
+	myado.OnInitADOConn("权限");	
 	myado.NewFile(thisapp->CurrentUser,m_path_name,"写");
 	myado.ExitConnect();
+	
 
 
 }
@@ -248,6 +253,12 @@ void C图片管理器Doc::OnEditUndo()
 void C图片管理器Doc::OnFileSaveAs()
 {
 	// TODO: 在此添加命令处理程序代码
+	
+	if (!allowdraw) 
+		{
+			AfxMessageBox("在只读状态下无法保存");
+			return;
+	}
 	CFileDialog fdlg(FALSE,NULL,NULL,OFN_HIDEREADONLY,"bmp格式 (*.bmp)|*.bmp||",NULL);
 	if (m_path_name=="")
 	{
@@ -259,10 +270,15 @@ void C图片管理器Doc::OnFileSaveAs()
 	SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-"+m_path_name);
 	
 	
-	
+	C图片管理器App* thisapp = (C图片管理器App*)AfxGetApp();
 	POSITION  POS = GetFirstViewPosition();
 	C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
 	cv->SaveCurrentImage((LPSTR)(LPCTSTR)m_path_name);
+
+
+	myado.OnInitADOConn("权限");
+	myado.NewFile(thisapp->CurrentUser,m_path_name,"写");
+	myado.ExitConnect();
 
 }
 

@@ -115,3 +115,28 @@ bool Adomdb::NewFile(CString username, CString filename, CString sudo)
 
 	return flag;
 }
+
+
+
+int Adomdb::CheckFileState(CString username, CString filepath)
+{
+	OnInitADOConn("权限");
+	m_pRecordset->MoveFirst();
+	bool findrecord = false;
+	int state;
+	CString du = "读",xie = "写";
+	while (!m_pRecordset->adoEOF)
+	{
+		if ((username.Compare((_bstr_t)(m_pRecordset->GetCollect("用户名")))==0)&&(filepath.Compare((_bstr_t)(m_pRecordset->GetCollect("文件路径")))==0))
+		{
+			findrecord = true;
+			if (du.Compare((bstr_t)(m_pRecordset->GetCollect("访问权限")))==0) {state =  READ_ONLY;break;}
+			if (xie.Compare((bstr_t)(m_pRecordset->GetCollect("访问权限")))==0) {state =  CAN_WRITE;break;}
+		}
+		m_pRecordset->MoveNext();
+	}
+	m_pRecordset->MoveFirst();
+	ExitConnect();
+	if (!findrecord) state =  NO_ACCESS;
+	return state;
+}

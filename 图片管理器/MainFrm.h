@@ -17,7 +17,8 @@ class CMainFrame : public CMDIFrameWnd
 		DRAW_ECLIPSE,
 		DRAW_RECT,
 		DRAW_CURL,
-		DRAW_ERASER
+		DRAW_ERASER,
+		DRAW_MOVE
 	};
 	DECLARE_DYNAMIC(CMainFrame)
 public:
@@ -110,6 +111,8 @@ public:
 	CPtrList m_ChildFramePtrList;
 	afx_msg void OnClose();
 	void ExitAllChildFrame(void);
+	afx_msg void OnDrawMove();
+	afx_msg void OnUpdateDrawMove(CCmdUI *pCmdUI);
 };
 
 

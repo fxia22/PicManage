@@ -57,6 +57,8 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, &CMainFrame::OnUpdateEditUndo)
 //	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
 ON_WM_CLOSE()
+ON_COMMAND(ID_DRAW_MOVE, &CMainFrame::OnDrawMove)
+ON_UPDATE_COMMAND_UI(ID_DRAW_MOVE, &CMainFrame::OnUpdateDrawMove)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -458,6 +460,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
 	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+	if (pDoc==NULL) return TRUE;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	int currentstyle = cm->m_nLineStyle;
 	int currentwidth = cm->m_nLineWidth;
@@ -465,7 +468,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	free(buf);
 	free(buf2);
 		//请将代码添加至此
-
+	
 		if (strcmp(buf,"LINE(100,100,200,200)")==0)
 		{
 			MyObject* n = new MyLine(100,100,200,200,currentstyle,currentwidth,currentcolor);
@@ -537,4 +540,21 @@ void CMainFrame::ExitAllChildFrame(void)
 		pChildFrame->OnClose();
 		pos=m_ChildFramePtrList.GetHeadPosition();
 	}
+}
+
+
+void CMainFrame::OnDrawMove()
+{
+	// TODO: 在此添加命令处理程序代码
+	drawstatus = DRAW_MOVE;
+}
+
+
+void CMainFrame::OnUpdateDrawMove(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!enabledraw) pCmdUI->Enable(FALSE);
+	else pCmdUI->Enable(TRUE);
+	if (enabledraw&&(drawstatus==DRAW_MOVE)) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
 }

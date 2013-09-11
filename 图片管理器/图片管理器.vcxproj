@@ -106,6 +106,7 @@
     <ClInclude Include="ChildFrm.h" />
     <ClInclude Include="CommandDlg.h" />
     <ClInclude Include="CommanddlgObj.h" />
+    <ClInclude Include="FileManageDlg.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="ChildFrm.cpp" />
     <ClCompile Include="CommandDlg.cpp" />
     <ClCompile Include="CommanddlgObj.cpp" />
+    <ClCompile Include="FileManageDlg.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />

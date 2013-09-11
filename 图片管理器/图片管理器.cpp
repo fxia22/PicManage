@@ -17,6 +17,7 @@
 #include "CommanddlgObj.h"
 #include "AdminDlg.h"
 #include "StyleDlg.h"
+#include "FileManageDlg.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -48,6 +49,8 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_UPDATE_COMMAND_UI(ID_MYFILE, &C图片管理器App::OnUpdateMyfile)
 	ON_COMMAND(ID_MYFILE, &C图片管理器App::OnMyfile)
 	ON_UPDATE_COMMAND_UI(ID_LOGIN, &C图片管理器App::OnUpdateLogin)
+	ON_COMMAND(ID_MENU_FILEMAN, &C图片管理器App::OnMenuFileman)
+	ON_UPDATE_COMMAND_UI(ID_MENU_FILEMAN, &C图片管理器App::OnUpdateMenuFileman)
 END_MESSAGE_MAP()
 
 
@@ -199,6 +202,7 @@ void C图片管理器App::OnLogout()
 	CurrentUser = "";
 	m_LoginStatus = false;
 	MessageBox(NULL,"注销成功","注销",MB_OK);
+	((CMainFrame*)m_pMainWnd)->enabledraw = 0;
 }
 
 
@@ -327,4 +331,23 @@ void C图片管理器App::OnUpdateLogin(CCmdUI *pCmdUI)
 	if (m_LoginStatus)
 		 pCmdUI->Enable(0);
 	else pCmdUI->Enable();
+}
+
+
+void C图片管理器App::OnMenuFileman()
+{
+	// TODO: 在此添加命令处理程序代码
+	CFileManageDlg dlg;
+	dlg.DoModal();
+}
+
+
+
+void C图片管理器App::OnUpdateMenuFileman(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!m_LoginStatus)
+		 pCmdUI->Enable(FALSE);
+	else
+		pCmdUI->Enable();
 }
