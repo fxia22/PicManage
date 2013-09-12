@@ -198,11 +198,17 @@ void C图片管理器App::OnLogin()
 
 void C图片管理器App::OnLogout()
 {
-	((CMainFrame*)m_pMainWnd)->ExitAllChildFrame();
-	CurrentUser = "";
-	m_LoginStatus = false;
-	MessageBox(NULL,"注销成功","注销",MB_OK);
-	((CMainFrame*)m_pMainWnd)->enabledraw = 0;
+	if (((CMainFrame*)m_pMainWnd)->ExitAllChildFrame())
+	{
+		CurrentUser = "";
+		m_LoginStatus = false;
+		MessageBox(NULL,"注销成功","注销",MB_OK);
+		((CMainFrame*)m_pMainWnd)->enabledraw = 0;
+	}
+	else
+	{
+		AfxMessageBox("您尚有未关闭的文件");
+	}
 }
 
 

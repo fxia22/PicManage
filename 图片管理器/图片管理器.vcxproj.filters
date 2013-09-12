@@ -102,6 +102,9 @@
     <ClInclude Include="FileManageDlg.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="MyBezier.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="图片管理器.cpp">
@@ -177,6 +180,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="FileManageDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyBezier.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

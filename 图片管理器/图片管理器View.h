@@ -73,6 +73,7 @@ public:
 	afx_msg void OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
 	bool m_normalize;
 	MyPoint point_of_drag;
+	int bzdraw;
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

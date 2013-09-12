@@ -110,7 +110,7 @@ public:
 //	afx_msg void OnFileOpen();
 	CPtrList m_ChildFramePtrList;
 	afx_msg void OnClose();
-	void ExitAllChildFrame(void);
+	int ExitAllChildFrame(void);
 	afx_msg void OnDrawMove();
 	afx_msg void OnUpdateDrawMove(CCmdUI *pCmdUI);
 	void getorder(char* fullorder, int* arr, int i);

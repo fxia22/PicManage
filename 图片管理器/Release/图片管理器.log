@@ -1,27 +1,11 @@
-﻿生成启动时间为 2013/9/11 20:11:05。
+﻿生成启动时间为 2013/9/12 0:49:13。
      1>项目“\\psf\Home\Desktop\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\图片管理器.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt AdminDlg.cpp ChildFrm.cpp CommandDlg.cpp CommanddlgObj.cpp FileManageDlg.cpp LogInBox.cpp MainFrm.cpp NewClientBox.cpp SizeDlg.cpp StyleDlg.cpp myEdit.cpp "图片管理器.cpp" "图片管理器Doc.cpp" "图片管理器View.cpp"
-         AdminDlg.cpp
-         ChildFrm.cpp
-         CommandDlg.cpp
-         CommanddlgObj.cpp
-         FileManageDlg.cpp
-         LogInBox.cpp
-         MainFrm.cpp
-     1>MainFrm.cpp(475): warning C4018: “<”: 有符号/无符号不匹配
-         NewClientBox.cpp
-         SizeDlg.cpp
-         StyleDlg.cpp
-         myEdit.cpp
-         图片管理器.cpp
-         图片管理器Doc.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\图片管理器.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt "图片管理器View.cpp"
          图片管理器View.cpp
-     1>图片管理器View.cpp(107): warning C4018: “<”: 有符号/无符号不匹配
-     1>图片管理器View.cpp(236): warning C4018: “<”: 有符号/无符号不匹配
-     1>图片管理器View.cpp(525): warning C4018: “<”: 有符号/无符号不匹配
-       ResourceCompile:
-         C:\Program Files (x86)\Windows Kits\8.0\bin\x86\rc.exe /D NDEBUG /l"0x0804" /IRelease\ /nologo /fo"Release\图片管理器.res" "图片管理器.rc" 
+     1>图片管理器View.cpp(108): warning C4018: “<”: 有符号/无符号不匹配
+     1>图片管理器View.cpp(274): warning C4018: “<”: 有符号/无符号不匹配
+     1>图片管理器View.cpp(590): warning C4018: “<”: 有符号/无符号不匹配
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.lib" /MACHINE:X86 /SAFESEH "Release\图片管理器.res"
          Release\AdminDlg.obj
@@ -33,6 +17,7 @@
          Release\Line.obj
          Release\LogInBox.obj
          Release\MainFrm.obj
+         Release\MyBezier.obj
          Release\MyCircle.obj
          Release\MyEllipse.obj
          Release\myEdit.obj
@@ -56,4 +41,4 @@
 
 生成成功。
 
-已用时间 00:00:10.03
+已用时间 00:00:05.35

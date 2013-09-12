@@ -110,6 +110,7 @@
     <ClInclude Include="Line.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
+    <ClInclude Include="MyBezier.h" />
     <ClInclude Include="MyCircle.h" />
     <ClInclude Include="MyEllipse.h" />
     <ClInclude Include="myEdit.h" />
@@ -140,6 +141,7 @@
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />
+    <ClCompile Include="MyBezier.cpp" />
     <ClCompile Include="MyCircle.cpp" />
     <ClCompile Include="MyEllipse.cpp" />
     <ClCompile Include="myEdit.cpp" />

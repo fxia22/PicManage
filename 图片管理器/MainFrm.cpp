@@ -494,18 +494,11 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 		MyObject * n =new MyEllipse(arr[0],arr[1],arr[2],arr[3],currentstyle,currentwidth,currentcolor);
 		pDoc->data.push_back(n);
 	}
-		
+	
 	
 	free(buf);
 	free(buf2);
 		//请将代码添加至此
-	
-	
-
-
-
-
-
 		//请不要更改其他代码
 		pDoc->UpdateAllViews(NULL);
 
@@ -549,7 +542,7 @@ void CMainFrame::OnClose()
 }
 
 
-void CMainFrame::ExitAllChildFrame(void)
+int CMainFrame::ExitAllChildFrame(void)
 {
 	POSITION pos=m_ChildFramePtrList.GetHeadPosition();
 	CChildFrame* pChildFrame;
@@ -558,8 +551,12 @@ void CMainFrame::ExitAllChildFrame(void)
 	{
 		pChildFrame=(CChildFrame*)m_ChildFramePtrList.GetNext(pos);
 		pChildFrame->OnClose();
-		pos=m_ChildFramePtrList.GetHeadPosition();
+		
 	}
+	pos=m_ChildFramePtrList.GetHeadPosition();
+	if (pos==NULL) return 1;
+	else return 0;
+
 }
 
 

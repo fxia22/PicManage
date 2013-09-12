@@ -18,7 +18,7 @@
 #include "MyEllipse.h"
 #include "MyCircle.h"
 #include "MyPolyLine.h"
-
+#include "MyBezier.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -49,6 +49,7 @@ C图片管理器View::C图片管理器View()
 {
 	// TODO: 在此处添加构造代码
 
+	bzdraw = 0;
 }
 
 C图片管理器View::~C图片管理器View()
@@ -204,6 +205,28 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 				tmp = pDoc->data.back();
 				point_of_drag = MyPoint(point.x,point.y);
 			}
+			break;
+		case DRAW_CURL:
+			if (bzdraw ==1)
+			{
+				if (tmp!=NULL)
+				{
+					MyBezier* bz = (MyBezier*)tmp;
+					bz->_x3=bz->_x4 = point.x;
+					bz->_y3=bz->_y4 = point.y;
+					bz->comp = true;
+				}
+			}
+			else
+			{
+				if(tmp==NULL)tmp=new MyBezier(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
+				else {delete tmp;tmp=new MyBezier(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
+				((MyBezier*)tmp)->comp = false;
+				bzdraw = 0;
+			}
+			break;
+
+
 		}
 		
 	
@@ -229,26 +252,41 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 	C图片管理器Doc* pDoc = GetDocument();
 	if ((cm->enabledraw)&&(pDoc->allowdraw))
 	{
-		if (cm->drawstatus == DRAW_ERASER)
+		
+		if (cm->drawstatus==DRAW_CURL)
 		{
-			//删除一些元素
-		MyRectangle * mr = (MyRectangle *)tmp;
-		for (int i = 0 ; i<pDoc->data.size();i++)
+			if (bzdraw==0) bzdraw++;
+			else
 			{
-				
-				MyLine* ml = (MyLine*)pDoc->data[i];
-				if ((mr!=NULL)&&(ml!=NULL))
-				if (mr->includeLine(ml))
-					{
-						ml->enable = false;
-				}
+				if(tmp) pDoc->data.push_back(tmp);
+				tmp=NULL;
+				bzdraw =0;
 			}
-			
+
 		}
 		else
-		if(tmp) pDoc->data.push_back(tmp);
-		tmp=NULL;
-	
+		{
+			bzdraw = 0;
+			if ( cm->drawstatus== DRAW_ERASER)
+			{
+			//删除一些元素
+				MyRectangle * mr = (MyRectangle *)tmp;
+				for (int i = 0 ; i<pDoc->data.size();i++)
+				{
+
+					MyLine* ml = (MyLine*)pDoc->data[i];
+					if ((mr!=NULL)&&(ml!=NULL))
+						if (mr->includeLine(ml))
+						{
+							ml->enable = false;
+						}
+				}
+
+			}
+		else
+			if(tmp) pDoc->data.push_back(tmp);
+			tmp=NULL;
+		}
 	}
 
 	Invalidate(TRUE);
@@ -260,6 +298,9 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 {
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	if (!(GetKeyState(VK_SHIFT) & 0x80000000))
+		 m_normalize = false;
+	else m_normalize = true;
 	CClientDC dc(this);
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 		C图片管理器Doc* pDoc = GetDocument();
@@ -393,6 +434,30 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 			UpdateWindow();
 
 			break;
+
+
+		case DRAW_CURL:
+			if(nFlags&MK_LBUTTON)
+				if (tmp)
+				{
+					MyBezier* bz = (MyBezier*) tmp;
+					if (bzdraw==0)
+					{
+						bz->_x2 = point.x;
+						bz->_y2 = point.y;
+					}
+					else
+					{
+						if (bzdraw == 1)
+						{
+							bz->_x3 = point.x;
+							bz->_y3 = point.y;
+						}
+					}
+				}
+				Invalidate();
+				UpdateWindow();
+				break;
 		default:
 		break;
 	} 
