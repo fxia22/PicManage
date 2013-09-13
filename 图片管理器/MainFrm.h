@@ -6,6 +6,7 @@
 #include "myEdit.h"
 #include "ToolBarEditStatic.h"
 #include "Adomdb.h"
+#include "ClientWnd.h"
 class CMainFrame : public CMDIFrameWnd
 {
 	public:	enum
@@ -120,6 +121,8 @@ public:
 
 
 
+	CClientWnd m_wndClient;
+	afx_msg void OnFilesearch();
 };
 
 

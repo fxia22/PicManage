@@ -51,6 +51,7 @@ BEGIN_MESSAGE_MAP(C图片管理器App, CWinApp)
 	ON_UPDATE_COMMAND_UI(ID_LOGIN, &C图片管理器App::OnUpdateLogin)
 	ON_COMMAND(ID_MENU_FILEMAN, &C图片管理器App::OnMenuFileman)
 	ON_UPDATE_COMMAND_UI(ID_MENU_FILEMAN, &C图片管理器App::OnUpdateMenuFileman)
+	ON_UPDATE_COMMAND_UI(ID_FILESEARCH, &C图片管理器App::OnUpdateFilesearch)
 END_MESSAGE_MAP()
 
 
@@ -354,6 +355,31 @@ void C图片管理器App::OnUpdateMenuFileman(CCmdUI *pCmdUI)
 	// TODO: 在此添加命令更新用户界面处理程序代码
 	if (!m_LoginStatus)
 		 pCmdUI->Enable(FALSE);
+	else
+		pCmdUI->Enable();
+}
+
+
+
+void C图片管理器App::OnCerTainFileOpen(CString str)
+{
+	OnFileNew();
+	CMainFrame* cm = (CMainFrame*)m_pMainWnd;
+	C图片管理器Doc* cd = (C图片管理器Doc*)cm->GetActiveFrame()->GetActiveDocument();
+	if (!cd->LoadImage(str))
+	{
+		((CChildFrame*)cm->GetActiveFrame())->GetActiveDocument()->OnCloseDocument();
+	}
+		// TODO: 在此添加命令处理程序代码
+}
+
+
+
+void C图片管理器App::OnUpdateFilesearch(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!m_LoginStatus)
+		pCmdUI->Enable(FALSE);
 	else
 		pCmdUI->Enable();
 }

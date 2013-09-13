@@ -104,9 +104,11 @@
     <ClInclude Include="AdminDlg.h" />
     <ClInclude Include="Adomdb.h" />
     <ClInclude Include="ChildFrm.h" />
+    <ClInclude Include="ClientWnd.h" />
     <ClInclude Include="CommandDlg.h" />
     <ClInclude Include="CommanddlgObj.h" />
     <ClInclude Include="FileManageDlg.h" />
+    <ClInclude Include="FilesearchDlg.h" />
     <ClInclude Include="Line.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
@@ -116,6 +118,7 @@
     <ClInclude Include="myEdit.h" />
     <ClInclude Include="MyFileDialog.h" />
     <ClInclude Include="MyLine.h" />
+    <ClInclude Include="MyMultipleLine.h" />
     <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyPoint.h" />
     <ClInclude Include="MyPolyLine.h" />
@@ -135,9 +138,11 @@
     <ClCompile Include="AdminDlg.cpp" />
     <ClCompile Include="Adomdb.cpp" />
     <ClCompile Include="ChildFrm.cpp" />
+    <ClCompile Include="ClientWnd.cpp" />
     <ClCompile Include="CommandDlg.cpp" />
     <ClCompile Include="CommanddlgObj.cpp" />
     <ClCompile Include="FileManageDlg.cpp" />
+    <ClCompile Include="FilesearchDlg.cpp" />
     <ClCompile Include="Line.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />
@@ -147,6 +152,7 @@
     <ClCompile Include="myEdit.cpp" />
     <ClCompile Include="MyFileDialog.cpp" />
     <ClCompile Include="MyLine.cpp" />
+    <ClCompile Include="MyMultipleLine.cpp" />
     <ClCompile Include="MyPoint.cpp" />
     <ClCompile Include="MyPolyLine.cpp" />
     <ClCompile Include="MyRectangle.cpp" />
@@ -170,7 +176,9 @@
     <None Include="res\My.rc2" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\bitmap1.bmp" />
     <Image Include="res\bmp00001.bmp" />
+    <Image Include="res\dlgbkg.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\toolbar1.bmp" />
     <Image Include="res\toolbar_.bmp" />

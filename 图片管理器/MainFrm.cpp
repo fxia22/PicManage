@@ -14,7 +14,7 @@
 #include "ChildFrm.h"
 #include "MyCircle.h"
 #include "MyEllipse.h"
-
+#include "FilesearchDlg.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -63,6 +63,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 ON_WM_CLOSE()
 ON_COMMAND(ID_DRAW_MOVE, &CMainFrame::OnDrawMove)
 ON_UPDATE_COMMAND_UI(ID_DRAW_MOVE, &CMainFrame::OnUpdateDrawMove)
+ON_COMMAND(ID_FILESEARCH, &CMainFrame::OnFilesearch)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -93,6 +94,14 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {
 	if (CMDIFrameWnd::OnCreate(lpCreateStruct) == -1)
 		return -1;
+
+	/*if(!m_wndClient.SubclassWindow(m_hWndMDIClient)) 
+
+	{ 
+		TRACE("Fail to subclass MDI client window/n"); 
+		return -1; 
+	} 
+	*/
 
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
@@ -519,7 +528,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 
 void CMainFrame::OnCommandSet()
 {
-	
+	((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen("\\psf\Home\Desktop\1234.bmp");
 	// TODO: 在此添加命令处理程序代码
 	//MessageBox("haha");
 }
@@ -678,4 +687,11 @@ LRESULT CMainFrame::OnContentChange(WPARAM,LPARAM)
 	//请不要更改其他代码
 
 	return TRUE;
+}
+
+void CMainFrame::OnFilesearch()
+{
+	// TODO: 在此添加命令处理程序代码
+	CFilesearchDlg dlg;
+	dlg.DoModal();
 }

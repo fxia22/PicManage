@@ -74,6 +74,7 @@ public:
 	bool m_normalize;
 	MyPoint point_of_drag;
 	int bzdraw;
+	afx_msg void OnShange();
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

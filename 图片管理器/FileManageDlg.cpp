@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(CFileManageDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_ADD_TO_GROUP, &CFileManageDlg::OnBnClickedButtonAddToGroup)
 	ON_LBN_SELCHANGE(IDC_LIST_VISIBLEFILE, &CFileManageDlg::OnLbnSelchangeListVisiblefile)
 	ON_LBN_SELCHANGE(IDC_LIST_FILEGROUP, &CFileManageDlg::OnLbnSelchangeListFilegroup)
+	ON_LBN_DBLCLK(IDC_LIST_FILE_IN_GROUP, &CFileManageDlg::OnLbnDblclkListFileInGroup)
 END_MESSAGE_MAP()
 
 
@@ -185,4 +186,19 @@ void CFileManageDlg::OnLbnSelchangeListFilegroup()
 	 }
 	 fileado.m_pRecordset->MoveFirst();
 	 fileado.ExitConnect();
+}
+
+
+
+void CFileManageDlg::OnLbnDblclkListFileInGroup()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (m_FileInGroup.GetCurSel() == -1)
+	{
+		return;
+	}
+	CString str;
+	m_FileInGroup.GetText(m_FileInGroup.GetCurSel(),str);
+	((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen(str);
+	OnCancel();
 }

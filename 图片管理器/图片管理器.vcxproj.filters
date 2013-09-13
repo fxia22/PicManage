@@ -105,6 +105,15 @@
     <ClInclude Include="MyBezier.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="ClientWnd.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyMultipleLine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FilesearchDlg.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="图片管理器.cpp">
@@ -185,6 +194,15 @@
     <ClCompile Include="MyBezier.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="ClientWnd.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MyMultipleLine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FilesearchDlg.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="图片管理器.rc">
@@ -219,6 +237,12 @@
       <Filter>资源文件</Filter>
     </Image>
     <Image Include="res\toolbar_.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\bitmap1.bmp">
+      <Filter>资源文件</Filter>
+    </Image>
+    <Image Include="res\dlgbkg.bmp">
       <Filter>资源文件</Filter>
     </Image>
   </ItemGroup>

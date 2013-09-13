@@ -80,4 +80,6 @@ public:
 	CImage* m_srcimg;
 	bool IsEmpty(void);
 	virtual void OnCloseDocument();
+	void OnCertainFileOpen(CString str);
+	int LoadImage(CString str);
 };

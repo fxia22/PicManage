@@ -53,6 +53,8 @@ public://自己定义的变量
 	afx_msg void OnUpdateLogin(CCmdUI *pCmdUI);
 	afx_msg void OnMenuFileman();
 	afx_msg void OnUpdateMenuFileman(CCmdUI *pCmdUI);
+	void OnCerTainFileOpen(CString);
+	afx_msg void OnUpdateFilesearch(CCmdUI *pCmdUI);
 };
 
 extern C图片管理器App theApp;

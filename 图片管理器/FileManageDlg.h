@@ -34,4 +34,5 @@ public:
 	CString currentgroup;
 	afx_msg void OnLbnSelchangeListVisiblefile();
 	afx_msg void OnLbnSelchangeListFilegroup();
+	afx_msg void OnLbnDblclkListFileInGroup();
 };

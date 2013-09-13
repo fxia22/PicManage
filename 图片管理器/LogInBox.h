@@ -28,4 +28,6 @@ public:
 	int CheckState(CString& name, CString& pass);
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButtonExit();
+	afx_msg void OnPaint();
+	virtual BOOL OnInitDialog();
 };

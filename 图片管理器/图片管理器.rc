@@ -80,6 +80,8 @@ IDR_MyTYPE              ICON                    "res\\图片管理器Doc.ico"
 IDR_MAINFRAME           BITMAP                  "res\\Toolbar.bmp"
 IDR_TOOLBARDRAW         BITMAP                  "res\\toolbar1.bmp"
 IDR_TOOLBAR_CMD         BITMAP                  "res\\bmp00001.bmp"
+IDB_BITMAP_BKGG         BITMAP                  "res\\bitmap1.bmp"
+IDB_BITMAP_DLGBKG       BITMAP                  "res\\dlgbkg.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -143,6 +145,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "权限管理(&M)",                    ID_32828
         MENUITEM "文件管理(&F)",                    ID_MENU_FILEMAN
+        MENUITEM "文件搜索(&S)",                    ID_FILESEARCH
         MENUITEM "偏好设置(&P)",                    ID_32829
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                      ID_APP_EXIT
@@ -176,6 +179,7 @@ BEGIN
         MENUITEM SEPARATOR
         MENUITEM "文件管理(&F)",                    ID_MENU_FILEMAN
         MENUITEM "权限管理(&M)",                    ID_CALLADMIN
+        MENUITEM "文件搜索(&S)",                    ID_FILESEARCH
         MENUITEM "偏好设置(&P)",                    ID_32829
         MENUITEM SEPARATOR
         MENUITEM "退出(&X)",                      ID_APP_EXIT
@@ -221,6 +225,8 @@ BEGIN
         MENUITEM "背景色(&B)",                     ID_DRAW_BKGCOLOR
         MENUITEM "颜色(&C)",                      ID_DRAW_COLOR
         MENUITEM "式样(&S)",                      ID_DRAW_STYLE
+        MENUITEM SEPARATOR
+        MENUITEM "栅格化(&D)",                     ID_SHANGE
         MENUITEM SEPARATOR
         POPUP "通过命令行创建(&M)"
         BEGIN
@@ -395,6 +401,14 @@ BEGIN
         TOPMARGIN, 7
         BOTTOMMARGIN, 162
     END
+
+    IDD_DIALOG_FILESEARCH, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 302
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 169
+    END
 END
 #endif    // APSTUDIO_INVOKED
 
@@ -525,6 +539,19 @@ BEGIN
     LISTBOX         IDC_LIST_FILE_IN_GROUP,202,95,153,49,LBS_SORT | LBS_NOINTEGRALHEIGHT | LBS_DISABLENOSCROLL | WS_VSCROLL | WS_HSCROLL | WS_TABSTOP
     LTEXT           "组中文件",IDC_STATIC_INGROUP,239,81,33,8
     PUSHBUTTON      "添加文件到文件组",IDC_BUTTON_ADD_TO_GROUP,277,79,81,14
+END
+
+IDD_DIALOG_FILESEARCH DIALOGEX 0, 0, 309, 176
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "文件搜索"
+FONT 8, "MS Shell Dlg", 400, 0, 0x1
+BEGIN
+    PUSHBUTTON      "取消",IDCANCEL,252,155,50,14
+    EDITTEXT        IDC_EDIT_FILESEACH,89,29,105,14,ES_AUTOHSCROLL
+    LTEXT           "输入关键字",IDC_STATIC_FILENAME,38,30,41,8
+    PUSHBUTTON      "搜索文件",IDC_BUTTON_STARTSEARCH,207,29,50,14
+    LISTBOX         IDC_LIST1_SEARCH,38,50,158,90,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    DEFPUSHBUTTON   "确定",IDOK,198,155,50,14
 END
 
 

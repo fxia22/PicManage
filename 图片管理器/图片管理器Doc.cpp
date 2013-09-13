@@ -490,23 +490,127 @@ void C图片管理器Doc::OnCloseDocument()
 {
 	// TODO: 在此添加专用代码和/或调用基类
 	
-	/*if (m_img!=NULL) {
+	/*if (!m_img->IsNull()) {
 		m_img->Destroy();
 		m_img = NULL;
 	}
-	if (m_srcimg!=NULL) 
+	if (!m_srcimg->IsNull()) 
 		{
 			m_srcimg->Destroy();
 			m_srcimg = NULL;
 	}
 	*/
-	/*
-	for (int i =1;i<data.size();i++)
+	while (!data.empty())
 	{
-		if (data[i]!=NULL) delete data[i];
-		data[i]= NULL;
+		if(!data.back()) delete data.back();
+		data.pop_back(); 
 	}
-	data.empty();
-	*/
 	CDocument::OnCloseDocument();
 }
+
+
+
+
+void C图片管理器Doc::OnCertainFileOpen(CString str)
+{
+	
+	C图片管理器App* thisapp = (C图片管理器App* )AfxGetApp();
+	m_path_name = str;
+		if (CheckFileState(thisapp->CurrentUser,m_path_name)==NO_ACCESS)
+		{
+			AfxMessageBox("您没有访问权限");
+			UpdateAllViews(NULL);
+			return;
+		}
+		else
+		{
+			if (CheckFileState(thisapp->CurrentUser,m_path_name)==READ_ONLY) 
+			{
+				allowdraw = FALSE;	
+				AfxMessageBox("您有只读权限");
+			}
+			else allowdraw = TRUE;
+		}
+
+
+		if(m_srcimg==NULL) m_srcimg=new CImage();
+		else m_srcimg->Destroy();//释放以前的图片
+		m_srcimg->Load(m_path_name);
+
+		if(m_img==NULL) m_img=new CImage();
+		else m_img->Destroy();//释放以前的图片
+		SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-"+m_path_name);
+
+		if ((m_srcimg->GetHeight()>800)||(m_srcimg->GetWidth()>1200))
+		{
+			AfxMessageBox("您载入的图片太大，已经做了相应缩放");
+			int tempheight = 600;
+			int tempwidth = tempheight*m_srcimg->GetWidth()/m_srcimg->GetHeight();
+			CreateStretchedImage(m_srcimg,m_img,tempheight,tempwidth);
+		}
+		else
+			ImageCopy(*m_srcimg,*m_img);
+
+		POSITION  POS = GetFirstViewPosition();
+		C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
+		CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+		cm->enabledraw = false;
+		SetWindowPos(cm->GetActiveFrame()->GetSafeHwnd(),HWND_TOP,0,0,m_img->GetWidth(),m_img->GetHeight(),SWP_SHOWWINDOW);
+		UpdateAllViews(NULL);
+	
+	// TODO: 在此添加命令处理程序代码
+}
+
+
+int C图片管理器Doc::LoadImage(CString str)
+{
+
+
+	
+	C图片管理器App* thisapp = (C图片管理器App* )AfxGetApp();
+		m_path_name = str;
+		if (CheckFileState(thisapp->CurrentUser,m_path_name)==NO_ACCESS)
+		{
+			AfxMessageBox("您没有访问权限");
+			UpdateAllViews(NULL);
+			return false;
+		}
+		else
+		{
+			if (CheckFileState(thisapp->CurrentUser,m_path_name)==READ_ONLY) 
+			{
+				allowdraw = FALSE;	
+				AfxMessageBox("您有只读权限");
+			}
+			else allowdraw = TRUE;
+		}
+
+
+		if(m_srcimg==NULL) m_srcimg=new CImage();
+		else m_srcimg->Destroy();//释放以前的图片
+		m_srcimg->Load(m_path_name);
+		if (m_srcimg->IsNull())return false;
+		if(m_img==NULL) m_img=new CImage();
+		else m_img->Destroy();//释放以前的图片
+		SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-"+m_path_name);
+
+		if ((m_srcimg->GetHeight()>800)||(m_srcimg->GetWidth()>1200))
+		{
+			AfxMessageBox("您载入的图片太大，已经做了相应缩放");
+			int tempheight = 600;
+			int tempwidth = tempheight*m_srcimg->GetWidth()/m_srcimg->GetHeight();
+			CreateStretchedImage(m_srcimg,m_img,tempheight,tempwidth);
+		}
+		else
+			ImageCopy(*m_srcimg,*m_img);
+
+		POSITION  POS = GetFirstViewPosition();
+		C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
+		CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+		cm->enabledraw = false;
+		SetWindowPos(cm->GetActiveFrame()->GetSafeHwnd(),HWND_TOP,0,0,m_img->GetWidth(),m_img->GetHeight(),SWP_SHOWWINDOW);
+		UpdateAllViews(NULL);
+	return true;
+}
+
+

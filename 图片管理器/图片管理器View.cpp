@@ -19,7 +19,7 @@
 #include "MyCircle.h"
 #include "MyPolyLine.h"
 #include "MyBezier.h"
-
+#include "MyMultipleLine.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -40,6 +40,7 @@ BEGIN_MESSAGE_MAP(C图片管理器View, CView)
 	ON_WM_ERASEBKGND()
 	ON_WM_KEYDOWN()
 	ON_WM_KEYUP()
+	ON_COMMAND(ID_SHANGE, &C图片管理器View::OnShange)
 END_MESSAGE_MAP()
 
 // C图片管理器View 构造/析构
@@ -72,7 +73,8 @@ void C图片管理器View::OnDraw(CDC* pDC)
 {
 	C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
-	
+
+
 	ASSERT_VALID(pDoc);
 	if (!pDoc)
 		return;
@@ -203,6 +205,7 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 			if (pDoc->data.size()!=0)
 			{
 				tmp = pDoc->data.back();
+				pDoc->data.pop_back();
 				point_of_drag = MyPoint(point.x,point.y);
 			}
 			break;
@@ -225,7 +228,10 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 				bzdraw = 0;
 			}
 			break;
-
+		case DRAW_BRUSH:
+			if(tmp==NULL)tmp=new MyMultipleLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
+			else {delete tmp;tmp=new MyMultipleLine(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
+			break;
 
 		}
 		
@@ -315,12 +321,24 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 				//dc.SetDCBrushColor(cm->m_clr);
 				//dc.MoveTo(m_pre_point);
 				//dc.LineTo(point);
-				tmp=new MyLine(m_pre_point.x,m_pre_point.y,point.x,point.y, cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
+			/*	tmp=new MyLine(m_pre_point.x,m_pre_point.y,point.x,point.y, cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);
 				GetDocument()->data.push_back(tmp);
 				Invalidate(1);
 				UpdateWindow();
 				//dc.SetPixel(point, cm->m_clr);
 				m_pre_point = point;
+			*/
+				if (tmp!=NULL)
+				{
+
+				
+					MyMultipleLine* ml = (MyMultipleLine*) tmp;
+					ml->AddPoint(point.x,point.y);
+					Invalidate();
+					UpdateWindow();
+				}			
+			
+			
 			};
 			break;
 		case (DRAW_LINE):
@@ -517,42 +535,6 @@ bool C图片管理器View::SaveBitmap(HBITMAP  hBitmap, char* filename)
 bool C图片管理器View::SaveCurrentImage(char* filename1)
 {
 	bool flag;
-	/*C图片管理器Doc* pDoc = GetDocument();
-	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
-	ASSERT_VALID(pDoc);
-	if (!pDoc)
-		{
-			return FALSE;
-			MessageBox("Cannot open file");
-	}
-	RECT rect;
-	GetClientRect(&rect);
-	CDC MemDC;
-	CDC *pDC=GetDC();
-	if (pDC==NULL) MessageBox("PDC==NUll");
-	MemDC.CreateCompatibleDC(CDC::FromHandle(::GetDC(NULL)));
-
-	CBitmap MemBitmap;
-	
-	MemBitmap.CreateCompatibleBitmap(pDC,rect.right-rect.left,rect.bottom-rect.top);
-	MemDC.SelectObject(&MemBitmap);
-	MemDC.FillSolidRect(0,0,rect.right-rect.left,rect.bottom-rect.top,pDoc->m_bkgclr);
-	//给MeMDC绘图
-
-
-	for(int i=0;i<pDoc->data.size();i++)
-	{
-		
-		pDoc->data[i]->draw(MemDC);
-		
-	}
-	
-	MemDC.BitBlt(0,0,rect.right-rect.left,rect.bottom-rect.top,GetDC(),rect.left,rect.top,SRCCOPY);
-	flag = SaveBitmap(*(MemDC.GetCurrentBitmap()),filename1);
-	
-
-	MemBitmap.DeleteObject();
-	MemDC.DeleteDC();*/
 	C图片管理器Doc* pDoc = GetDocument();
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	CDC *pDC=GetDC();
@@ -706,4 +688,23 @@ void C图片管理器View::OnKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags)
 	// TODO: 在此添加消息处理程序代码和/或调用默认值
 	m_normalize = false;
 	CView::OnKeyUp(nChar, nRepCnt, nFlags);
+}
+
+
+void C图片管理器View::OnShange()
+{
+	// TODO: 在此添加命令处理程序代码
+	C图片管理器Doc* pDoc = GetDocument();
+	if (pDoc==NULL) return;
+	pDoc->data.clear();
+	pDoc->UpdateAllViews(NULL);
+
+
+
+
+
+
+
+
+
 }
