@@ -56,6 +56,7 @@ BEGIN_MESSAGE_MAP(CMainFrame, CMDIFrameWnd)
 	ON_UPDATE_COMMAND_UI(ID_DRAW_BKGCOLOR, &CMainFrame::OnUpdateDrawBkgcolor)
 	ON_COMMAND(ID_DRAW_STYLE, &CMainFrame::OnDrawStyle)
 	ON_MESSAGE(ID_RETURN_PRESSED, OnReturnPressed)
+	ON_MESSAGE(ID_CONTENT_CHANGE, OnContentChange)
 	ON_COMMAND(ID_COMMAND_SET, &CMainFrame::OnCommandSet)
 	ON_UPDATE_COMMAND_UI(ID_EDIT_UNDO, &CMainFrame::OnUpdateEditUndo)
 //	ON_COMMAND(ID_FILE_OPEN, &CMainFrame::OnFileOpen)
@@ -455,22 +456,31 @@ void CMainFrame::OnDrawStyle()
 
 LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 {
+	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+	if (pDoc==NULL) return TRUE;
 	
+	C图片管理器View * cv =(C图片管理器View *)GetActiveFrame()->GetActiveView();
+	if (cv!=NULL)
+	{
+		if (cv->tmp!=NULL) delete cv->tmp;
+		cv->tmp =NULL;
+		pDoc->UpdateAllViews(NULL);
+	}
+
 	char* buf=(char*)malloc(m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.SetWindowText("");//清空以前的命令
 	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
-	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
-	if (pDoc==NULL) return TRUE;
+	if (!pDoc->allowdraw) return TRUE;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	int currentstyle = cm->m_nLineStyle;
 	int currentwidth = cm->m_nLineWidth;
 	COLORREF currentcolor = cm->m_clr;
 	
 	int arr[4];
-	getorder(buf,arr,geti(buf));
+	if (!getorder(buf,arr,geti(buf))) return true;
 	getword(geti(buf),buf);
 	for(int i=0;i<strlen(buf);i++){
 		buf[i]=toupper(buf[i]);}
@@ -577,10 +587,23 @@ void CMainFrame::OnUpdateDrawMove(CCmdUI *pCmdUI)
 }
 
 
-void CMainFrame::getorder(char* fullorder, int* arr, int i)
+bool CMainFrame::getorder(char* fullorder, int* arr, int i)
 {
 	char *p=fullorder+i;
-	sscanf_s(p,"(%d,%d,%d,%d)",&arr[0],&arr[1],&arr[2],&arr[3]);
+	int a=-1,b=-1,c=-1,d=-1;
+	sscanf_s(p,"(%d,%d,%d,%d)",&a,&b,&c,&d);
+	if ((a!=-1)&&(b!=-1)&&(c!=-1)&&(d!=-1))
+	{
+		*arr = a;
+		*(arr+1) = b;
+		*(arr+2) = c;
+		*(arr+3) = d;
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
 }
 
 
@@ -601,4 +624,58 @@ int CMainFrame::geti(char* fullorder)
 			return i;
 	}
 	return 0;
+}
+
+
+LRESULT CMainFrame::OnContentChange(WPARAM,LPARAM)
+{
+	char* buf=(char*)malloc(m_CmdBar.m_Edit1.GetWindowTextLength()+1);
+	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
+	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	C图片管理器Doc* pDoc = (C图片管理器Doc*)(GetActiveFrame()->GetActiveDocument());
+	
+	if (strchr(buf,')'))
+	{
+		if (pDoc==NULL) return TRUE;
+		C图片管理器View * cv =(C图片管理器View *)GetActiveFrame()->GetActiveView();
+		if (cv ==NULL) {
+			return TRUE;
+			MessageBox("cv=NULL");
+		}
+		CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+		int currentstyle = cm->m_nLineStyle;
+		int currentwidth = cm->m_nLineWidth;
+		COLORREF currentcolor = cm->m_clr;
+		if (cv->tmp!=NULL) delete cv->tmp;
+		cv->tmp =NULL;
+		int arr[4];
+		if (!getorder(buf,arr,geti(buf))) return true;
+		getword(geti(buf),buf);
+		for(int i=0;i<strlen(buf);i++){
+			buf[i]=toupper(buf[i]);}
+		if(strcmp(buf,"LINE")==0)
+		{
+			cv->tmp =new MyLine(arr[0],arr[1],arr[2],arr[3],PS_DOT,1,RGB(0,0,0));
+		}
+		if(strcmp(buf,"RECTANGLE")==0)
+		{			
+			cv->tmp =new MyRectangle(arr[0],arr[1],arr[2],arr[3],PS_DOT,1,RGB(0,0,0));
+		}
+		if(strcmp(buf,"CIRCLE")==0)
+		{			
+				cv->tmp =new MyCircle(arr[0],arr[1],arr[2],arr[3],PS_DOT,1,RGB(0,0,0));
+		}
+		if(strcmp(buf,"ELLIPSE")==0)
+		{
+				cv->tmp =new MyEllipse(arr[0],arr[1],arr[2],arr[3],PS_DOT,1,RGB(0,0,0));
+		}
+			pDoc->UpdateAllViews(NULL);
+	}
+	free(buf);
+	free(buf2);
+	//请将代码添加至此
+	//请不要更改其他代码
+
+	return TRUE;
 }

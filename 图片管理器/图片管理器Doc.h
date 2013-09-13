@@ -79,4 +79,5 @@ public:
 	bool ImageCopy(const CImage &srcImage, CImage &destImage);
 	CImage* m_srcimg;
 	bool IsEmpty(void);
+	virtual void OnCloseDocument();
 };

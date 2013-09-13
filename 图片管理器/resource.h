@@ -131,6 +131,7 @@
 #define ID_DRAW_MOVE                    32861
 #define ID_32862                        32862
 #define ID_MENU_FILEMAN                 32863
+#define ID_CONTENT_CHANGE				32864
 
 // Next default values for new objects
 // 

@@ -101,6 +101,7 @@ public:
 	afx_msg void OnUpdateDrawBkgcolor(CCmdUI *pCmdUI);
 	afx_msg void OnDrawStyle();
 	afx_msg LRESULT OnReturnPressed(WPARAM,LPARAM);//处理自定义消息的函数
+	afx_msg LRESULT OnContentChange(WPARAM,LPARAM);//处理自定义消息的函数
 	afx_msg void OnCommandSet();
 	afx_msg void OnUpdateEditUndo(CCmdUI *pCmdUI);
 //	_ConnectionPtr m_pConnection;
@@ -113,7 +114,7 @@ public:
 	int ExitAllChildFrame(void);
 	afx_msg void OnDrawMove();
 	afx_msg void OnUpdateDrawMove(CCmdUI *pCmdUI);
-	void getorder(char* fullorder, int* arr, int i);
+	bool getorder(char* fullorder, int* arr, int i);
 	void getword(int i, char* fullorder);
 	int geti(char* fullorder);
 

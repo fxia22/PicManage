@@ -196,8 +196,8 @@ void CÍ¼Æ¬¹ÜÀíÆ÷View::OnLButtonDown(UINT nFlags, CPoint point)
 			else {delete tmp;tmp=new MyCircle(point.x,point.y,point.x,point.y,cm->m_nLineStyle,cm->m_nLineWidth,cm->m_clr);}
 			break;
 		case DRAW_ERASER:
-			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));
-			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DASH,1,RGB(0,0,0));}
+			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));
+			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));}
 			break;
 		case DRAW_MOVE:
 			if (pDoc->data.size()!=0)

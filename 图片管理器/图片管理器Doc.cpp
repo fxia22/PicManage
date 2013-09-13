@@ -244,6 +244,7 @@ void C图片管理器Doc::OnEditUndo()
 	// TODO: 在此添加命令处理程序代码
 	if (!data.empty())
 	{
+		 delete data.back();
 		 data.pop_back(); 
 	}
 		 UpdateAllViews(NULL);
@@ -482,4 +483,30 @@ bool C图片管理器Doc::IsEmpty(void)
 		return true;
 	else
 	return false;
+}
+
+
+void C图片管理器Doc::OnCloseDocument()
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	
+	/*if (m_img!=NULL) {
+		m_img->Destroy();
+		m_img = NULL;
+	}
+	if (m_srcimg!=NULL) 
+		{
+			m_srcimg->Destroy();
+			m_srcimg = NULL;
+	}
+	*/
+	/*
+	for (int i =1;i<data.size();i++)
+	{
+		if (data[i]!=NULL) delete data[i];
+		data[i]= NULL;
+	}
+	data.empty();
+	*/
+	CDocument::OnCloseDocument();
 }
