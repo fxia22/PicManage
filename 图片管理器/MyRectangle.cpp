@@ -8,6 +8,7 @@ MyRectangle::MyRectangle(void):MyLine()
 
 MyRectangle::MyRectangle(int x1,int y1,int x2,int y2,int style,int width,COLORREF clr):MyLine(x1,y1,x2,y2,style,width,clr)
 {
+	label = "Rectangle";
 }
 
 MyRectangle::MyRectangle(MyLine& L):MyLine(L)
@@ -55,4 +56,13 @@ bool MyRectangle::includeLine( MyLine* L)
 	if ((L->_x1>minx)&&(L->_x1<maxx)&&(L->_x2>minx)&&(L->_x2<maxx)&&(L->_y1>miny)&&(L->_y1<maxy)&&(L->_y2>miny)&&(L->_y2<maxy))
 		return true;
 	return false;
+}
+
+
+void MyRectangle::moveto(int x, int y)
+{
+	_x1+=x;
+	_x2+=x;
+	_y1+=y;
+	_y2+=y;
 }

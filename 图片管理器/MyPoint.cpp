@@ -8,6 +8,7 @@ MyPoint::MyPoint(void):_x(0),_y(0),m_clr(RGB(0,0,0))
 
 MyPoint::MyPoint(int x,int y,COLORREF clr):_x(x),_y(y),m_clr(clr)
 {
+	label = "point";
 }
 
 MyPoint::MyPoint(MyPoint& p)
@@ -24,4 +25,10 @@ MyPoint::~MyPoint(void)
 void MyPoint::draw(CDC& dc)const
 {
 	dc.SetPixel(_x,_y,m_clr);
+}
+
+void MyPoint::moveto(int x, int y)
+{
+	_x+=x;
+	_y+=y;
 }

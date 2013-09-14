@@ -9,6 +9,13 @@ Line::Line(void)
 Line::Line(int a,int b,int c,int d):x1(a),y1(b),x2(c),y2(d),m_lineclr(RGB(255,255,0))
 {
 }
+
+Line::Line(int a,int b,int c,int d,CString str):x1(a),y1(b),x2(c),y2(d),m_lineclr(RGB(255,255,0)),MyObject(str)
+{
+}
+
+
+
 Line::~Line(void)
 {
 }

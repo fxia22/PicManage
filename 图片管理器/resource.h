@@ -22,6 +22,7 @@
 #define IDB_BITMAP_BKGG                 339
 #define IDD_DIALOG_FILESEARCH           340
 #define IDB_BITMAP_DLGBKG               341
+#define IDR_TOOLBAR_LIST                342
 #define IDC_EDIT1                       1000
 #define IDC_EDIT_LOGINPASS              1001
 #define IDC_EDIT3                       1002
@@ -143,13 +144,21 @@
 #define ID_SHANGE                       32865
 #define ID_32866                        32866
 #define ID_FILESEARCH                   32867
+#define ID_BUTTON32868                  32868
+#define ID_PLACE_FOR_LIST               32868
+#define ID_BUTTON32881                  32881
+#define ID_BUTTON32882                  32882
+#define ID_BUTTON32883                  32883
+#define ID_BUTTON32884                  32884
+#define ID_BUTTON32885                  32885
+#define TIMER1                          32886
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
-#define _APS_NEXT_RESOURCE_VALUE        342
-#define _APS_NEXT_COMMAND_VALUE         32868
+#define _APS_NEXT_RESOURCE_VALUE        344
+#define _APS_NEXT_COMMAND_VALUE         32887
 #define _APS_NEXT_CONTROL_VALUE         1048
 #define _APS_NEXT_SYMED_VALUE           310
 #endif

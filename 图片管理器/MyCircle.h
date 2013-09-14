@@ -10,5 +10,6 @@ public:
 	MyCircle(MyLine&);
 	virtual ~MyCircle(void);
 	void virtual draw(CDC& dc)const;
+	void virtual moveto(int x,int y);
 };
 

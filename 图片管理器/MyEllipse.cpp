@@ -8,6 +8,7 @@ MyEllipse::MyEllipse(void):MyLine()
 
 MyEllipse::MyEllipse(int x1,int y1,int x2,int y2,int style,int width,COLORREF clr):MyLine(x1,y1,x2,y2,style,width,clr)
 {
+	label = "Ellipse";
 }
 
 MyEllipse::MyEllipse(MyLine& L):MyLine(L)

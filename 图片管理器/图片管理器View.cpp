@@ -20,6 +20,7 @@
 #include "MyPolyLine.h"
 #include "MyBezier.h"
 #include "MyMultipleLine.h"
+#include "ChildFrm.h"
 #ifdef _DEBUG
 #define new DEBUG_NEW
 #endif
@@ -41,6 +42,9 @@ BEGIN_MESSAGE_MAP(C图片管理器View, CView)
 	ON_WM_KEYDOWN()
 	ON_WM_KEYUP()
 	ON_COMMAND(ID_SHANGE, &C图片管理器View::OnShange)
+	ON_WM_TIMER()
+	ON_WM_CREATE()
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 // C图片管理器View 构造/析构
@@ -48,14 +52,17 @@ END_MESSAGE_MAP()
 C图片管理器View::C图片管理器View()
 	: m_pre_point(CPoint(0,0))
 {
-	// TODO: 在此处添加构造代码
 
+	
+	// TODO: 在此处添加构造代码
+	m_normalize = false;
 	bzdraw = 0;
 }
 
 C图片管理器View::~C图片管理器View()
 {
 	m_normalize = false;
+	
 }
 
 BOOL C图片管理器View::PreCreateWindow(CREATESTRUCT& cs)
@@ -63,8 +70,10 @@ BOOL C图片管理器View::PreCreateWindow(CREATESTRUCT& cs)
 	// TODO: 在此处通过修改
 	//  CREATESTRUCT cs 来修改窗口类或样式
 	//m_mousestatus = false;
-	return CView::PreCreateWindow(cs);
 	m_normalize = false;
+	
+	return CView::PreCreateWindow(cs);
+
 }
 
 // C图片管理器View 绘制
@@ -107,10 +116,23 @@ void C图片管理器View::OnDraw(CDC* pDC)
 	//给MeMDC绘图
 	
 	MemDC.SetBkMode(TRANSPARENT);
+
 	for(int i=0;i<pDoc->data.size();i++)
 	{
-		pDoc->data[i]->draw(MemDC);
+		if (pDoc->data[i]->selected)
+		
+			{
+				if(m_drawselect)
+				pDoc->data[i]->draw(MemDC);
+			
+		}
+		else
+		{
+				pDoc->data[i]->draw(MemDC);
+		}
 	}
+
+
 	if(tmp)
 	{
 		tmp->draw(MemDC);
@@ -201,13 +223,12 @@ void C图片管理器View::OnLButtonDown(UINT nFlags, CPoint point)
 			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));
 			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));}
 			break;
+		case DRAW_SELECT:
+			if(tmp==NULL)tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));
+			else {delete tmp;tmp=new MyRectangle(point.x,point.y,point.x,point.y,PS_DOT,1,RGB(0,0,0));}
+			break;
 		case DRAW_MOVE:
-			if (pDoc->data.size()!=0)
-			{
-				tmp = pDoc->data.back();
-				pDoc->data.pop_back();
-				point_of_drag = MyPoint(point.x,point.y);
-			}
+			tmp = NULL;
 			break;
 		case DRAW_CURL:
 			if (bzdraw ==1)
@@ -256,6 +277,15 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 	//m_normalize = false;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	C图片管理器Doc* pDoc = GetDocument();
+		vector<MyObject*> ::iterator Iter;
+	if (cm->drawstatus!=DRAW_SELECT)
+		 for (Iter = pDoc->data.begin();Iter!= pDoc->data.end();Iter++)
+		{
+			(*Iter)->selected = false;
+		}
+	
+	
+	
 	if ((cm->enabledraw)&&(pDoc->allowdraw))
 	{
 		
@@ -273,28 +303,51 @@ void C图片管理器View::OnLButtonUp(UINT nFlags, CPoint point)
 		else
 		{
 			bzdraw = 0;
-			if ( cm->drawstatus== DRAW_ERASER)
+			if (( cm->drawstatus== DRAW_ERASER)||(cm->drawstatus == DRAW_SELECT))
 			{
 			//删除一些元素
 				MyRectangle * mr = (MyRectangle *)tmp;
-				for (int i = 0 ; i<pDoc->data.size();i++)
+				vector<MyObject*> ::iterator Iter;
+				for (Iter = pDoc->data.begin();Iter!= pDoc->data.end();)
 				{
 
-					MyLine* ml = (MyLine*)pDoc->data[i];
-					if ((mr!=NULL)&&(ml!=NULL))
-						if (mr->includeLine(ml))
-						{
-							ml->enable = false;
-						}
+						MyLine* ml = (MyLine*)*Iter;
+
+						if ((mr!=NULL)&&(ml!=NULL))
+							if (mr->includeLine(ml))
+							{
+								
+								if (cm->drawstatus==DRAW_ERASER)
+								{
+									delete *Iter;
+									pDoc->data.erase(Iter);
+								}
+								else
+								{
+									(*Iter)->selected = true;
+									Iter++;
+								}
+
+
+
+							}
+							else Iter++;
+							
 				}
 
 			}
 		else
+		{
+			
 			if(tmp) pDoc->data.push_back(tmp);
+			CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+			
+		}
 			tmp=NULL;
+		 
 		}
 	}
-
+	updateListBox();
 	Invalidate(TRUE);
 	UpdateWindow();
 	CView::OnLButtonUp(nFlags, point);
@@ -434,23 +487,37 @@ void C图片管理器View::OnMouseMove(UINT nFlags, CPoint point)
 			UpdateWindow();
 			break;
 
-		case DRAW_MOVE:
+
+		case DRAW_SELECT:
 			if(nFlags&MK_LBUTTON)
-			if (tmp)
+				if (tmp)
+				{
+					MyRectangle* mr = (MyRectangle*) tmp;
+					mr->_x2 = point.x;
+					mr->_y2 = point.y;
+
+				}
+				Invalidate();
+				UpdateWindow();
+				break;
+
+		case DRAW_MOVE:
+			if (nFlags&MK_LBUTTON)
 			{
-				MyLine* ml = (MyLine*) tmp;
-				int tempx;int tempy;
-				tempx = ml->_x2- ml->_x1;
-				tempy = ml->_y2 - ml->_y1 ;
-				ml->_x1 = point.x ;
-				ml->_y1 = point.y ;
-				ml->_x2 = point.x +tempx;
-				ml->_y2 = point.y +tempy;
+				vector<MyObject*> ::iterator Iter;
+				
+				for (Iter = pDoc->data.begin();Iter!= pDoc->data.end();Iter++)
+				{
+					if ((*Iter)->selected)
+						(*Iter)->moveto(point.x-m_pre_point.x,point.y-m_pre_point.y);
+
+				}
+
 			}
-			
+
+			m_pre_point = point;
 			Invalidate();
 			UpdateWindow();
-
 			break;
 
 
@@ -589,40 +656,6 @@ bool C图片管理器View::SaveCurrentImage(char* filename1)
 	return flag;
 }
 
-/*
-BOOL C图片管理器View::TranslateBitmapSize(
-	HDC hCurScreemDC,	//当前屏幕DC，可通过GetDC获得
-	HBITMAP hBmpSrc,	//原BITMAP句柄
-	int nSrcWidth,		//原BITMAP的宽度
-	int nSrcHeight,		//原BITMAP的高度
-	HBITMAP &hBmpDst,	//改变大小后的BITMAP的句柄
-	int nDstWidth,		//改变大小后的BITMAP的宽度
-	int nDstHeight		//改变大小后的BITMAP的高度
-	)
-{
-	if (hBmpSrc == NULL || hCurScreemDC == NULL)
-	{
-		return FALSE;
-	}
-	if (hBmpDst != NULL)
-	{
-		DeleteObject(hBmpDst);
-	}
-	HDC hOldSrcDC = NULL;
-	HDC hOldDstDC = NULL;
-	HDC hSrcDC = CreateCompatibleDC(hCurScreemDC);
-	HDC hDstDC = CreateCompatibleDC(hCurScreemDC);
-	hBmpDst = CreateCompatibleBitmap(hCurScreemDC,nDstWidth,nDstHeight);
-	hOldSrcDC = (HDC)SelectObject(hSrcDC,hBmpSrc);
-	hOldDstDC = (HDC)SelectObject(hDstDC,hBmpDst);
-	StretchBlt(hDstDC,0,0,nDstWidth,nDstHeight,hSrcDC,0,0,nSrcWidth,nSrcHeight,SRCCOPY);
-	SelectObject(hSrcDC,hOldSrcDC);
-	SelectObject(hDstDC,hOldDstDC);
-	DeleteObject(hSrcDC);
-	DeleteObject(hDstDC);
-	return TRUE;	
-}
-*/
 
 
 bool C图片管理器View::ImageCopy(const CImage &srcImage, CImage &destImage)
@@ -707,4 +740,66 @@ void C图片管理器View::OnShange()
 
 
 
+}
+
+
+void C图片管理器View::OnUpdate(CView* pSender, LPARAM lHint, CObject* pHint)
+{
+	// TODO: 在此添加专用代码和/或调用基类
+	updateListBox();
+	Invalidate(TRUE);
+	UpdateWindow();
+	CView::OnUpdate(pSender,lHint,pHint);
+}
+
+
+void C图片管理器View::updateListBox(void)
+{
+	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	CListBox * list = &	((CChildFrame*)cm->GetActiveFrame())->listbar.Lis;
+	if (list==NULL) return;
+	C图片管理器Doc* pDoc  =(C图片管理器Doc*) GetDocument();
+	vector<MyObject*> ::iterator Iter;
+	list->ResetContent();
+	for (Iter = pDoc->data.begin();Iter!= pDoc->data.end();Iter++)
+	{
+		list->AddString((*Iter)->label);
+		
+	}
+}
+
+void C图片管理器View::OnTimer(UINT_PTR nIDEvent)
+{
+	// TODO: 在此添加消息处理程序代码和/或调用默认值
+	switch(nIDEvent)
+	{
+	case 1:
+		{ 
+			m_drawselect = !m_drawselect;
+			Invalidate(NULL);
+			UpdateWindow();
+			break;
+		}
+	}
+	CView::OnTimer(nIDEvent);
+}
+
+
+int C图片管理器View::OnCreate(LPCREATESTRUCT lpCreateStruct)
+{
+	if (CView::OnCreate(lpCreateStruct) == -1)
+		return -1;
+
+	// TODO:  在此添加您专用的创建代码
+	SetTimer(1,500,NULL);
+
+	return 0;
+}
+
+
+void C图片管理器View::OnDestroy()
+{
+	CView::OnDestroy();
+	KillTimer(1);
+	// TODO: 在此处添加消息处理程序代码
 }

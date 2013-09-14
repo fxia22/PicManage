@@ -14,5 +14,6 @@ public:
 	virtual ~MyPoint(void);
 	virtual void draw(CDC& dc)const;
 	
+	virtual void moveto(int x, int y);
 };
 

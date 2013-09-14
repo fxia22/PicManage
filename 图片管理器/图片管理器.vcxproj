@@ -109,7 +109,7 @@
     <ClInclude Include="CommanddlgObj.h" />
     <ClInclude Include="FileManageDlg.h" />
     <ClInclude Include="FilesearchDlg.h" />
-    <ClInclude Include="Line.h" />
+    <ClInclude Include="ListToolBar.h" />
     <ClInclude Include="LogInBox.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MyBezier.h" />
@@ -121,7 +121,6 @@
     <ClInclude Include="MyMultipleLine.h" />
     <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyPoint.h" />
-    <ClInclude Include="MyPolyLine.h" />
     <ClInclude Include="MyRectangle.h" />
     <ClInclude Include="NewClientBox.h" />
     <ClInclude Include="Resource.h" />
@@ -143,7 +142,7 @@
     <ClCompile Include="CommanddlgObj.cpp" />
     <ClCompile Include="FileManageDlg.cpp" />
     <ClCompile Include="FilesearchDlg.cpp" />
-    <ClCompile Include="Line.cpp" />
+    <ClCompile Include="ListToolBar.cpp" />
     <ClCompile Include="LogInBox.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MyBezier.cpp" />
@@ -154,7 +153,6 @@
     <ClCompile Include="MyLine.cpp" />
     <ClCompile Include="MyMultipleLine.cpp" />
     <ClCompile Include="MyPoint.cpp" />
-    <ClCompile Include="MyPolyLine.cpp" />
     <ClCompile Include="MyRectangle.cpp" />
     <ClCompile Include="NewClientBox.cpp" />
     <ClCompile Include="SizeDlg.cpp" />
@@ -178,6 +176,7 @@
   <ItemGroup>
     <Image Include="res\bitmap1.bmp" />
     <Image Include="res\bmp00001.bmp" />
+    <Image Include="res\bmp00002.bmp" />
     <Image Include="res\dlgbkg.bmp" />
     <Image Include="res\Toolbar.bmp" />
     <Image Include="res\toolbar1.bmp" />

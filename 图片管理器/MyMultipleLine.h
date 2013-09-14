@@ -18,5 +18,7 @@ private:
 	vector<MyPoint> data;
 	
 
+public:
+	virtual void moveto(int x, int y);
 };
 

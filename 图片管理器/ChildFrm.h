@@ -3,7 +3,7 @@
 //
 
 #pragma once
-
+#include "ListToolBar.h"
 class CChildFrame : public CMDIChildWnd
 {
 	DECLARE_DYNCREATE(CChildFrame)
@@ -33,4 +33,7 @@ protected:
 public:
 	afx_msg void OnClose();
 	void ExitWithoutQuery(void);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	CListToolBar listbar;
+	void OnSelchangeMylist(void);
 };

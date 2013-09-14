@@ -82,6 +82,7 @@ IDR_TOOLBARDRAW         BITMAP                  "res\\toolbar1.bmp"
 IDR_TOOLBAR_CMD         BITMAP                  "res\\bmp00001.bmp"
 IDB_BITMAP_BKGG         BITMAP                  "res\\bitmap1.bmp"
 IDB_BITMAP_DLGBKG       BITMAP                  "res\\dlgbkg.bmp"
+IDR_TOOLBAR_LIST        BITMAP                  "res\\bmp00002.bmp"
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -112,6 +113,7 @@ BEGIN
     BUTTON      ID_DRAW_CIRCLE
     BUTTON      ID_DRAW_BRUSH
     BUTTON      ID_DRAW_CURL
+    BUTTON      ID_DRAW_SELECT
     BUTTON      ID_DRAW_MOVE
     BUTTON      ID_DRAW_ERASE
     BUTTON      ID_DRAW_STYLE
@@ -128,6 +130,11 @@ BEGIN
     BUTTON      ID_BAR_STATIC2
     BUTTON      ID_BAR_EDIT2
     BUTTON      ID_COMMAND_SET
+END
+
+IDR_TOOLBAR_LIST TOOLBAR 120, 200
+BEGIN
+    BUTTON      ID_PLACE_FOR_LIST
 END
 
 

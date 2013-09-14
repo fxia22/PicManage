@@ -12,10 +12,12 @@ public:
 public:
 	MyLine(void);    
 	MyLine(MyPoint&,MyPoint&);
+	MyLine(int,int,int,int,int,int,COLORREF,CString);
 	MyLine(int,int,int,int,int,int,COLORREF);
 	MyLine(MyLine&);
 	virtual ~MyLine(void);
 	void virtual draw(CDC& dc)const;
 	bool isPoint()const;
+	void virtual moveto(int x,int y);
 };
 

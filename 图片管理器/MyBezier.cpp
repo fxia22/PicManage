@@ -13,7 +13,7 @@ MyBezier::~MyBezier(void)
 
 MyBezier::MyBezier(int x1,int y1,int x2,int y2,int style,int width,COLORREF clr):MyLine(x1,y2,x2,y2,style,width,clr)
 {
-
+	label  = "Bezier";
 }
 
 void MyBezier::draw(CDC& dc)const
@@ -63,5 +63,18 @@ void MyBezier::draw(CDC& dc)const
 			pen.DeleteObject();
 		}
 	}
+
+}
+
+void MyBezier::moveto(int x, int y)
+{
+	_x1+=x;
+	_x2+=x;
+	_x3+=x;
+	_x4+=x;
+	_y1+=y;
+	_y2+=y;
+	_y3+=y;
+	_y4+=y;
 
 }

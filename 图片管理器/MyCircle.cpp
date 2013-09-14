@@ -8,6 +8,7 @@ MyCircle::MyCircle(void):MyLine()
 
 MyCircle::MyCircle(int x1,int y1,int x2,int y2,int style,int width,COLORREF clr):MyLine(x1,y1,x2,y2,style,width,clr)
 {
+	label = "Circle";
 }
 
 MyCircle::MyCircle(MyLine& L):MyLine(L)
@@ -38,4 +39,12 @@ void  MyCircle::draw(CDC& dc)const
 		dc.SelectObject(penOld);
 		pen.DeleteObject();
 	}
+}
+
+void MyCircle:: moveto(int x,int y)
+{
+	_x1+=x;
+	_x2+=x;
+	_y1+=y;
+	_y2+=y;
 }

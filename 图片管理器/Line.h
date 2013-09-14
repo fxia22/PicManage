@@ -10,6 +10,7 @@ public:
 	COLORREF m_lineclr;
 	Line(void);
 	Line(int,int,int,int);
+	Line(int,int,int,int,CString);
 	~Line(void);
 	void draw(CDC& dc)const;
 	bool isPoint()const;

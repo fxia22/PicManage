@@ -64,6 +64,9 @@ ON_WM_CLOSE()
 ON_COMMAND(ID_DRAW_MOVE, &CMainFrame::OnDrawMove)
 ON_UPDATE_COMMAND_UI(ID_DRAW_MOVE, &CMainFrame::OnUpdateDrawMove)
 ON_COMMAND(ID_FILESEARCH, &CMainFrame::OnFilesearch)
+
+ON_COMMAND(ID_DRAW_SELECT, &CMainFrame::OnDrawSelect)
+ON_UPDATE_COMMAND_UI(ID_DRAW_SELECT, &CMainFrame::OnUpdateDrawSelect)
 END_MESSAGE_MAP()
 
 static UINT indicators[] =
@@ -103,6 +106,11 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	} 
 	*/
 
+	
+
+
+
+
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	
@@ -137,11 +145,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_wndToolBar2.EnableDocking(CBRS_ALIGN_ANY);
 	m_CmdBar.EnableDocking(CBRS_ALIGN_ANY);
 
+
 	EnableDocking(CBRS_ALIGN_ANY);
+	
 	DockControlBar(&m_wndToolBar);
 	DockControlBar(&m_wndToolBar2);
 	DockControlBar(&m_CmdBar);
-
+	
 
 	m_CmdBar.SetButtonInfo(0, ID_BAR_STATIC1, TBBS_SEPARATOR, 160 ); 
 	if(!m_CmdBar.m_Static1.Create ("创建元素:",WS_CHILD|WS_VISIBLE,CRect(0,0,100,25), &m_CmdBar, ID_BAR_STATIC1))
@@ -156,6 +166,13 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	if(!m_CmdBar.m_Edit2.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(500,0,760,22), &m_CmdBar, ID_BAR_EDIT2))
 		return -1;
 	
+	
+	//m_myListBox.Create(WS_CHILD|WS_VISIBLE|LBS_STANDARD|WS_HSCROLL, 
+	
+		//CRect(10,10,200,200), pParentWnd, IDC_MYLISTBOX)
+		
+
+
 
 	RepositionBars(AFX_IDW_CONTROLBAR_FIRST, AFX_IDW_CONTROLBAR_LAST, 0);	 
 	enabledraw = false;
@@ -694,4 +711,27 @@ void CMainFrame::OnFilesearch()
 	// TODO: 在此添加命令处理程序代码
 	CFilesearchDlg dlg;
 	dlg.DoModal();
+}
+
+
+//void CMainFrame::OnSelChangeMyList(void)
+//{
+//	AfxMessageBox("oops");
+//}
+
+
+void CMainFrame::OnDrawSelect()
+{
+	// TODO: 在此添加命令处理程序代码
+	drawstatus = DRAW_SELECT;
+}
+
+
+void CMainFrame::OnUpdateDrawSelect(CCmdUI *pCmdUI)
+{
+	// TODO: 在此添加命令更新用户界面处理程序代码
+	if (!enabledraw) pCmdUI->Enable(FALSE);
+	else pCmdUI->Enable(TRUE);
+	if (enabledraw&&(drawstatus==DRAW_SELECT)) pCmdUI->SetCheck(1);
+	else pCmdUI->SetCheck(0);
 }

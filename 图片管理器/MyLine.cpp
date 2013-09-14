@@ -7,7 +7,12 @@ MyLine::MyLine(void):_x1(0),_x2(0),_y1(0),_y2(0),m_width(1),m_style(PS_SOLID),m_
 }
 
 
-MyLine::MyLine(int x1,int y1,int x2,int y2,int style,int width ,COLORREF clr):_x1(x1),_y1(y1),_x2(x2),_y2(y2),m_style(style),m_width(width),m_clr(clr)
+MyLine::MyLine(int x1,int y1,int x2,int y2,int style,int width ,COLORREF clr):_x1(x1),_y1(y1),_x2(x2),_y2(y2),m_style(style),m_width(width),m_clr(clr),MyObject("Line")
+{
+}
+
+
+MyLine::MyLine(int x1,int y1,int x2,int y2,int style,int width ,COLORREF clr,CString str):_x1(x1),_y1(y1),_x2(x2),_y2(y2),m_style(style),m_width(width),m_clr(clr),MyObject(str)
 {
 }
 
@@ -50,4 +55,12 @@ bool MyLine::isPoint()const
 
 MyLine::~MyLine(void)
 {
+}
+
+void MyLine::moveto(int x,int y)
+{
+	_x1+=x;
+	_x2+=x;
+	_y1+=y;
+	_y2+=y;
 }

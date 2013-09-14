@@ -18,7 +18,8 @@ class C图片管理器View : public CView
 		DRAW_RECT,
 		DRAW_CURL,
 		DRAW_ERASER,
-		DRAW_MOVE
+		DRAW_MOVE,
+		DRAW_SELECT
 	};
 protected: // 仅从序列化创建
 	C图片管理器View();
@@ -75,6 +76,12 @@ public:
 	MyPoint point_of_drag;
 	int bzdraw;
 	afx_msg void OnShange();
+	virtual void OnUpdate(CView* /*pSender*/, LPARAM /*lHint*/, CObject* /*pHint*/);
+	void updateListBox(void);
+	bool m_drawselect;
+	afx_msg void OnTimer(UINT_PTR nIDEvent);
+	afx_msg int OnCreate(LPCREATESTRUCT lpCreateStruct);
+	afx_msg void OnDestroy();
 };
 
 #ifndef _DEBUG  // 图片管理器View.cpp 中的调试版本

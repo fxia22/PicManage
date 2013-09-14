@@ -16,5 +16,6 @@ public:
 	virtual ~MyPolyLine(void);
 	virtual void draw(CDC& dc)const;
 	void add(MyLine* obj);
+	virtual void moveto(int x, int y);
 };
 

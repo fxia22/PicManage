@@ -12,5 +12,6 @@ public:
 	void virtual draw(CDC& dc)const;
 //	bool complete;
 	bool comp;
+	virtual void moveto(int x, int y);
 };
 

@@ -11,5 +11,6 @@ public:
 	void virtual draw(CDC& dc)const;
 	bool isLine()const;
 	bool includeLine( MyLine* L);
+	virtual void moveto(int x, int y);
 };
 

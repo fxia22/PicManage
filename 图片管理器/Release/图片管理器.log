@@ -1,8 +1,9 @@
-﻿生成启动时间为 2013/9/14 0:23:15。
+﻿生成启动时间为 2013/9/15 1:05:28。
      1>项目“\\psf\Home\Desktop\图片管理器\PicManage\图片管理器\图片管理器.vcxproj”在节点 2 上(Build 个目标)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\图片管理器.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt LogInBox.cpp
-         LogInBox.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /sdl /O2 /Oi /Oy- /GL /D WIN32 /D _WINDOWS /D NDEBUG /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Release\图片管理器.pch" /Fo"Release\\" /Fd"Release\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt FileManageDlg.cpp "图片管理器.cpp"
+         FileManageDlg.cpp
+         图片管理器.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.exe" /INCREMENTAL:NO /NOLOGO /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /manifestinput:"C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\Include\Manifest\dpiaware.manifest" /DEBUG /PDB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"\\psf\Home\Desktop\图片管理器\PicManage\Release\图片管理器.lib" /MACHINE:X86 /SAFESEH "Release\图片管理器.res"
          Release\AdminDlg.obj
@@ -13,7 +14,7 @@
          Release\CommanddlgObj.obj
          Release\FileManageDlg.obj
          Release\FilesearchDlg.obj
-         Release\Line.obj
+         Release\ListToolBar.obj
          Release\LogInBox.obj
          Release\MainFrm.obj
          Release\MyBezier.obj
@@ -24,7 +25,6 @@
          Release\MyLine.obj
          Release\MyMultipleLine.obj
          Release\MyPoint.obj
-         Release\MyPolyLine.obj
          Release\MyRectangle.obj
          Release\NewClientBox.obj
          Release\SizeDlg.obj
@@ -41,4 +41,4 @@
 
 生成成功。
 
-已用时间 00:00:05.91
+已用时间 00:00:07.20

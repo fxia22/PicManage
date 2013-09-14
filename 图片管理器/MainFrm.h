@@ -7,6 +7,7 @@
 #include "ToolBarEditStatic.h"
 #include "Adomdb.h"
 #include "ClientWnd.h"
+#include "ListToolBar.h"
 class CMainFrame : public CMDIFrameWnd
 {
 	public:	enum
@@ -19,7 +20,9 @@ class CMainFrame : public CMDIFrameWnd
 		DRAW_RECT,
 		DRAW_CURL,
 		DRAW_ERASER,
-		DRAW_MOVE
+		DRAW_MOVE,
+		DRAW_SELECT
+
 	};
 	DECLARE_DYNAMIC(CMainFrame)
 public:
@@ -123,6 +126,14 @@ public:
 
 	CClientWnd m_wndClient;
 	afx_msg void OnFilesearch();
+//	CListToolBar listbar;
+
+
+
+
+//	void OnSelChangeMyList(void);
+	afx_msg void OnDrawSelect();
+	afx_msg void OnUpdateDrawSelect(CCmdUI *pCmdUI);
 };
 
 

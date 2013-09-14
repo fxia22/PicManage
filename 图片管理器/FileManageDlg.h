@@ -35,4 +35,5 @@ public:
 	afx_msg void OnLbnSelchangeListVisiblefile();
 	afx_msg void OnLbnSelchangeListFilegroup();
 	afx_msg void OnLbnDblclkListFileInGroup();
+	afx_msg void OnLbnDblclkListVisiblefile();
 };
