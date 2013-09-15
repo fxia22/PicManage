@@ -32,6 +32,7 @@ void CFilesearchDlg::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CFilesearchDlg, CDialogEx)
 	ON_BN_CLICKED(IDC_BUTTON_STARTSEARCH, &CFilesearchDlg::OnBnClickedButtonStartsearch)
 	ON_LBN_DBLCLK(IDC_LIST1_SEARCH, &CFilesearchDlg::OnLbnDblclkList1Search)
+	ON_LBN_SELCHANGE(IDC_LIST1_SEARCH, &CFilesearchDlg::OnLbnSelchangeList1Search)
 END_MESSAGE_MAP()
 
 
@@ -78,5 +79,23 @@ void CFilesearchDlg::OnLbnDblclkList1Search()
 	OnCancel();
 
 
+
+}
+
+
+void CFilesearchDlg::OnLbnSelchangeList1Search()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	CImage img;
+	CString str;
+	m_file.GetText(m_file.GetCurSel(),str);
+	img.Load(str);
+	CRect rect;
+	CWnd *pWnd = GetDlgItem(IDC_STATIC_PICTURE);
+	CDC *pDC = pWnd->GetDC();
+	pWnd->GetClientRect(&rect);
+	pDC->SetStretchBltMode(STRETCH_HALFTONE);
+	img.Draw(pDC->m_hDC,rect);
+	ReleaseDC( pDC );
 
 }

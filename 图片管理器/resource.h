@@ -68,6 +68,9 @@
 #define IDC_STATIC_FILENAME             1045
 #define IDC_BUTTON_STARTSEARCH          1046
 #define IDC_LIST1_SEARCH                1047
+#define IDC_STATIC_PICTURE              1048
+#define IDC_STATIC_PICTURE2             1049
+#define IDC_STATIC_PREVIEW              1050
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -159,7 +162,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        344
 #define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1048
+#define _APS_NEXT_CONTROL_VALUE         1051
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif

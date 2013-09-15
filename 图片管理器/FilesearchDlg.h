@@ -25,4 +25,5 @@ public:
 	Adomdb searchado;
 	afx_msg void OnBnClickedButtonStartsearch();
 	afx_msg void OnLbnDblclkList1Search();
+	afx_msg void OnLbnSelchangeList1Search();
 };

@@ -56,6 +56,16 @@ void CAdminDlg::OnBnClickedButtonOpenFile()
 		m_pathname = fdlg.GetPathName();
 		GetDlgItem(IDC_EDIT_FILEPATH)->SetWindowText(m_pathname);
 	}
+	CImage img;
+	img.Load(m_pathname);
+	CRect rect;
+	CWnd *pWnd = GetDlgItem(IDC_STATIC_PICTURE2);
+	CDC *pDC = pWnd->GetDC();
+	pWnd->GetClientRect(&rect);
+	pDC->SetStretchBltMode(STRETCH_HALFTONE);
+	img.Draw(pDC->m_hDC,rect);
+	ReleaseDC( pDC );
+
 }
 
 
