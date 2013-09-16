@@ -19,11 +19,12 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
-public:
+private:
 	afx_msg void OnBnClickedOk();
 	CEdit username;
 	CEdit password1;
 	CEdit password2;
+public:
 	CString m_user;
 	CString m_pass;
 };

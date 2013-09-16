@@ -11,7 +11,7 @@
 
 IMPLEMENT_DYNAMIC(CFilesearchDlg, CDialogEx)
 
-CFilesearchDlg::CFilesearchDlg(CWnd* pParent /*=NULL*/)
+	CFilesearchDlg::CFilesearchDlg(CWnd* pParent /*=NULL*/)
 	: CDialogEx(CFilesearchDlg::IDD, pParent)
 {
 
@@ -38,20 +38,20 @@ END_MESSAGE_MAP()
 
 // CFilesearchDlg 消息处理程序
 
-
+//开始搜索
 void CFilesearchDlg::OnBnClickedButtonStartsearch()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	m_file.ResetContent();
 	CString str;
-	m_keyword.GetWindowTextA(str);
-	if (str=="")
+	m_keyword.GetWindowTextA(str);                           //搜索关键字
+	if (str=="")                                  //未输入关键字
 	{
 		AfxMessageBox("请输入关键字");
 		return;
 	}
-	searchado.OnInitADOConn("权限");
-	searchado.m_pRecordset->MoveFirst();
+	searchado.OnInitADOConn("权限");                         //查询文件权限
+	searchado.m_pRecordset->MoveFirst();                       //遍历数据库
 	while (!searchado.m_pRecordset->adoEOF)
 	{
 		CString filename;
@@ -65,8 +65,8 @@ void CFilesearchDlg::OnBnClickedButtonStartsearch()
 
 }
 
-
-void CFilesearchDlg::OnLbnDblclkList1Search()
+//搜索列表
+void CFilesearchDlg::OnLbnDblclkList1Search()                      
 {
 	// TODO: 在此添加控件通知处理程序代码
 	if (m_file.GetCurSel() == -1)
@@ -74,7 +74,7 @@ void CFilesearchDlg::OnLbnDblclkList1Search()
 		return;
 	}
 	CString str;
-	m_file.GetText(m_file.GetCurSel(),str);
+	m_file.GetText(m_file.GetCurSel(),str);                               //展示搜索出的文件
 	((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen(str);
 	OnCancel();
 

@@ -105,12 +105,6 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 		return -1; 
 	} 
 	*/
-
-	
-
-
-
-
 	if (!m_wndToolBar.CreateEx(this, TBSTYLE_FLAT, WS_CHILD | WS_VISIBLE | CBRS_TOP | CBRS_GRIPPER | CBRS_TOOLTIPS | CBRS_FLYBY | CBRS_SIZE_DYNAMIC) ||
 		!m_wndToolBar.LoadToolBar(IDR_MAINFRAME))
 	
@@ -159,12 +153,12 @@ int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 	m_CmdBar.SetButtonInfo(1, ID_BAR_EDIT1, TBBS_SEPARATOR, 160 ); 
 	if(!m_CmdBar.m_Edit1.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(100,0,360,22), &m_CmdBar, ID_BAR_EDIT1))
 		return -1;
-	m_CmdBar.SetButtonInfo(2, ID_BAR_STATIC2, TBBS_SEPARATOR, 320 ); 
-	if(!m_CmdBar.m_Static2.Create ("创建对象:",WS_CHILD|WS_VISIBLE,CRect(400,0,500,25), &m_CmdBar, ID_BAR_STATIC2))
-		return -1;
-	m_CmdBar.SetButtonInfo(3, ID_BAR_EDIT2, TBBS_SEPARATOR, 120 ); 
-	if(!m_CmdBar.m_Edit2.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(500,0,760,22), &m_CmdBar, ID_BAR_EDIT2))
-		return -1;
+	//m_CmdBar.SetButtonInfo(2, ID_BAR_STATIC2, TBBS_SEPARATOR, 320 ); 
+	//if(!m_CmdBar.m_Static2.Create ("创建对象:",WS_CHILD|WS_VISIBLE,CRect(400,0,500,25), &m_CmdBar, ID_BAR_STATIC2))
+	//	return -1;
+	//m_CmdBar.SetButtonInfo(3, ID_BAR_EDIT2, TBBS_SEPARATOR, 120 ); 
+	//if(!m_CmdBar.m_Edit2.Create (WS_CHILD|WS_VISIBLE|WS_TABSTOP|WS_BORDER,CRect(500,0,760,22), &m_CmdBar, ID_BAR_EDIT2))
+	//	return -1;
 	
 	
 	//m_myListBox.Create(WS_CHILD|WS_VISIBLE|LBS_STANDARD|WS_HSCROLL, 
@@ -494,11 +488,11 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	}
 
 	char* buf=(char*)malloc(m_CmdBar.m_Edit1.GetWindowTextLength()+1);
-	char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	//char* buf2=(char*)malloc(m_CmdBar.m_Edit2.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.GetWindowText(buf,m_CmdBar.m_Edit1.GetWindowTextLength()+1);
 	m_CmdBar.m_Edit1.SetWindowText("");//清空以前的命令
-	m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
-	m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
+	//m_CmdBar.m_Edit2.GetWindowText(buf2,m_CmdBar.m_Edit2.GetWindowTextLength()+1);
+	//m_CmdBar.m_Edit2.SetWindowText("");//清空以前的命令
 	if (!pDoc->allowdraw) return TRUE;
 	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
 	int currentstyle = cm->m_nLineStyle;
@@ -533,7 +527,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 	
 	
 	free(buf);
-	free(buf2);
+	//free(buf2);
 		//请将代码添加至此
 		//请不要更改其他代码
 		pDoc->UpdateAllViews(NULL);
@@ -545,7 +539,7 @@ LRESULT CMainFrame::OnReturnPressed(WPARAM,LPARAM)
 
 void CMainFrame::OnCommandSet()
 {
-	((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen("\\psf\Home\Desktop\1234.bmp");
+	//((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen("\\psf\Home\Desktop\1234.bmp");
 	// TODO: 在此添加命令处理程序代码
 	//MessageBox("haha");
 }

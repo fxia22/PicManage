@@ -24,6 +24,8 @@ protected: // 仅从序列化创建
 public:
 		vector<MyObject*> data;//用于保存所有需要绘制的直线
 		COLORREF m_bkgclr;
+		CImage* m_img;
+
 		// 操作
 public:
 
@@ -64,7 +66,6 @@ public:
 	CString m_path_name;
 //	CImage m_img;
 	afx_msg void OnFileOpen();
-	CImage* m_img;
 	afx_msg void OnEditUndo();
 	afx_msg void OnFileSaveAs();
 	afx_msg void OnUpdateChangeSize(CCmdUI *pCmdUI);
@@ -72,14 +73,19 @@ public:
 //	Adomdb ado;
 	Adomdb myado;
 //	int CheckFileState(void);
-	int CheckFileState(CString username, CString filepath);
+
 	bool allowdraw;
 	int LoadImage();
 	void CreateStretchedImage(CImage *pImage,CImage *ResultImage,int StretchHeight,int StretchWidth);
 	bool ImageCopy(const CImage &srcImage, CImage &destImage);
-	CImage* m_srcimg;
+	
 	bool IsEmpty(void);
 	virtual void OnCloseDocument();
 	void OnCertainFileOpen(CString str);
 	int LoadImage(CString str);
+	afx_msg void OnLoadimage();
+private:
+	int CheckFileState(CString username, CString filepath);
+	CImage* m_srcimg;
+	
 };

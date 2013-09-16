@@ -19,21 +19,28 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
-public:
-	CListBox m_VisibleFile;
-	CListBox m_Group;
-	CListBox m_FileInGroup;
-	CEdit m_Groupname;
+private:
+	
 	afx_msg void OnBnClickedButtonAddgroup();
-	Adomdb fileado;
+	
 	virtual BOOL OnInitDialog();
-	CString  m_currentuser;
+
 	afx_msg void OnBnClickedButtonAddToGroup();
-	CString currentfile;
-	CString currentsudo;
-	CString currentgroup;
+	
 	afx_msg void OnLbnSelchangeListVisiblefile();
 	afx_msg void OnLbnSelchangeListFilegroup();
 	afx_msg void OnLbnDblclkListFileInGroup();
 	afx_msg void OnLbnDblclkListVisiblefile();
+private:
+	CString currentfile;
+	CString currentsudo;
+	CString currentgroup;
+	CListBox m_VisibleFile;
+	CListBox m_Group;
+	CListBox m_FileInGroup;
+	CEdit m_Groupname;
+	Adomdb fileado;
+	CString  m_currentuser;
+public:
+	afx_msg void OnBnClickedButtonRemovefile();
 };

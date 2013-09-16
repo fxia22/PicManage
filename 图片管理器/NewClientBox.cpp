@@ -1,6 +1,10 @@
 // NewClientBox.cpp : 实现文件
 //
-
+/************************************************************************/
+/* 新用户对话框
+Edited by xf
+*/
+/************************************************************************/
 #include "stdafx.h"
 #include "图片管理器.h"
 #include "NewClientBox.h"
@@ -39,14 +43,16 @@ END_MESSAGE_MAP()
 
 // NewClientBox 消息处理程序
 
-
+/************************************************************************/
+/* 点击ok                                                               */
+/************************************************************************/
 void NewClientBox::OnBnClickedOk()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	GetDlgItem(IDC_EDIT_PASS1)->GetWindowText(m_pass);
-	GetDlgItem(IDC_EDIT_USERNAME)->GetWindowText(m_user);
+	GetDlgItem(IDC_EDIT_USERNAME)->GetWindowText(m_user);//获得用户名、密码
 	CString pass;
-	GetDlgItem(IDC_EDIT_PASS2)->GetWindowText(pass);
+	GetDlgItem(IDC_EDIT_PASS2)->GetWindowText(pass);//获得第二次密码
 	if ((m_user=="")||(m_pass=="")) 
 	{
 		AfxMessageBox("用户名或密码不能为空");
@@ -60,9 +66,6 @@ void NewClientBox::OnBnClickedOk()
 	if (pd->CheckState(m_user,m_pass)!=LogInBox::NO_USER)
 		{
 			AfxMessageBox("用户名存在");
-		//	CString str;
-		//	str.Format("%d",pd->CheckState(m_user,m_pass));
-		//	AfxMessageBox(str);
 			return;
 	}
 	CDialogEx::OnOK();

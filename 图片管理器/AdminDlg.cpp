@@ -1,6 +1,10 @@
 // AdminDlg.cpp : 实现文件
 //
-
+/************************************************************************/
+/* 权限管理对话框的实现
+Edited by xf
+*/
+/************************************************************************/
 #include "stdafx.h"
 #include "图片管理器.h"
 #include "AdminDlg.h"
@@ -46,7 +50,10 @@ END_MESSAGE_MAP()
 
 // CAdminDlg 消息处理程序
 
-
+/************************************************************************/
+/* 打开文件，将文件名载入到编辑框中
+*/
+/************************************************************************/
 void CAdminDlg::OnBnClickedButtonOpenFile()
 {
 	// TODO: 在此添加控件通知处理程序代码
@@ -68,7 +75,11 @@ void CAdminDlg::OnBnClickedButtonOpenFile()
 
 }
 
-
+/************************************************************************/
+/* 
+初始化对话框时，将当前用户可见文件载入listbox
+*/
+/************************************************************************/
 BOOL CAdminDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -80,7 +91,7 @@ BOOL CAdminDlg::OnInitDialog()
 	  adminado.m_pRecordset->MoveFirst();
 	  while (!adminado.m_pRecordset->adoEOF)
 	  {
-		CString temp = (_bstr_t)(adminado.m_pRecordset->GetCollect("用户名"));
+		CString temp = (_bstr_t)(adminado.m_pRecordset->GetCollect("用户名"));//如果数据库中对应改用户有某文件，则该文件对该用户可见
 		//userlist.push_back(temp);
 		m_List_user2.AddString(temp);
 		adminado.m_pRecordset->MoveNext();
@@ -98,7 +109,11 @@ BOOL CAdminDlg::OnInitDialog()
 	// 异常: OCX 属性页应返回 FALSE
 }
 
-
+/************************************************************************/
+/* 
+更改权限
+*/
+/************************************************************************/
 void CAdminDlg::OnLbnSelchangeListTest()
 {
 		
@@ -106,14 +121,20 @@ void CAdminDlg::OnLbnSelchangeListTest()
 	else if (m_List_sudo2.GetCurSel()==1) m_sudo = "写";
 }
 
-
+/************************************************************************/
+/* 更改被选定用户                                                                     */
+/************************************************************************/
 void CAdminDlg::OnLbnSelchangeListUser2()
 {
 	// TODO: 在此添加控件通知处理程序代码
 	m_List_user2.GetText(m_List_user2.GetCurSel(),m_username);
 	
 }
-
+/************************************************************************/
+/* 
+点击ok，判断是否可以授权，如果可以，则实现授权
+*/
+/************************************************************************/
 
 void CAdminDlg::OnBnClickedOk()
 {
@@ -135,7 +156,7 @@ void CAdminDlg::OnBnClickedOk()
 		AfxMessageBox("请选择用户");
 		return;
 	}
-	state = adminado.CheckFileState(m_current_operator,m_pathname);
+	state = adminado.CheckFileState(m_current_operator,m_pathname);//直接调用了adomdb类的函数
 	
 	if (state!=Adomdb::CAN_WRITE)
 	{
@@ -144,7 +165,7 @@ void CAdminDlg::OnBnClickedOk()
 	}
 	if (m_current_operator==m_username)
 	{
-		AfxMessageBox("您不能给自己授权");
+		AfxMessageBox("您不能给自己授权");//存在很多处理用户的错误输入
 		return;
 	}
 	adminado.OnInitADOConn("权限");

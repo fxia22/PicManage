@@ -1,6 +1,11 @@
 // LogInBox.cpp : 实现文件
 //
-
+/************************************************************************/
+/*
+登陆窗口的实现
+Edited by xf
+*/
+/************************************************************************/
 #include "stdafx.h"
 #include "图片管理器.h"
 #include "LogInBox.h"
@@ -38,7 +43,10 @@ END_MESSAGE_MAP()
 
 // LogInBox 消息处理程序
 
-
+/************************************************************************/
+/* 新建用户
+*/
+/************************************************************************/
 void LogInBox::OnBnClickedNewclient()
 {
 	
@@ -55,14 +63,17 @@ void LogInBox::OnBnClickedNewclient()
 	// TODO: 在此添加控件通知处理程序代码
 }
 
-
+/************************************************************************/
+/* 检查登陆状态,是否允许登陆?
+*/
+/************************************************************************/
 int LogInBox::CheckState(CString& name, CString& pass)
 {
 		bool userexist = false;
 		bool passwordright = false;
 		ado.OnInitADOConn("用户");
 		ado.m_pRecordset->MoveFirst();
-		while (!ado.m_pRecordset->adoEOF)
+		while (!ado.m_pRecordset->adoEOF)//遍历数据表
 		{
 			if (name.Compare((_bstr_t)(ado.m_pRecordset->GetCollect("用户名")))==0)
 			{
@@ -81,14 +92,17 @@ int LogInBox::CheckState(CString& name, CString& pass)
 		ado.ExitConnect();
 	
 
-	if (userexist)
-		 if (passwordright) return CHECK_OK;
+	if (userexist)//用户是否存在
+		 if (passwordright) return CHECK_OK;//密码是否正确
 		 else return WRONG_PASSWORD;
 	else
-		return NO_USER;
+		return NO_USER;//使用了枚举增加可读性
 	return 0;
 }
-
+/************************************************************************/
+/* 点击ok，输出判定结果
+*/
+/************************************************************************/
 
 void LogInBox::OnBnClickedOk()
 {

@@ -21,21 +21,24 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
-public:
+	private:
 //	CListCtrl m_List_user;
 //	CListCtrl m_List_sudo;
 	CEdit m_filepath;
 	afx_msg void OnBnClickedButtonOpenFile();
 	virtual BOOL OnInitDialog();
+	afx_msg void OnLbnSelchangeListTest();
+	afx_msg void OnLbnSelchangeListUser2();
+	afx_msg void OnBnClickedOk();
+private:
 	CListBox m_List_sudo2;
 	CListBox m_List_user2;
-	afx_msg void OnLbnSelchangeListTest();
+	
 	Adomdb adminado;
 	CString m_username;
 	CString m_sudo;
 	CString m_pathname;
 //	vector<CString> userlist;
-	afx_msg void OnLbnSelchangeListUser2();
-	afx_msg void OnBnClickedOk();
+	
 	CString m_current_operator;
 };

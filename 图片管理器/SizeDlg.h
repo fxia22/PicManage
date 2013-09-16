@@ -20,9 +20,11 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	CEdit m_height;
-	CEdit m_width;
+	
 	afx_msg void OnBnClickedOk();
 	int width;
 	int height;
+private:
+	CEdit m_height;
+	CEdit m_width;
 };

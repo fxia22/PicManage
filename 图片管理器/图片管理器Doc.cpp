@@ -35,6 +35,7 @@ BEGIN_MESSAGE_MAP(C图片管理器Doc, CDocument)
 	ON_COMMAND(ID_FILE_SAVE_AS, &C图片管理器Doc::OnFileSaveAs)
 	ON_UPDATE_COMMAND_UI(ID_CHANGE_SIZE, &C图片管理器Doc::OnUpdateChangeSize)
 	ON_COMMAND(ID_CHANGE_SIZE, &C图片管理器Doc::OnChangeSize)
+	ON_COMMAND(ID_LOADIMAGE, &C图片管理器Doc::OnLoadimage)
 END_MESSAGE_MAP()
 
 
@@ -61,6 +62,8 @@ BOOL C图片管理器Doc::OnNewDocument()
 	cm->drawstatus = CMainFrame::DRAW_BRUSH;
 	SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-未命名");
 	allowdraw = true;
+	m_srcimg = NULL;
+	m_img = NULL;
 	return TRUE;
 }
 
@@ -170,7 +173,7 @@ void C图片管理器Doc::OnFileSave()
 	{
 		if(fdlg.DoModal() == IDOK) 
 		{  
-			m_path_name = fdlg.GetPathName()+".bmp"; 
+			m_path_name = fdlg.GetPathName()+"_"+((C图片管理器App*)AfxGetApp())->CurrentUser+".bmp"; 
 		}
 	}
 	SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-"+m_path_name);
@@ -261,13 +264,10 @@ void C图片管理器Doc::OnFileSaveAs()
 			return;
 	}
 	CFileDialog fdlg(FALSE,NULL,NULL,OFN_HIDEREADONLY,"bmp格式 (*.bmp)|*.bmp||",NULL);
-	if (m_path_name=="")
-	{
 		if(fdlg.DoModal() == IDOK) 
 		{  
-			m_path_name = fdlg.GetPathName()+".bmp"; 
+			m_path_name = fdlg.GetPathName()+"_"+((C图片管理器App*)AfxGetApp())->CurrentUser+".bmp"; 
 		}
-	}
 	SetTitle(((C图片管理器App*)AfxGetApp())->CurrentUser+"-"+m_path_name);
 	
 	
@@ -614,3 +614,75 @@ int C图片管理器Doc::LoadImage(CString str)
 }
 
 
+
+
+void C图片管理器Doc::OnLoadimage()
+{
+	// TODO: 在此添加命令处理程序代码
+	CFileDialog fdlg(FALSE,NULL,NULL,OFN_HIDEREADONLY,"jpg格式 (*.jpg)|*.jpg|bmp格式 (*.bmp)|*.bmp||",NULL);
+	CString str;
+	if (m_srcimg!=NULL)
+	{
+		AfxMessageBox("您只可以在空文档中载入图片");
+		return;
+	}
+	
+		if(fdlg.DoModal() == IDOK) 
+		{  
+			str = fdlg.GetPathName();
+		}
+		else return;
+	
+
+	myado.OnInitADOConn("权限");
+	myado.m_pRecordset->MoveFirst();
+	bool findrecord = false;
+	while (!myado.m_pRecordset->adoEOF)
+	{
+		if (str.Compare((_bstr_t)(myado.m_pRecordset->GetCollect("文件路径")))==0)
+		{
+			findrecord = true;
+			break;
+		}
+		myado.m_pRecordset->MoveNext();
+	}
+	myado.m_pRecordset->MoveFirst();
+	myado.ExitConnect();
+	if (findrecord)
+	{
+		AfxMessageBox("您不能将数据库中已有的文件载入");
+		return;
+	}
+	
+
+	if(m_srcimg==NULL) m_srcimg=new CImage();
+	else m_srcimg->Destroy();//释放以前的图片
+	m_srcimg->Load(str);
+		
+	if(m_img==NULL) m_img=new CImage();
+	else m_img->Destroy();//释放以前的图片
+		
+	if ((m_srcimg->GetHeight()>800)||(m_srcimg->GetWidth()>1200))
+	{
+		AfxMessageBox("您载入的图片太大，已经做了相应缩放");
+		int tempheight = 600;
+		int tempwidth = tempheight*m_srcimg->GetWidth()/m_srcimg->GetHeight();
+		if (tempwidth>1200) 
+		{
+			tempheight = 600*1200/tempwidth;
+			tempwidth =1200;
+		}
+		CreateStretchedImage(m_srcimg,m_img,tempheight,tempwidth);
+	}
+	else
+		ImageCopy(*m_srcimg,*m_img);
+
+	POSITION  POS = GetFirstViewPosition();
+	C图片管理器View *cv = (C图片管理器View *) GetNextView(POS);
+	CMainFrame * cm = (CMainFrame*)AfxGetApp()->m_pMainWnd;
+	cm->enabledraw = false;
+	SetWindowPos(cm->GetActiveFrame()->GetSafeHwnd(),HWND_TOP,0,0,m_img->GetWidth()+125,m_img->GetHeight(),SWP_SHOWWINDOW);
+	UpdateAllViews(NULL);
+
+
+}

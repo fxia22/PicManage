@@ -38,7 +38,7 @@ public:
 	afx_msg void OnFileNew();
 public://自己定义的变量
 	CString CurrentUser;
-	Adomdb ado;
+	
 	bool m_LoginStatus;
 	afx_msg void OnUpdateFileNew(CCmdUI *pCmdUI);
 	afx_msg void OnUpdateFileOpen(CCmdUI *pCmdUI);
@@ -47,7 +47,7 @@ public://自己定义的变量
 //	bool firstdoc;
 //	void NewFile(void);
 	//afx_msg void OnMyFileOpen();
-	Adomdb appado;
+	
 	afx_msg void OnUpdateMyfile(CCmdUI *pCmdUI);
 	afx_msg void OnMyfile();
 	afx_msg void OnUpdateLogin(CCmdUI *pCmdUI);
@@ -55,6 +55,9 @@ public://自己定义的变量
 	afx_msg void OnUpdateMenuFileman(CCmdUI *pCmdUI);
 	void OnCerTainFileOpen(CString);
 	afx_msg void OnUpdateFilesearch(CCmdUI *pCmdUI);
+private:
+	Adomdb ado;
+	Adomdb appado;
 };
 
 extern C图片管理器App theApp;

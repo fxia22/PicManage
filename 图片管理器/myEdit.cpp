@@ -26,7 +26,7 @@ BOOL myEdit::PreTranslateMessage(MSG* pMsg)
 		if(pMsg->wParam == 0x0d)//如果是回车
 		{
 			//向父窗口发送消息
-			//MessageBeep(0xFFFFFF);
+			
 			((CMainFrame*)AfxGetMainWnd())->PostMessage(ID_RETURN_PRESSED,0,0);
 
 			return true;
@@ -58,4 +58,5 @@ void myEdit::OnEnChange()
 
 	// TODO:  在此添加控件通知处理程序代码
 	((CMainFrame*)AfxGetMainWnd())->PostMessage(ID_CONTENT_CHANGE,0,0);
+	//如果有键入，直接返回，因为我需要实现预览功能
 }

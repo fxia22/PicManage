@@ -14,7 +14,7 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX); 
 
 	DECLARE_MESSAGE_MAP()
-public:
+private:
 //	afx_msg void OnRButtonDown(UINT nFlags, CPoint point);
 	afx_msg void OnRButtonUp(UINT nFlags, CPoint point);
 	BOOL CMyFileDialog::PreTranslateMessage(MSG* pMsg);

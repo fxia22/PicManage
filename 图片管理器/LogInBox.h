@@ -23,11 +23,13 @@ protected:
 
 	DECLARE_MESSAGE_MAP()
 public:
-	afx_msg void OnBnClickedNewclient();
-	Adomdb ado;
 	int CheckState(CString& name, CString& pass);
+private:
+	afx_msg void OnBnClickedNewclient();
 	afx_msg void OnBnClickedOk();
 	afx_msg void OnBnClickedButtonExit();
 	afx_msg void OnPaint();
 	virtual BOOL OnInitDialog();
+private:
+	Adomdb ado;
 };

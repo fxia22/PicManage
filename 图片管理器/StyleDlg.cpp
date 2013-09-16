@@ -1,6 +1,10 @@
 // StyleDlg.cpp : 实现文件
 //
-
+/************************************************************************/
+/* 选择线型对话框的实现
+Edit by xf
+*/
+/************************************************************************/
 #include "stdafx.h"
 #include "图片管理器.h"
 #include "StyleDlg.h"
@@ -58,7 +62,6 @@ void CStyleDlg::OnNMCustomdrawStSlider(NMHDR *pNMHDR, LRESULT *pResult)
 
 }
 
-
 BOOL CStyleDlg::OnInitDialog()
 {
 	CDialogEx::OnInitDialog();
@@ -94,7 +97,9 @@ BOOL CStyleDlg::OnInitDialog()
 	// 异常: OCX 属性页应返回 FALSE
 }
 
-
+/************************************************************************/
+/* 选择线型                                                             */
+/************************************************************************/
 void CStyleDlg::OnBnClickedRadio(UINT ID)
 {
 	CRect rect;
@@ -125,7 +130,9 @@ void CStyleDlg::OnBnClickedRadio(UINT ID)
 	
 	// TODO: 在此添加控件通知处理程序代码
 }
-
+/************************************************************************/
+/* 绘制对话框中的曲线样本                                               */
+/************************************************************************/
 
 void CStyleDlg::OnPaint()
 {
@@ -174,7 +181,9 @@ void CStyleDlg::OnPaint()
 //	UpdateWindow();
 //	CDialogEx::OnLButtonUp(nFlags, point);
 //}
-
+/************************************************************************/
+/* 滑动滚动条改变线宽                                                   */
+/************************************************************************/
 
 void CStyleDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 {
@@ -185,7 +194,9 @@ void CStyleDlg::OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar)
 	CDialogEx::OnHScroll(nSBCode, nPos, pScrollBar);
 }
 
-
+/************************************************************************/
+/* 点击确定，上载数据                                                   */
+/************************************************************************/
 
 void CStyleDlg::OnBnClickedOk()
 {

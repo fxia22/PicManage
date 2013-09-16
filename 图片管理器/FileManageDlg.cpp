@@ -42,6 +42,7 @@ BEGIN_MESSAGE_MAP(CFileManageDlg, CDialogEx)
 	ON_LBN_SELCHANGE(IDC_LIST_FILEGROUP, &CFileManageDlg::OnLbnSelchangeListFilegroup)
 	ON_LBN_DBLCLK(IDC_LIST_FILE_IN_GROUP, &CFileManageDlg::OnLbnDblclkListFileInGroup)
 	ON_LBN_DBLCLK(IDC_LIST_VISIBLEFILE, &CFileManageDlg::OnLbnDblclkListVisiblefile)
+	ON_BN_CLICKED(IDC_BUTTON_REMOVEFILE, &CFileManageDlg::OnBnClickedButtonRemovefile)
 END_MESSAGE_MAP()
 
 
@@ -216,6 +217,70 @@ void CFileManageDlg::OnLbnDblclkListVisiblefile()
 	m_VisibleFile.GetText(m_VisibleFile.GetCurSel(),str);
 	((C图片管理器App*)AfxGetApp())->OnCerTainFileOpen(str);
 	OnCancel();
+
+
+}
+
+
+void CFileManageDlg::OnBnClickedButtonRemovefile()
+{
+	// TODO: 在此添加控件通知处理程序代码
+	if (currentsudo =="读")
+	{
+		AfxMessageBox("您对该文件只有读权限，不能删除");
+		return;
+	}
+
+	else
+	{
+		CFile::Remove(currentfile);
+		fileado.OnInitADOConn("权限");
+		fileado.m_pRecordset->MoveFirst();
+		while (!fileado.m_pRecordset->adoEOF)
+		{
+			
+				CString name =  (_bstr_t)(fileado.m_pRecordset->GetCollect("文件路径"));
+				if (name==currentfile)
+				{
+					fileado.m_pRecordset->Delete(adAffectCurrent);
+					fileado.m_pRecordset->Update();
+					fileado.ExitConnect();
+					break;
+				}
+				fileado.m_pRecordset->MoveNext();
+
+			}
+			
+		AfxMessageBox("文件删除成功!");
+
+
+		m_VisibleFile.ResetContent();
+		CString du = "读";
+		fileado.OnInitADOConn("权限");
+		fileado.m_pRecordset->MoveFirst();
+		while (!fileado.m_pRecordset->adoEOF)
+		{
+			if (m_currentuser.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("用户名")))==0)
+			{
+				CString name = (_bstr_t)(fileado.m_pRecordset->GetCollect("文件路径"));
+				if (du.Compare((_bstr_t)(fileado.m_pRecordset->GetCollect("访问权限")))==0)
+					name+="(只读)";
+				if (m_VisibleFile.FindString(-1,name)==-1)
+				{m_VisibleFile.AddString(name);
+				}
+
+			}
+			fileado.m_pRecordset->MoveNext();
+		}
+		fileado.m_pRecordset->MoveFirst();
+		fileado.ExitConnect();
+
+	}
+
+
+
+
+
 
 
 }

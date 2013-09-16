@@ -19,11 +19,13 @@ protected:
 	virtual void DoDataExchange(CDataExchange* pDX);    // DDX/DDV Ö§³Ö
 
 	DECLARE_MESSAGE_MAP()
-public:
-	CEdit m_keyword;
-	CListBox m_file;
-	Adomdb searchado;
+private:
+	
 	afx_msg void OnBnClickedButtonStartsearch();
 	afx_msg void OnLbnDblclkList1Search();
 	afx_msg void OnLbnSelchangeList1Search();
+private:
+	CEdit m_keyword;
+	CListBox m_file;
+	Adomdb searchado;
 };

@@ -23,14 +23,12 @@ protected:
 public:
 	afx_msg void OnNMCustomdrawStSlider(NMHDR *pNMHDR, LRESULT *pResult);
 
-public:
+private:
 	 
 
 
-	CSliderCtrl m_csc;
-	CEdit m_linewidth;
-	int m_width;
-	int m_style;
+	
+	
 	void OnBnClickedRadio(UINT ID);
 	virtual BOOL OnInitDialog();
 	afx_msg void OnBnClickedRadio3();
@@ -39,4 +37,9 @@ public:
 //	afx_msg void OnLButtonUp(UINT nFlags, CPoint point);
 	afx_msg void OnHScroll(UINT nSBCode, UINT nPos, CScrollBar* pScrollBar);
 	afx_msg void OnBnClickedOk();
+private:
+	CSliderCtrl m_csc;
+	CEdit m_linewidth;
+	int m_width;
+	int m_style;
 };

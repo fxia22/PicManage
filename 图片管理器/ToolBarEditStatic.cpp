@@ -1,6 +1,10 @@
 // ToolBarEditStatic.cpp : implementation file
 //
-
+/************************************************************************/
+/* 含编辑框的工具栏类的实现
+Edit by xf
+*/
+/************************************************************************/
 #include "stdafx.h"
 //#include "testToolBarEditStatic.h"
 #include "ToolBarEditStatic.h"

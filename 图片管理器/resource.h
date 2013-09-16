@@ -71,6 +71,8 @@
 #define IDC_STATIC_PICTURE              1048
 #define IDC_STATIC_PICTURE2             1049
 #define IDC_STATIC_PREVIEW              1050
+#define IDC_BUTTON1                     1051
+#define IDC_BUTTON_REMOVEFILE           1051
 #define ID_32771                        32771
 #define ID_32772                        32772
 #define ID_32773                        32773
@@ -155,14 +157,15 @@
 #define ID_BUTTON32884                  32884
 #define ID_BUTTON32885                  32885
 #define TIMER1                          32886
+#define ID_LOADIMAGE                    32887
 
 // Next default values for new objects
 // 
 #ifdef APSTUDIO_INVOKED
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        344
-#define _APS_NEXT_COMMAND_VALUE         32887
-#define _APS_NEXT_CONTROL_VALUE         1051
+#define _APS_NEXT_COMMAND_VALUE         32888
+#define _APS_NEXT_CONTROL_VALUE         1052
 #define _APS_NEXT_SYMED_VALUE           310
 #endif
 #endif
